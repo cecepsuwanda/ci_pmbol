@@ -9,7 +9,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Wisuda | Dashboard</title>
+  <title>PMBOnline | Dashboard</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <!-- Bootstrap 3.3.6 -->
@@ -46,9 +46,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <!-- Logo -->
     <a href="<?php echo base_url();?>" class="logo">
       <!-- mini logo for sidebar mini 50x50 pixels -->
-      <span class="logo-mini">Wisuda</span>
+      <span class="logo-mini">PMBOnline</span>
       <!-- logo for regular state and mobile devices -->
-      <span class="logo-lg">Wisuda</span>
+      <span class="logo-lg">PMBOnline</span>
     </a>
 
     <!-- Header Navbar: style can be found in header.less -->
@@ -107,15 +107,15 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             echo $divrowcol->display();
        
                      $box=array('class'=>'collapsed-box');
-                     $header_box = array('class'=>'with-border','title'=>'Konfirmasi','tools'=>array(array('widget'=>'collapse','icon'=>'fa fa-plus'),array('widget'=>'remove','icon'=>'fa fa-times')));
+                     $header_box = array('class'=>'with-border','title'=>'Verifikasi','tools'=>array(array('widget'=>'collapse','icon'=>'fa fa-plus'),array('widget'=>'remove','icon'=>'fa fa-times')));
 
 
                      $row = array('jml'=>1);
                      $col = array('jml'=>1,'class'=>array('col-md-12'));
 
-                     $callout=new callout('callout-info','Pemberitahuan','Konfirmasi adalah pendaftar yang sudah melakukan konfirmasi pembayaran');
-                     $tbstat = array("id" => "wisudawan",'width'=>'100%');
-                     $isi_data = $data_wisudawan;
+                     $callout=new callout('callout-info','Pemberitahuan','Verifikasi adalah pendaftar yang pembayarannya sudah divalidasi oleh admin');
+                     $tbstat = array("id" => "verifikasi",'width'=>'100%');
+                     $isi_data = $verifikasi;
                      $tbl = new mytable($tbstat,$header,$isi_data,''); 
                      $content = array(array( $callout->display().'<div>'.$tbl->display().'</div>'));
                      $divrowcol = new div_row_col($row,$col,$content);
@@ -123,9 +123,20 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                      $tempbox=new box($box,$header_box,$body); 
                      $content1=array(array($tempbox->display())); 
 
-               
+                     $callout=new callout('callout-info','Pemberitahuan','Konfirmasi adalah pendaftar yang suda membayar uang pendaftaran');
+                     $tbstat = array("id" => "konfirmasi",'width'=>'100%');
+                     $isi_data = $konfirmasi;
+                     $tbl = new mytable($tbstat,$header,$isi_data,''); 
+                     $content = array(array( $callout->display().'<div>'.$tbl->display().'</div>'));
+                     $divrowcol = new div_row_col($row,$col,$content);
+                     $body = $divrowcol->display();
+                     $header_box['title']='Konfirmasi';
+                     $tempbox=new box($box,$header_box,$body); 
+                     $content1[]=array($tempbox->display());
+
+
                      $callout=new callout('callout-info','Pemberitahuan','Data Mahasiswa Baru');
-                     $tbstat = array("id" => "calon",'width'=>'100%');
+                     $tbstat = array("id" => "daftar",'width'=>'100%');
                      $isi_data = $daftar;
                      $tbl = new mytable($tbstat,$header,$isi_data,''); 
                      $content = array(array( $callout->display().'<div>'.$tbl->display().'</div>'));
@@ -133,7 +144,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                      $body = $divrowcol->display();
                      $header_box['title']='Pendaftar';
                      $tempbox=new box($box,$header_box,$body); 
-                    $content1[]=array($tempbox->display()); 
+                     $content1[]=array($tempbox->display()); 
 
                
                    $hlp_timeline = new timeline($timeline);
@@ -146,7 +157,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                    $tempbox=new box($box,$header_box,$body); 
                    $content1[]=array($tempbox->display()); 
 
-                   $row = array('jml'=>3);
+                   $row = array('jml'=>4);
                    $col = array('jml'=>1,'class'=>array('col-md-12'));
 
                    $divrowcol = new div_row_col($row,$col,$content1);
@@ -205,8 +216,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <script src="<?php echo base_url();?>assets/dist/js/demo.js"></script> -->
 <script>
   $(function () {
-    $("#wisudawan").DataTable();
-    $("#calon").DataTable();
+    $("#daftar").DataTable();
+    $("#konfirmasi").DataTable();
+    $("#verifikasi").DataTable();
     
   });
 </script>

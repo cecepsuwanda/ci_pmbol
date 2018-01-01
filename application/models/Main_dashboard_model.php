@@ -35,9 +35,9 @@ class Main_dashboard_model extends CI_Model {
        return $option;
    }
 
-   private function angkatan()
+   private function thnlls()
    {
-   	$curYear = date('Y')-3;
+   	$curYear = date('Y');
 
      $ang=array();
      for ($i=2008; $i <= $curYear ; $i++) { 
@@ -50,8 +50,8 @@ class Main_dashboard_model extends CI_Model {
    {
    	$tmp=$this->db['fakultas']->getdata('');
     $data['drop_fak']=$this->build_dropdown($tmp,array('id_fak','nm_fak'),'Fakultas ','--- Pilih Fakultas ---');
-    $tmp=$this->angkatan();
-    $data['drop_ang']=$this->build_dropdown($tmp,array(0,1),'','--- Pilih Angkatan ---');
+    $tmp=$this->thnlls();
+    $data['drop_ang']=$this->build_dropdown($tmp,array(0,1),'','--- Pilih Tahun Lulus ---');
             
     $data['isbuka']= $this->db['priode']->isbuka();
     if($this->db['priode']->istutup()==1){

@@ -19,20 +19,18 @@ class Maba_model extends CI_Model {
          $i=1;
          foreach ($data as $row) {
           $tmp=array();
+          $tmp[]=array($i++,array());
               foreach ($row as $key=>$value) {                
                 switch($key)
                 {
-                  case 'kwitansi' : $tmp[]=array((is_null($value) ? ''  : 'Ada'),array());
-                                    break;
+                  
                   case 'nama' :$tmp[]=array(strtoupper($value),array()); 
                                break;
-                  case 'nim' :$tmp[]=array($i++,array());
-                              $tmp[]=array($value,array());
-                              break; 
                   default :  $tmp[]=array($value,array()); 
                              break;
                 }                  
               }
+              
           $table[]=$tmp;
          }
       }
@@ -130,9 +128,9 @@ class Maba_model extends CI_Model {
    public function getmaba_jn_prodi($konf=0,$ver=0)
    {      
       
-      $this->db->select('id_peserta,nm,fak_prodi,nm_prodi,kwitansi,ket');
+      $this->db->select('id_peserta,nm,fak_prodi,nm_prodi,ket');
       $this->db->from('tb_maba a'); 
-      $this->db->join('tb_prodi b', 'a.kd_prodi=b.id_prodi');
+      $this->db->join('tb_prodi b', 'a.id_prodi=b.id_prodi');
 
       $where = 'verified='.$ver.' and konf='.$konf.' and '.$this->sql_priode;
       $this->db->where($where);      
@@ -267,7 +265,7 @@ class Maba_model extends CI_Model {
 
    public function jml()
    {
-   	  $this->db->select('sum(if(konf=0,1,0)) as jml1,sum(if(konf=1,1,0)) as jml2,SUM(IF(verified=1,1,0)) AS jml3');
+   	  $this->db->select('count(*) as jml1,sum(if((konf=1) and (verified=0),1,0)) as jml2,SUM(IF((konf=1)and(verified=1),1,0)) AS jml3');
       $this->db->from('tb_maba');
 
       $where = $this->sql_priode;
