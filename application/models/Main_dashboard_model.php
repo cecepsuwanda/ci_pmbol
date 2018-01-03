@@ -12,13 +12,12 @@ class Main_dashboard_model extends CI_Model {
    public function rekap_data()
    {
    	 $priode=$this->db['priode']->priode_aktif();
-     $this->db['maba']->set_priode($priode);
+     $this->db['wisudawan']->set_priode($priode);
      $this->db['berita']->set_priode($priode);
 
-     $data=$this->db['maba']->jml();          
-     $data['daftar']=$this->db['maba']->getmaba_jn_prodi();
-     $data['konfirmasi']=$this->db['maba']->getmaba_jn_prodi(1);
-     $data['verifikasi']=$this->db['maba']->getmaba_jn_prodi(1,1);
+     $data=$this->db['wisudawan']->jml();          
+     $data['data_calon']=$this->db['wisudawan']->getwisudawan_jn_prodi(0);
+     $data['data_wisudawan']=$this->db['wisudawan']->getwisudawan_jn_prodi(1);
      $data['timeline'] =$this->db['berita']->getdata('');
 
    	 return $data;
@@ -35,9 +34,9 @@ class Main_dashboard_model extends CI_Model {
        return $option;
    }
 
-   private function thnlls()
+   private function angkatan()
    {
-   	$curYear = date('Y');
+   	$curYear = date('Y')-3;
 
      $ang=array();
      for ($i=2008; $i <= $curYear ; $i++) { 
@@ -50,8 +49,8 @@ class Main_dashboard_model extends CI_Model {
    {
    	$tmp=$this->db['fakultas']->getdata('');
     $data['drop_fak']=$this->build_dropdown($tmp,array('id_fak','nm_fak'),'Fakultas ','--- Pilih Fakultas ---');
-    $tmp=$this->thnlls();
-    $data['drop_ang']=$this->build_dropdown($tmp,array(0,1),'','--- Pilih Tahun Lulus ---');
+    $tmp=$this->angkatan();
+    $data['drop_ang']=$this->build_dropdown($tmp,array(0,1),'','--- Pilih Angkatan ---');
             
     $data['isbuka']= $this->db['priode']->isbuka();
     if($this->db['priode']->istutup()==1){

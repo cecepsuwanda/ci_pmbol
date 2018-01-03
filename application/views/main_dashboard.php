@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
   
-  $header = array(array('No','Id Pendaftaran','Nama','Fakultas','Prodi','Keterangan')); 
+  $header = array(array('No','NIM','Nama','Fakultas','Prodi','Kwitansi','Keterangan')); 
   $data['menu_idx']=$menu_idx;
 ?>
 <!DOCTYPE html>
@@ -9,7 +9,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>PMBOnline | Dashboard</title>
+  <title>Wisuda | Dashboard</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <!-- Bootstrap 3.3.6 -->
@@ -46,9 +46,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <!-- Logo -->
     <a href="<?php echo base_url();?>" class="logo">
       <!-- mini logo for sidebar mini 50x50 pixels -->
-      <span class="logo-mini">PMBOnline</span>
+      <span class="logo-mini">Wisuda</span>
       <!-- logo for regular state and mobile devices -->
-      <span class="logo-lg">PMBOnline</span>
+      <span class="logo-lg">Wisuda</span>
     </a>
 
     <!-- Header Navbar: style can be found in header.less -->
@@ -96,26 +96,26 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             $col = array('jml'=>3,'class'=>array('col-md-3 col-sm-6 col-xs-12','col-md-3 col-sm-6 col-xs-12','col-md-3 col-sm-6 col-xs-12'));
             $content=array();
             $tmp=array();
-            $infobox = new info_box('fa fa-edit','Daftar',$jml_daftar);
+            $infobox = new info_box('fa fa-edit','Calon Wisudawan',$jml_calon);
             $tmp[]= $infobox->display();
-            $infobox = new info_box('fa fa-graduation-cap','Konfirmasi',$jml_konf);
+            $infobox = new info_box('fa fa-graduation-cap','Layak Verifikasi',$jml_layak);
             $tmp[]= $infobox->display();
-            $infobox = new info_box('fa fa-graduation-cap','Verifikasi',$jml_ver);
+            $infobox = new info_box('fa fa-graduation-cap','Wisudawan',$jml_wisudawan);
             $tmp[]= $infobox->display();
             $content[] =$tmp;
             $divrowcol = new div_row_col($row,$col,$content);
             echo $divrowcol->display();
        
                      $box=array('class'=>'collapsed-box');
-                     $header_box = array('class'=>'with-border','title'=>'Verifikasi','tools'=>array(array('widget'=>'collapse','icon'=>'fa fa-plus'),array('widget'=>'remove','icon'=>'fa fa-times')));
+                     $header_box = array('class'=>'with-border','title'=>'Wisudawan','tools'=>array(array('widget'=>'collapse','icon'=>'fa fa-plus'),array('widget'=>'remove','icon'=>'fa fa-times')));
 
 
                      $row = array('jml'=>1);
                      $col = array('jml'=>1,'class'=>array('col-md-12'));
 
-                     $callout=new callout('callout-info','Pemberitahuan','Verifikasi adalah pendaftar yang pembayarannya sudah divalidasi oleh admin');
-                     $tbstat = array("id" => "verifikasi",'width'=>'100%');
-                     $isi_data = $verifikasi;
+                     $callout=new callout('callout-info','Pemberitahuan','Wisudawan adalah pendaftar yang sudah diverifikasi oleh Admin');
+                     $tbstat = array("id" => "wisudawan",'width'=>'100%');
+                     $isi_data = $data_wisudawan;
                      $tbl = new mytable($tbstat,$header,$isi_data,''); 
                      $content = array(array( $callout->display().'<div>'.$tbl->display().'</div>'));
                      $divrowcol = new div_row_col($row,$col,$content);
@@ -123,28 +123,17 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                      $tempbox=new box($box,$header_box,$body); 
                      $content1=array(array($tempbox->display())); 
 
-                     $callout=new callout('callout-info','Pemberitahuan','Konfirmasi adalah pendaftar yang suda membayar uang pendaftaran');
-                     $tbstat = array("id" => "konfirmasi",'width'=>'100%');
-                     $isi_data = $konfirmasi;
+               
+                     $callout=new callout('callout-info','Pemberitahuan','Calon Wisudawan adalah pendaftar yang belum diverifikasi oleh Admin');
+                     $tbstat = array("id" => "calon",'width'=>'100%');
+                     $isi_data = $data_calon;
                      $tbl = new mytable($tbstat,$header,$isi_data,''); 
                      $content = array(array( $callout->display().'<div>'.$tbl->display().'</div>'));
                      $divrowcol = new div_row_col($row,$col,$content);
                      $body = $divrowcol->display();
-                     $header_box['title']='Konfirmasi';
+                     $header_box['title']='Calon Wisudawan';
                      $tempbox=new box($box,$header_box,$body); 
-                     $content1[]=array($tempbox->display());
-
-
-                     $callout=new callout('callout-info','Pemberitahuan','Data Mahasiswa Baru');
-                     $tbstat = array("id" => "daftar",'width'=>'100%');
-                     $isi_data = $daftar;
-                     $tbl = new mytable($tbstat,$header,$isi_data,''); 
-                     $content = array(array( $callout->display().'<div>'.$tbl->display().'</div>'));
-                     $divrowcol = new div_row_col($row,$col,$content);
-                     $body = $divrowcol->display();
-                     $header_box['title']='Pendaftar';
-                     $tempbox=new box($box,$header_box,$body); 
-                     $content1[]=array($tempbox->display()); 
+                    $content1[]=array($tempbox->display()); 
 
                
                    $hlp_timeline = new timeline($timeline);
@@ -157,7 +146,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                    $tempbox=new box($box,$header_box,$body); 
                    $content1[]=array($tempbox->display()); 
 
-                   $row = array('jml'=>4);
+                   $row = array('jml'=>3);
                    $col = array('jml'=>1,'class'=>array('col-md-12'));
 
                    $divrowcol = new div_row_col($row,$col,$content1);
@@ -216,9 +205,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <script src="<?php echo base_url();?>assets/dist/js/demo.js"></script> -->
 <script>
   $(function () {
-    $("#daftar").DataTable();
-    $("#konfirmasi").DataTable();
-    $("#verifikasi").DataTable();
+    $("#wisudawan").DataTable();
+    $("#calon").DataTable();
     
   });
 </script>

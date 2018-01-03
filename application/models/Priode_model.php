@@ -75,10 +75,7 @@ class Priode_model extends CI_Model {
      $priode=$this->getdata('aktif=1');
      $data['awal']=$priode[0]['awal'];
      $data['akhir']=$priode[0]['akhir'];
-     $data['bank']=$priode[0]['bank'];
-     $data['an']=$priode[0]['an'];
-     $data['rek']=$priode[0]['rek'];
-     $data['byr']=$priode[0]['byr'];
+     $data['wisuda']=$priode[0]['wisuda'];
      return $data;
    }
 

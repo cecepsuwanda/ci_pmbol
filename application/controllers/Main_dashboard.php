@@ -6,7 +6,7 @@ class Main_dashboard extends CI_Controller {
 	public function index()
 	{
 		$db['berita']=$this->Berita_model;
-		$db['maba']=$this->Maba_model;
+		$db['wisudawan']=$this->Wisudawan_model;
 		$db['priode']=$this->Priode_model;
 		$this->Main_dashboard_model->setdbvar($db);
 		$data=$this->Main_dashboard_model->rekap_data();

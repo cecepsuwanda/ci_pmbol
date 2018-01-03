@@ -139,13 +139,17 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                       </div>                      
                       <!-- /.form-group -->
                       <div class="form-group">
-                        <label>Tahun Lulus</label>
-                        <select class="form-control select2" id="ang" name="ang" style="width: 100%;" <?php echo $isbuka==0 ? 'disabled' :''; ?> data-msg="Tahun Lulus Harus Dipilih !!!" required>
+                        <label>Angkatan</label>
+                        <select class="form-control select2" id="ang" name="ang" style="width: 100%;" <?php echo $isbuka==0 ? 'disabled' :''; ?> data-msg="Angkatan Harus Dipilih !!!" required>
                           <?php echo $drop_ang ?>
                         </select>
                       </div>                      
                       <!-- /.form-group -->
-                      
+                      <div class="form-group">
+                         <label>NIM</label>
+                         <input type="text" class="form-control" id="nim" name="nim" placeholder="NIM ..." <?php echo $isbuka==0 ? 'disabled' :''; ?> data-msg="NIM Harus Diisi !!!" data-inputmask='"mask": "A9A999999"' required data-mask>
+                      </div>
+                      <!-- /.form-group -->
                       <div class="form-group">
                          <label>No. KTP/NIK</label>
                          <input type="text" class="form-control" id="ktp" name="ktp"  placeholder="KTP/NIK ..." <?php echo $isbuka==0 ? 'disabled' :''; ?> data-msg="KTP/NIP Harus Diisi !!!" data-inputmask='"mask": "9999999999999999"' required data-mask>
@@ -167,8 +171,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                              <label>Jenis Kelamin</label>
                              <select class="form-control select2" id="jk" name="jk" style="width: 100%;" <?php echo $isbuka==0 ? 'disabled' :''; ?> data-msg="Jenis Kelamin Harus Dipilih !!!" required >
                                <option value='' selected='selected'>-- Pilih Jenis Kelamin --</option>
-                               <option value='L' >Laki-laki</option>
-                               <option value='P' >Perempuan</option>
+                               <option value='1' >Laki-laki</option>
+                               <option value='2' >Perempuan</option>
                             </select>
                           </div>
                           <!-- /.form-group -->

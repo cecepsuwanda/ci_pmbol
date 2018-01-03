@@ -8,8 +8,8 @@ class Wisudawan_model extends CI_Model {
    public function set_priode($priode)
    {
      $this->priode = $priode;
-     $this->sql_priode ='(tgl_input between "'.$priode['awal'].'" and "'.$priode['akhir'].'" or 
-       tgl_update between "'.$priode['awal'].'" and "'.$priode['akhir'].'")';
+     $this->sql_priode ='(tgl_input between "'.$priode['awal'].'" and "'.$priode['wisuda'].'" or 
+       tgl_update between "'.$priode['awal'].'" and "'.$priode['wisuda'].'")';
    }
 
    private function build_tag_db($data)
@@ -111,7 +111,7 @@ class Wisudawan_model extends CI_Model {
    public function getdata($where)
    {      
       $this->db->select('*');
-      $this->db->from('tb_maba');
+      $this->db->from('tb_wisudawan');
       if(!empty($where)){
         $this->db->where($where);      
       }
