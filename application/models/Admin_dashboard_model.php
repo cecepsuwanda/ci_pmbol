@@ -43,10 +43,10 @@ class Admin_dashboard_model extends CI_Model {
           $tmp=array();
               foreach ($row as $key=>$value) {
                 if($key!='id'){
-                  if($key=='id_wisuda'){
-                     $temp=$this->db['wisudawan']->getdata("id_wisuda='$value'");
-                     $tmp[]=array((isset($temp[0]['nim']) ? $temp[0]['nim'] : ''),array());
-                     $tmp[]=array((isset($temp[0]['nama']) ? $temp[0]['nama'] : ''),array());
+                  if($key=='id_peserta'){
+                     $temp=$this->db['maba']->getdata("id_wisuda='$value'");
+                     $tmp[]=array((isset($temp[0]['id_peserta']) ? $temp[0]['id_peserta'] : ''),array());
+                     $tmp[]=array((isset($temp[0]['nm']) ? $temp[0]['nm'] : ''),array());
                   }else{
                      $tmp[]=array($value,array());
                   }                
@@ -74,9 +74,18 @@ class Admin_dashboard_model extends CI_Model {
               $temp[]=array($i,array());
               $ext = explode('.',basename($row));
               $tmp = explode('_',$ext[0]);
-              $temp[]=array($tmp[1],array());
+              if(isset($tmp[1])){
+                $temp[]=array($tmp[1],array());
+              }else{
+                $temp[]=array($ext[0],array());
+              }
+
               $temp[]=array('<img src="'.base_url().'assets/photo/'.$row.'" style="width:50px;height:50px;"><br>'.$row,array());
-              $tmp1 = $this->db['wisudawan']->getdata("id_wisuda='$tmp[1]'");
+              if(isset($tmp[1])){
+                $tmp1 = $this->db['maba']->getdata("id_peserta='$tmp[1]'");
+              }else{
+                $tmp1 = $this->db['maba']->getdata("id_peserta='$ext[0]'");
+              }
               if(!empty($tmp1)){
                 if($tmp[0]=='temp'){
                    $txt='';
@@ -96,16 +105,7 @@ class Admin_dashboard_model extends CI_Model {
                    $temp[]=array($txt,array());    
 
                 }else{
-                  if($tmp[0]=='photo'){
-                      $txt='';
-                      if(basename($tmp1[0]['photo'])==$row){
-                        $txt.="Photo Terkoneksi Ke Akun"; 
-                      }else{
-                        $txt.="Photo di akun ".basename($tmp1[0]['photo']).'<br>'; 
-                        $txt.= '<a href="javascript:updatephoto('."'$tmp[1]'".","."'$row'".')">Update data</a>';
-                      }  
-                      $temp[]=array($txt,array());                      
-                  }
+                  
                   if($tmp[0]=='kwitansi'){
                      $txt='';
                      if(basename($tmp1[0]['kwitansi'])==$row){
@@ -116,6 +116,15 @@ class Admin_dashboard_model extends CI_Model {
                      }
                       
                      $temp[]=array($txt,array());      
+                  }else{
+                     $txt='';
+                      if(basename($tmp1[0]['photo'])==$row){
+                        $txt.="Photo Terkoneksi Ke Akun"; 
+                      }else{
+                        $txt.="Photo di akun ".basename($tmp1[0]['photo']).'<br>'; 
+                        $txt.= '<a href="javascript:updatephoto('."'$ext[0]'".","."'$row'".')">Update data</a>';
+                      }  
+                      $temp[]=array($txt,array());                      
                   }
                 }
                             
@@ -138,8 +147,8 @@ class Admin_dashboard_model extends CI_Model {
 
      $tmp=$this->db['log_admin']->getdata('');
      $data['log_admin']=$this->build_tag_db2($tmp);
-     $tmp=$this->db['log_wisudawan']->getdata('');
-     $data['log_wisudawan']=$this->build_tag_db3($tmp);
+     $tmp=$this->db['log_maba']->getdata('');
+     $data['log_maba']=$this->build_tag_db3($tmp);
 
      $file = directory_map('./assets/photo/');
      $data['photo']=$this->build_tag_db4($file);
@@ -150,9 +159,9 @@ class Admin_dashboard_model extends CI_Model {
    public function rekap_data()
    {
      $priode=$this->db['priode']->priode_aktif();
-     $this->db['wisudawan']->set_priode($priode);     
-     $data=$this->db['wisudawan']->jml();     
-     $data['rekap_prodi']=$this->db['wisudawan']->rekapperprodi();     
+     $this->db['maba']->set_priode($priode);     
+     $data=$this->db['maba']->jml();     
+     $data['rekap_prodi']=$this->db['maba']->rekapperprodi();
      return $data;
    }
    
@@ -208,12 +217,12 @@ class Admin_dashboard_model extends CI_Model {
    {
      
      $priode=$this->db['priode']->priode_aktif();
-     $this->db['wisudawan']->set_priode($priode);
-     
-     $data['data_calon']=$this->db['wisudawan']->getwisudawan_jn_prodi_admin(0);     
-     $data['data_layak']=$this->db['wisudawan']->getwisudawan_jn_prodi_admin(0,1);     
-     $data['data_wisudawan']=$this->db['wisudawan']->getwisudawan_jn_prodi_admin(1);
-     
+     $this->db['maba']->set_priode($priode);
+         
+     $data['data_daf']=$this->db['maba']->getmaba_jn_prodi_admin(0);
+     $data['data_konf']=$this->db['maba']->getmaba_jn_prodi_admin(1);
+     $data['data_ver']=$this->db['maba']->getmaba_jn_prodi_admin(1,1);
+
      return $data;
 
    }
@@ -234,14 +243,28 @@ class Admin_dashboard_model extends CI_Model {
     return $data;
    }
 
-   public function baca_data_wisudawan($id_wisuda)
+   private function thnlls($angk)
+   {
+    $curYear = date('Y');
+
+     $ang=array();
+     for ($i=2008; $i <= $curYear ; $i++) { 
+       if($i!=$angk){
+         $ang[]=array($i,$i);
+       }
+
+     }
+     return $ang;
+   }
+
+   public function baca_data_maba($id_peserta)
    {
 
-     $tmp=$this->db['wisudawan']->getdata('id_wisuda="'.$id_wisuda.'"');
+     $tmp=$this->db['maba']->getdata('id_peserta="'.$id_peserta.'"');
      
-     $arr_ang=$this->angkatan($tmp[0]['angkatan']);     
-     $data['drop_ang']=$this->build_dropdown($arr_ang,array(0,1),'','--- Pilih Angkatan ---');    
-     $data['drop_ang']= "<option value='".$tmp[0]['angkatan']."' selected='selected' >".$tmp[0]['angkatan']."</option>".$data['drop_ang'];
+     $arr_thnlls=$this->thnlls($tmp[0]['thnlls']);     
+     $data['drop_thnlls']=$this->build_dropdown($arr_thnlls,array(0,1),'','--- Pilih Tahun Lulus ---');    
+     $data['drop_thnlls']= "<option value='".$tmp[0]['thnlls']."' selected='selected' >".$tmp[0]['thnlls']."</option>".$data['drop_thnlls'];
 
      $tmp_prodi=$this->db['prodi']->getdata('id_prodi="'.$tmp[0]['id_prodi'].'"');     
      $tmp_fak=$this->db['fakultas']->getdata('id_fak="'.$tmp_prodi[0]['fak_prodi'].'"');
@@ -254,35 +277,32 @@ class Admin_dashboard_model extends CI_Model {
      $data['drop_prodi']=$this->build_dropdown($arr_prodi,array('id_prodi','nm_prodi'),'Prodi. ','--- Pilih Prodi ---');
      $data['drop_prodi']= "<option value='".$tmp_prodi[0]['id_prodi']."' selected='selected' >Prodi. ".$tmp_prodi[0]['nm_prodi']."</option>".$data['drop_prodi'];
 
+     $data['id_peserta']=$tmp[0]['id_peserta'];
      $data['ktp']=$tmp[0]['ktp'];
-     $data['nama']=$tmp[0]['nama'];
+     $data['nama']=$tmp[0]['nm'];
      $data['jk']=$tmp[0]['jk'];
-     $data['tmpt_lahir']=$tmp[0]['tmpt_lahir'];
-     $data['tgl_lahir']=date("d-m-Y", strtotime($tmp[0]['tgl_lahir']));
+     $data['tmpt_lahir']=$tmp[0]['tmplhr'];
+     $data['tgl_lahir']=date("d-m-Y", strtotime($tmp[0]['tgllhr']));
      $data['alamat']=empty($tmp[0]['alamat']) ? '' : $tmp[0]['alamat'];
-     $data['hp']=$tmp[0]['hp'];
+     $data['asal']=empty($tmp[0]['asalsma']) ? '' : $tmp[0]['asalsma'];
+     $data['email']=empty($tmp[0]['email']) ? '' : $tmp[0]['email'];
+     $data['hp']=$tmp[0]['hp'];     
      $data['photo']=$tmp[0]['photo'];
-     $data['tgl_byr']= is_null($tmp[0]['tgl_byr'])  ? '' : date("d-m-Y", strtotime($tmp[0]['tgl_byr']));
+     $data['tgl_trans']= is_null($tmp[0]['tgltrans'])  ? '' : date("d-m-Y", strtotime($tmp[0]['tgltrans']));
      $data['kwitansi']=$tmp[0]['kwitansi'];
-
-     $data['nim']=$tmp[0]['nim'];
-     
-     //$data['ipk']=$tmp[0]['ipk'];
-     //$data['tgl_lls']= is_null($tmp[0]['tgl_lls'])  ? '' : date("d-m-Y", strtotime($tmp[0]['tgl_lls']));
-
-     $data['jdl_skripsi']=$tmp[0]['jdl_skripsi'];
+     $data['bank']=empty($tmp[0]['nm_bank']) ? '' : $tmp[0]['nm_bank'];
+     $data['kelas']=empty($tmp[0]['kelas']) ? '' : $tmp[0]['kelas'];     
+    
+     $data['ver']=$tmp[0]['verified'];     
 
      $data['keterangan']=empty($tmp[0]['ket']) ? '' : $tmp[0]['ket'];
-     $data['verifikasi']=$tmp[0]['ver'];
-
-
-
+     
      return $data;
    }
 
-   public function hapus_data_wisudawan($id_wisuda)
+   public function hapus_data_maba($id_peserta)
    {
-     $data=$this->db['wisudawan']->getdata("id_wisuda='$id_wisuda'");
+     $data=$this->db['maba']->getdata("id_peserta='$id_peserta'");
      
      if(!empty($data[0]['photo'])){
         if(file_exists('./assets/photo/'.basename($data[0]['photo']))){
@@ -297,7 +317,7 @@ class Admin_dashboard_model extends CI_Model {
      }
 
 
-     $this->db['wisudawan']->deletedataadmin($id_wisuda);
+     $this->db['maba']->deletedataadmin($id_peserta);
    }
 
 

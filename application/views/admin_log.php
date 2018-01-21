@@ -7,7 +7,7 @@ $data['menu_idx']=$menu_idx;
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Admin | Dashboard</title>
+  <title>PMBOnline | Dashboard</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <!-- Bootstrap 3.3.6 -->
@@ -44,9 +44,9 @@ $data['menu_idx']=$menu_idx;
     <!-- Logo -->
     <a href="<?php echo base_url();?>" class="logo">
       <!-- mini logo for sidebar mini 50x50 pixels -->
-      <span class="logo-mini">Wisuda</span>
+      <span class="logo-mini">PMBOnline</span>
       <!-- logo for regular state and mobile devices -->
-      <span class="logo-lg">Wisuda</span>
+      <span class="logo-lg">PMBOnline</span>
     </a>
 
     <!-- Header Navbar: style can be found in header.less -->
@@ -108,9 +108,9 @@ $data['menu_idx']=$menu_idx;
                    $content1=array(array($tempbox->display()));
                
                    
-                   $header = array(array('No','Login','Logout','NIM','Nama'));
-                   $tbstat = array("id" => "logwisudawan",'width'=>'100%');
-                   $isi_data = $log_wisudawan;
+                   $header = array(array('No','Login','Logout','Id peserta','Nama'));
+                   $tbstat = array("id" => "logmaba",'width'=>'100%');
+                   $isi_data = $log_maba;
                    $tbl = new mytable($tbstat,$header,$isi_data,'');
                    $content=array(array($tbl->display())); 
 
@@ -118,7 +118,7 @@ $data['menu_idx']=$menu_idx;
                    $divrowcol = new div_row_col($row,$col,$content);
                    $body=$divrowcol->display();
                    
-                   $header_box['title']='Log Wisudawan';
+                   $header_box['title']='Log Mahasiswa Baru';
                    $tempbox=new box($box,$header_box,$body); 
                    $content1[]=array($tempbox->display()); 
 
@@ -243,7 +243,7 @@ $data['menu_idx']=$menu_idx;
 
   $(function () {
     $("#logadmin").DataTable();
-    $("#logwisudawan").DataTable();
+    $("#logmaba").DataTable();
     $("#tbphoto").DataTable();
   });
 </script>

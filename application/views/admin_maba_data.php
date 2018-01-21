@@ -7,7 +7,7 @@ $data['menu_idx']=$menu_idx;
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Admin | Dashboard</title>
+  <title>PMBOnline | Dashboard</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <!-- Bootstrap 3.3.6 -->
@@ -67,9 +67,9 @@ $data['menu_idx']=$menu_idx;
     <!-- Logo -->
     <a href="<?php echo base_url();?>" class="logo">
       <!-- mini logo for sidebar mini 50x50 pixels -->
-      <span class="logo-mini">Wisuda</span>
+      <span class="logo-mini">PMBOnline</span>
       <!-- logo for regular state and mobile devices -->
-      <span class="logo-lg">Wisuda</span>
+      <span class="logo-lg">PMBOnline</span>
     </a>
 
     <!-- Header Navbar: style can be found in header.less -->
@@ -100,11 +100,11 @@ $data['menu_idx']=$menu_idx;
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        Data Wisudawan        
+        Data Mahasiswa Baru        
       </h1>
       <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li class="active">Data Wisudawan</li>
+        <li class="active">Data Mahasiswa Baru</li>
       </ol>
     </section>
 
@@ -112,9 +112,9 @@ $data['menu_idx']=$menu_idx;
     <section class="content">
      
                   <?php 
-                    $header = array(array('Photo','NIM','Nama','Tanggal Bayar','Kwitansi','Fakultas','Prodi','Keterangan','Aksi'));
-                    $tbstat = array("id" => "wisudawan",'width'=>'100%');
-                    $isi_data = $data_wisudawan;
+                    $header = array(array('Photo','Nama','Tanggal Bayar','Kwitansi','Fakultas','Prodi','Keterangan','Aksi'));
+                    $tbstat = array("id" => "ver",'width'=>'100%');
+                    $isi_data = $data_ver;
                     $tbl = new mytable($tbstat,$header,$isi_data,'');
                     $content=array(array($tbl->display())); 
 
@@ -124,33 +124,33 @@ $data['menu_idx']=$menu_idx;
                     $body=$divrowcol->display();
 
                     $box=array('class'=>'collapsed-box');
-                    $header_box = array('class'=>'with-border','title'=>'Wisudawan','tools'=>array(array('widget'=>'collapse','icon'=>'fa fa-plus'),array('widget'=>'remove','icon'=>'fa fa-times')));
+                    $header_box = array('class'=>'with-border','title'=>'Verifikasi','tools'=>array(array('widget'=>'collapse','icon'=>'fa fa-plus'),array('widget'=>'remove','icon'=>'fa fa-times')));
                     $footer = '<button type="button" class="btn btn-primary" onclick="Cetak()">Cetak Data Wisudawan</button>';
                     $tempbox=new box($box,$header_box,$body,$footer); 
                     $content1=array(array($tempbox->display()));
                  
-                    $tbstat = array("id" => "layak",'width'=>'100%');
-                    $isi_data = $data_layak;
+                    $tbstat = array("id" => "konf",'width'=>'100%');
+                    $isi_data = $data_konf;
                     $tbl = new mytable($tbstat,$header,$isi_data,'');
                     $content=array(array($tbl->display())); 
                    
                     $divrowcol = new div_row_col($row,$col,$content);
                     $body=$divrowcol->display();
 
-                    $header_box['title']='Layak Verifikasi';
+                    $header_box['title']='Konfirmasi';
                     $footer = '<button type="button" class="btn btn-primary" onclick="Verifikasi()">Cetak Form Verifikasi</button>'; 
                     $tempbox=new box($box,$header_box,$body,$footer); 
                     $content1[]=array($tempbox->display());
                  
-                    $tbstat = array("id" => "calon",'width'=>'100%');
-                    $isi_data = $data_calon;
+                    $tbstat = array("id" => "daf",'width'=>'100%');
+                    $isi_data = $data_daf;
                     $tbl = new mytable($tbstat,$header,$isi_data,'');
                     $content=array(array($tbl->display())); 
                    
                     $divrowcol = new div_row_col($row,$col,$content);
                     $body=$divrowcol->display();
 
-                    $header_box['title']='Calon Wisudawan';
+                    $header_box['title']='Daftar';
                     $tempbox=new box($box,$header_box,$body); 
                     $content1[]=array($tempbox->display());
 
@@ -241,9 +241,9 @@ $data['menu_idx']=$menu_idx;
 <script>
   
   $(function () {
-    $("#wisudawan").DataTable();
-    $("#calon").DataTable();
-    $("#layak").DataTable();    
+    $("#ver").DataTable();
+    $("#konf").DataTable();
+    $("#daf").DataTable();    
   });
 
 // Get the image and insert it inside the modal - use its "alt" text as a caption
@@ -462,18 +462,18 @@ $('.myImg').click(function() {
 
   function modal_show(id)
   {
-    myajax('modal','id_wisuda='+id,"<?php echo base_url();?>index.php/Admin_dashboard/baca_data_wisudawan",null,after);
+    myajax('modal','id_peserta='+id,"<?php echo base_url();?>index.php/Admin_dashboard/baca_data_maba",null,after);
     
   }
 
   function hapus_data(id)
   {
-    myajax('','id_wisuda='+id,"<?php echo base_url();?>index.php/Admin_dashboard/hapus_data_wisudawan",null,after2);    
+    myajax('','id_peserta='+id,"<?php echo base_url();?>index.php/Admin_dashboard/hapus_data_maba",null,after2);    
   }
 
   function modal1_show()
   {
-    myajax('modal','',"<?php echo base_url();?>index.php/Admin_dashboard/tambah_data_wisudawan",null,after1);
+    myajax('modal','',"<?php echo base_url();?>index.php/Admin_dashboard/tambah_data_maba",null,after1);
     
   }
 
@@ -484,7 +484,7 @@ $('.myImg').click(function() {
 
   function Cetak()
   {
-    window.location = '<?php echo base_url();?>index.php/Admin_dashboard/cetak_wisudawan';
+    window.location = '<?php echo base_url();?>index.php/Admin_dashboard/cetak_maba';
   }
   
 </script>

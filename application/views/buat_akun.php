@@ -7,7 +7,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Wisuda | Dashboard</title>
+  <title>PMBOnline | Dashboard</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <!-- Bootstrap 3.3.6 -->
@@ -48,9 +48,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <!-- Logo -->
     <a href="<?php echo base_url();?>" class="logo">
       <!-- mini logo for sidebar mini 50x50 pixels -->
-      <span class="logo-mini">Wisuda</span>
+      <span class="logo-mini">PMBOnline</span>
       <!-- logo for regular state and mobile devices -->
-      <span class="logo-lg">Wisuda</span>
+      <span class="logo-lg">PMBOnline</span>
     </a>
 
     <!-- Header Navbar: style can be found in header.less -->
@@ -81,7 +81,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        Buat Akun        
+        Daftar Mahasiswa Baru        
       </h1>
       <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
@@ -96,7 +96,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         <div class="col-md-12">
           <div class="box">
             <div class="box-header with-border">
-              <h3 class="box-title">Buat Akun</h3>
+              <h3 class="box-title">Daftar Mahasiswa Baru</h3>
 
               <div class="box-tools pull-right">
                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
@@ -123,43 +123,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
              <form action="#" id="buat_akun" name="buat_akun" method="post" >
              <div class="row">
                  <div class="col-md-6">
-                 
-                    <div class="form-group">
-                        <label>Fakultas</label>
-                        <select class="form-control select2" id="fak" name="fak" style="width: 100%;" <?php echo $isbuka==0 ? 'disabled' :''; ?> data-msg="Fakultas Harus Dipilih !!!" required>
-                          <?php echo $drop_fak ?>
-                        </select>
-                      </div>
-                      <!-- /.form-group -->
-                      <div class="form-group">
-                        <label>Prodi</label>
-                        <select class="form-control select2" id="prodi" name="prodi" style="width: 100%;" <?php echo $isbuka==0 ? 'disabled' :''; ?> data-msg="Prodi Harus Dipilih !!!" required>
-                          <option value = '' selected="selected">--- Pilih Prodi ---</option>                          
-                        </select>
-                      </div>                      
-                      <!-- /.form-group -->
-                      <div class="form-group">
-                        <label>Angkatan</label>
-                        <select class="form-control select2" id="ang" name="ang" style="width: 100%;" <?php echo $isbuka==0 ? 'disabled' :''; ?> data-msg="Angkatan Harus Dipilih !!!" required>
-                          <?php echo $drop_ang ?>
-                        </select>
-                      </div>                      
-                      <!-- /.form-group -->
-                      <div class="form-group">
-                         <label>NIM</label>
-                         <input type="text" class="form-control" id="nim" name="nim" placeholder="NIM ..." <?php echo $isbuka==0 ? 'disabled' :''; ?> data-msg="NIM Harus Diisi !!!" data-inputmask='"mask": "A9A999999"' required data-mask>
-                      </div>
-                      <!-- /.form-group -->
                       <div class="form-group">
                          <label>No. KTP/NIK</label>
                          <input type="text" class="form-control" id="ktp" name="ktp"  placeholder="KTP/NIK ..." <?php echo $isbuka==0 ? 'disabled' :''; ?> data-msg="KTP/NIP Harus Diisi !!!" data-inputmask='"mask": "9999999999999999"' required data-mask>
                       </div>
                       <!-- /.form-group --> 
-                 </div>
-                 <!-- /.col -->
-                 <div class="col-md-6">
-                      
-                      <div class="form-group">
+                     <div class="form-group">
                          <label>Nama Lengkap</label>
                          <input type="text" class="form-control" id="nama" name="nama" placeholder="Nama Lengkap ..." <?php echo $isbuka==0 ? 'disabled' :''; ?> data-msg="Nama Lengkap Harus Diisi !!!" style="text-transform:uppercase;" on keyup="javascript:this.value=this.value.toUpperCase();" required >
                       </div>
@@ -171,8 +140,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                              <label>Jenis Kelamin</label>
                              <select class="form-control select2" id="jk" name="jk" style="width: 100%;" <?php echo $isbuka==0 ? 'disabled' :''; ?> data-msg="Jenis Kelamin Harus Dipilih !!!" required >
                                <option value='' selected='selected'>-- Pilih Jenis Kelamin --</option>
-                               <option value='1' >Laki-laki</option>
-                               <option value='2' >Perempuan</option>
+                               <option value='L' >Laki-laki</option>
+                               <option value='P' >Perempuan</option>
                             </select>
                           </div>
                           <!-- /.form-group -->
@@ -180,11 +149,42 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                         <div class="col-md-6">  
                           <div class="form-group">
                              <label>Tanggal Lahir</label>
-                             <input type="text" class="form-control" id="datepicker" id="tgl" name="tgl" placeholder="Tanggal Lahir ..." data-inputmask='"mask": "99-99-9999"' data-msg="Tanggal Harus Diisi !!!" <?php echo $isbuka==0 ? 'disabled' :''; ?> required data-mask>
+                             <input type="text" class="form-control" id="tgl" name="tgl" placeholder="Tanggal Lahir ..." data-inputmask='"mask": "99-99-9999"' data-msg="Tanggal Harus Diisi !!!" <?php echo $isbuka==0 ? 'disabled' :''; ?> required data-mask>
                           </div>
                           <!-- /.form-group -->
                         </div>
-                      </div>  
+                      </div>
+                     
+                      <div class="form-group">
+                        <label>Lulus SMA/SMK/MA Tahun</label>
+                        <select class="form-control select2" id="thnlls" name="thnlls" style="width: 100%;" <?php echo $isbuka==0 ? 'disabled' :''; ?> data-msg="Tahun Lulus Harus Dipilih !!!" required>
+                          <?php echo $drop_thnlls ?>
+                        </select>
+                      </div>                      
+                      <!-- /.form-group -->
+                      
+                     
+                 </div>
+                 <!-- /.col -->
+                 <div class="col-md-6">
+                      
+                      <div class="form-group">
+                        <label>Fakultas</label>
+                        <select class="form-control select2" id="fak" name="fak" style="width: 100%;" <?php echo $isbuka==0 ? 'disabled' :''; ?> data-msg="Fakultas Harus Dipilih !!!" required>
+                          <?php echo $drop_fak ?>
+                        </select>
+                      </div>
+                      <!-- /.form-group -->
+                      
+                      <div class="form-group">
+                        <label>Prodi</label>
+                        <select class="form-control select2" id="prodi" name="prodi" style="width: 100%;" <?php echo $isbuka==0 ? 'disabled' :''; ?> data-msg="Prodi Harus Dipilih !!!" required>
+                          <option value = '' selected="selected">--- Pilih Prodi ---</option>                          
+                        </select>
+                      </div>                      
+                      <!-- /.form-group -->
+
+                        
                       <div class="form-group">
                          <label>Username</label>
                          <input type="text" class="form-control"  id="user" name="user" placeholder="Username ..." data-msg="Username Harus Diisi !!!" <?php echo $isbuka==0 ? 'disabled' :''; ?> required>
@@ -308,7 +308,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     $(".select2").select2();
 
     //Date picker
-    $('#datepicker').datepicker({
+    $('#tgl').datepicker({
       format: 'dd-mm-yyyy',
       autoclose: true
     });
@@ -327,9 +327,23 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         //prevent Default functionality
         e.preventDefault();
         var isvalid = $("#buat_akun").valid();
-        if (isvalid) {            
-            data = $("#buat_akun").serialize();
-            myajax('ket',data,'<?php echo base_url();?>index.php/Main_dashboard/save');    
+        if (isvalid) {
+              var ktp = $("#ktp").val();
+              var t = $("#tgl").val();
+              var jk = $("#jk").val();
+              if(jk=='P'){
+                var tmp =Number(t.substr(0,2))+40;
+                var sTgl = tmp.toString()+t.substr(3,2)+t.substr(8,2); 
+              }else{    
+                var sTgl = t.substr(0,2)+t.substr(3,2)+t.substr(8,2);
+              }  
+              if (ktp.search(sTgl)<0)
+              {
+                $('#ket').html('<div class="callout callout-danger"><h4>Pemberitahuan</h4><p>Tanggal lahir dan nomor ktp-nya tidak cocok !</p> </div>');
+              }else{     
+                   data = $("#buat_akun").serialize();
+                   myajax('ket',data,'<?php echo base_url();?>index.php/Main_dashboard/save');    
+              }
         }        
     });
 

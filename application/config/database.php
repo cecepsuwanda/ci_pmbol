@@ -74,11 +74,11 @@ $active_group = 'default';
 $query_builder = TRUE;
 
 $db['default'] = array(
-	'dsn'	=> 'mysql:host=localhost;dbname=wisuda',
+	'dsn'	=> 'mysql:host=localhost;dbname=ci_pmbol',
 	'hostname' => 'localhost',
 	'username' => 'root',
 	'password' => '123456',
-	'database' => 'wisuda',
+	'database' => 'ci_pmbol',
 	'dbdriver' => 'pdo',
 	'dbprefix' => '',
 	'pconnect' => FALSE,

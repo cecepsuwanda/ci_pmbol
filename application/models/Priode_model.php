@@ -75,9 +75,18 @@ class Priode_model extends CI_Model {
      $priode=$this->getdata('aktif=1');
      $data['awal']=$priode[0]['awal'];
      $data['akhir']=$priode[0]['akhir'];
-     $data['wisuda']=$priode[0]['wisuda'];
      return $data;
    }
+
+   public function getrek()
+   {
+     $priode=$this->getdata('aktif=1');
+     $data['bank']=$priode[0]['bank'];
+     $data['an']=$priode[0]['an'];
+     $data['rek']=$priode[0]['rek'];
+     $data['byr']=$priode[0]['byr'];
+     return $data;
+   }   
 
    public function isbuka()
    {
@@ -104,7 +113,7 @@ class Priode_model extends CI_Model {
    {
     $tmp=$this->priode_aktif();
     $date = date('Y-m-d');
-    return $date < $tmp['wisuda'];
+    return $date < $tmp['akhir'];
    }
 
    public function insertdata($data)

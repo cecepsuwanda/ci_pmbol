@@ -12,12 +12,13 @@ class Main_dashboard_model extends CI_Model {
    public function rekap_data()
    {
    	 $priode=$this->db['priode']->priode_aktif();
-     $this->db['wisudawan']->set_priode($priode);
+     $this->db['maba']->set_priode($priode);
      $this->db['berita']->set_priode($priode);
 
-     $data=$this->db['wisudawan']->jml();          
-     $data['data_calon']=$this->db['wisudawan']->getwisudawan_jn_prodi(0);
-     $data['data_wisudawan']=$this->db['wisudawan']->getwisudawan_jn_prodi(1);
+     $data=$this->db['maba']->jml();          
+     $data['data_daf']=$this->db['maba']->getmaba_jn_prodi(0);
+     $data['data_konf']=$this->db['maba']->getmaba_jn_prodi(1);
+     $data['data_ver']=$this->db['maba']->getmaba_jn_prodi(1,1);
      $data['timeline'] =$this->db['berita']->getdata('');
 
    	 return $data;
@@ -34,9 +35,9 @@ class Main_dashboard_model extends CI_Model {
        return $option;
    }
 
-   private function angkatan()
+   private function thnlls()
    {
-   	$curYear = date('Y')-3;
+   	$curYear = date('Y');
 
      $ang=array();
      for ($i=2008; $i <= $curYear ; $i++) { 
@@ -49,8 +50,8 @@ class Main_dashboard_model extends CI_Model {
    {
    	$tmp=$this->db['fakultas']->getdata('');
     $data['drop_fak']=$this->build_dropdown($tmp,array('id_fak','nm_fak'),'Fakultas ','--- Pilih Fakultas ---');
-    $tmp=$this->angkatan();
-    $data['drop_ang']=$this->build_dropdown($tmp,array(0,1),'','--- Pilih Angkatan ---');
+    $tmp=$this->thnlls();
+    $data['drop_thnlls']=$this->build_dropdown($tmp,array(0,1),'','--- Pilih Tahun Lulus ---');
             
     $data['isbuka']= $this->db['priode']->isbuka();
     if($this->db['priode']->istutup()==1){
@@ -66,23 +67,20 @@ class Main_dashboard_model extends CI_Model {
 
    public function save_akun($data)
    {
-      $tmp=$this->db['wisudawan']->getdata("nim='$data[nim]'");
-      if(!empty($tmp)){
-        return "<div class='callout callout-danger'><h4>Pemberitahuan</h4><p>Calon Wisudawan dengan nim = $data[nim], sudah buat akun !!!</p> </div>"; 
-      }else{
-         $tmp=$this->db['wisudawan']->getdata("ktp='$data[ktp]'");
+         $tmp=$this->db['maba']->getdata("ktp='$data[ktp]'");
          if(!empty($tmp)){
-             return "<div class='callout callout-danger'><h4>Pemberitahuan</h4><p>Calon Wisudawan dengan ktp/nik = $data[ktp], sudah buat akun !!!</p> </div>"; 
+             return "<div class='callout callout-danger'><h4>Pemberitahuan</h4><p>Calon Mahasiswa Baru dengan ktp/nik = $data[ktp], sudah daftar !!!</p> </div>"; 
          }else{ 
-             $tmp=$this->db['wisudawan']->getdata("user_name='$data[user]'");
+             $tmp=$this->db['maba']->getdata("user='$data[user]'");
              if(!empty($tmp)){
-                return "<div class='callout callout-danger'><h4>Pemberitahuan</h4><p>Calon Wisudawan dengan username = $data[user], sudah buat akun !!!</p> </div>"; 
+                return "<div class='callout callout-danger'><h4>Pemberitahuan</h4><p>Calon Mahasiswa Baru dengan username = $data[user], sudah ada !!!</p> </div>"; 
              }else{  
-               $this->db['wisudawan']->insertdata($data);
-               return "<div class='callout callout-info'><h4>Pemberitahuan</h4><p>Akun Calon Wisudawan dengan nim = $data[nim], berhasil di buat !!!</p> </div>"; 
+               $data['kd_prodi']= $this->db['prodi']->getkdprodi($data['prodi']);
+               $this->db['maba']->insertdata($data);
+               return "<div class='callout callout-info'><h4>Pemberitahuan</h4><p>Akun Calon Mahasiswa Baru dengan ktp/nik = $data[ktp], berhasil di buat !!!</p> </div>"; 
              }  
          }
-      }
+      
    }
 
    public function get_prodi($fak)

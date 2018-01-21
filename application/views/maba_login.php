@@ -6,7 +6,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Wisudawan | Login</title>
+  <title>PMBOnline | Login</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <!-- Bootstrap 3.3.6 -->
@@ -30,7 +30,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <body class="hold-transition login-page">
 <div class="login-box">
   <div class="login-logo">
-    Login Wisudawan
+    Login Mahasiswa Baru
   </div>
   <!-- /.login-logo -->
   <div class="login-box-body">
@@ -45,7 +45,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
     <p class="login-box-msg">Masukkan username dan password untuk login</p>
 
-    <form action="<?php echo base_url();?>index.php/Wisudawan_dashboard/login" method="post" id="login">
+    <form action="<?php echo base_url();?>index.php/Maba_dashboard/login" method="post" id="login">
       <div class="form-group has-feedback">
         <input type="text" name="un" value="" class="form-control" placeholder="Username" data-msg="Username Harus Diisi !!!" <?php echo $isbuka==0 ? 'disabled' :''; ?> required>
         <span class="glyphicon glyphicon-user form-control-feedback"></span>
@@ -62,7 +62,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
          <div class="col-xs-5">
          <!-- <button type="button" name="reset" class="btn btn-primary btn-block btn-flat">Reset</button> -->
            <?php if($isbuka==1){ ?>
-              <a href="<?php echo base_url();?>index.php/Wisudawan_dashboard/lupa">Lupa Password ?</a>
+              <a href="<?php echo base_url();?>index.php/Maba_dashboard/lupa">Lupa Password ?</a>
            <?php } ?>
         </div>
         <!-- /.col -->

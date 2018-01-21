@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Wisudawan_dashboard extends CI_Controller {
+class Maba_dashboard extends CI_Controller {
 	
 	public function index()
 	{
@@ -9,13 +9,13 @@ class Wisudawan_dashboard extends CI_Controller {
 		if($logged_in){
 		    $db['priode']=$this->Priode_model;
 		    $db['berita']=$this->Berita_model;
-            $this->Wisudawan_dashboard_model->setdbvar($db);
-            $data=$this->Wisudawan_dashboard_model->baca_berita();
+            $this->Maba_dashboard_model->setdbvar($db);
+            $data=$this->Maba_dashboard_model->baca_berita();
             $data['menu_idx']=0;
-		    $this->load->view('wisudawan_dashboard',$data);
+		    $this->load->view('maba_dashboard',$data);
 
 		}else{
-			redirect('/Wisudawan_dashboard/login');
+			redirect('/Maba_dashboard/login');
 		}
 
 	}
@@ -26,16 +26,16 @@ class Wisudawan_dashboard extends CI_Controller {
         $psw=$this->input->post('psw');
         $login = $this->input->post('login');
 
-		$db['wisudawan']=$this->Wisudawan_model;
+		$db['maba']=$this->Maba_model;
 		$db['priode']=$this->Priode_model;	
-		$db['log']=$this->Log_wisudawan_model;	
-		$this->Wisudawan_dashboard_model->setdbvar($db);
-		$data=$this->Wisudawan_dashboard_model->login($login,$un,$psw);
+		$db['log']=$this->Log_maba_model;	
+		$this->Maba_dashboard_model->setdbvar($db);
+		$data=$this->Maba_dashboard_model->login($login,$un,$psw);
         if(($login=='login') and ($data['msg']=='') )
 		{
-          redirect('/Wisudawan_dashboard/index');
+          redirect('/Maba_dashboard/index');
 		}else{
-		  $this->load->view('wisudawan_login',$data);
+		  $this->load->view('maba_login',$data);
 		} 		
 	}
 
@@ -52,17 +52,17 @@ class Wisudawan_dashboard extends CI_Controller {
           $data['user_pass']=$this->input->post('pass');
         
           $db['priode']=$this->Priode_model;
-          $db['wisudawan']=$this->Wisudawan_model;
+          $db['maba']=$this->Maba_model;
           
-          $this->Wisudawan_dashboard_model->setdbvar($db);
-          $hsl=$this->Wisudawan_dashboard_model->lupa($data);
+          $this->Maba_dashboard_model->setdbvar($db);
+          $hsl=$this->Maba_dashboard_model->lupa($data);
         }
 
         if(($save=='save') and ($hsl['kd']==1) )
 		{
-          $this->load->view('wisudawan_login',$hsl);
+          $this->load->view('maba_login',$hsl);
 		}else{ 
-		  $this->load->view('wisudawan_lupa',$hsl);
+		  $this->load->view('maba_lupa',$hsl);
 		}  
 	}
 
@@ -72,13 +72,14 @@ class Wisudawan_dashboard extends CI_Controller {
 		if($logged_in){
 		  $db['fakultas']=$this->Fakultas_model;
 		  $db['prodi']=$this->Prodi_model;
-		  $db['wisudawan']=$this->Wisudawan_model;
-		  $this->Wisudawan_dashboard_model->setdbvar($db);
-		  $data = $this->Wisudawan_dashboard_model->baca_data();		  
+		  $db['maba']=$this->Maba_model;
+		  $db['priode']=$this->Priode_model;
+		  $this->Maba_dashboard_model->setdbvar($db);
+		  $data = $this->Maba_dashboard_model->baca_data();		  
           $data['menu_idx']=1;
-		  $this->load->view('wisudawan_data',$data);
+		  $this->load->view('maba_data',$data);
 		}else{
-			redirect('/Wisudawan_dashboard/login');
+			redirect('/Maba_dashboard/login');
 		}
 
 
@@ -98,14 +99,14 @@ class Wisudawan_dashboard extends CI_Controller {
 	{
 		$logged_in = $this->session->userdata('logged_in');
 		if($logged_in){
-		  $id_wisuda = $this->session->userdata('id_wisuda');
+		  $id_peserta = $this->session->userdata('id_peserta');
 		  $lg_time = $this->session->userdata('lg_time');
 
-		  $db['log']=$this->Log_wisudawan_model;
-		  $this->Wisudawan_dashboard_model->setdbvar($db);
-		  $this->Wisudawan_dashboard_model->logout($id_wisuda,$lg_time);
+		  $db['log']=$this->Log_maba_model;
+		  $this->Maba_dashboard_model->setdbvar($db);
+		  $this->Maba_dashboard_model->logout($id_peserta,$lg_time);
 		  
-		  $array_items = array('id_wisuda','lg_time','logged_in');
+		  $array_items = array('id_peserta','lg_time','logged_in');
           $this->session->unset_userdata($array_items);
           
 		}
@@ -119,8 +120,8 @@ class Wisudawan_dashboard extends CI_Controller {
 	{
 		header('Content-type: application/json');
         
-                $id_wisuda = $this->session->userdata('id_wisuda');
-                $nm_file = 'temp_'.$id_wisuda.'_'.date('YmdHis');
+                $id_peserta = $this->session->userdata('id_peserta');
+                $nm_file = 'temp_'.$id_peserta.'_'.date('YmdHis');
                 
                 $config['upload_path']          = './assets/photo';
                 $config['allowed_types']        = 'gif|jpg|png';
@@ -150,39 +151,53 @@ class Wisudawan_dashboard extends CI_Controller {
         
 	}
 
-	public function updatedatawisudawan()
+	public function updatedatamaba()
 	{
+        
+        $data['ktp']=$this->input->post('ktp');
+        $data['nm']=$this->input->post('nama');
+        $data['tmplhr']= $this->input->post('tempat');
+        $data['jk']= $this->input->post('jk');
+        $data['tgllhr']= date('Y-m-d', strtotime($this->input->post('tgl')));
+
         $data['alamat']=$this->input->post('alamat');
         $data['hp']=$this->input->post('hp');
-        $data['jk']= $this->input->post('jk');
-        $data['ktp']=$this->input->post('ktp');
-        $data['nama']=$this->input->post('nama');
-        $data['tmpt_lahir']= $this->input->post('tempat');
-        $data['tgl_lahir']= date('Y-m-d', strtotime($this->input->post('tgl')));
+        $data['email']=$this->input->post('email');
+        $data['thnlls']=$this->input->post('thnlls');
+        $data['asalsma']=$this->input->post('asal'); 
+        
         if(!empty($this->input->post('nm_file')))
         {
          $data['photo']= $this->input->post('nm_file');
         }
+        
+        $data['id_peserta']= $this->session->userdata('id_peserta');
+		$db['maba']=$this->Maba_model;
+		$this->Maba_dashboard_model->setdbvar($db);
+		$hsl=$this->Maba_dashboard_model->updatedatamaba($data);
+		echo $hsl;
+	}
 
-        $data['angkatan']=$this->input->post('ang');
+	public function updatedatapil()
+	{
+               
         $data['id_prodi']= $this->input->post('prodi');
-        $data['nim']=$this->input->post('nim');
+        $data['kelas']= $this->input->post('kelas');
 
-        if(!empty($this->input->post('user'))){  
-          $data['user_name']=$this->input->post('user');
-          $data['user_pass']= md5($this->input->post('pass'));
-        } 
+        $data['id_peserta']= $this->session->userdata('id_peserta');
+		$db['maba']=$this->Maba_model;
+		$this->Maba_dashboard_model->setdbvar($db);
+		$hsl=$this->Maba_dashboard_model->updatedatapil($data);
+		echo $hsl;
+	}
 
-        //$data['ipk']= $this->input->post('ipk');
-        
-        $data['jdl_skripsi']= $this->input->post('jdlskripsi');
-        
-        //if(!empty($this->input->post('tgllls'))){
-          //$data['tgl_lls']= date('Y-m-d', strtotime($this->input->post('tgllls')));
-        //}
-        
-        if(!empty($this->input->post('tglbyr'))){
-          $data['tgl_byr']= date('Y-m-d', strtotime($this->input->post('tglbyr')));
+	public function konf()
+	{
+                        
+        $data['nm_bank']= $this->input->post('bank');
+                
+        if(!empty($this->input->post('tgltrans'))){
+          $data['tgltrans']= date('Y-m-d', strtotime($this->input->post('tgltrans')));
         }
         
         if(!empty($this->input->post('nm_file1')))
@@ -190,15 +205,27 @@ class Wisudawan_dashboard extends CI_Controller {
          $data['kwitansi']= $this->input->post('nm_file1');
         }
 
-
-        $data['id_wisuda']= $this->session->userdata('id_wisuda');
-		$db['wisudawan']=$this->Wisudawan_model;
-		$this->Wisudawan_dashboard_model->setdbvar($db);
-		$hsl=$this->Wisudawan_dashboard_model->updatedatawisudawan($data);
+        $data['id_peserta']= $this->session->userdata('id_peserta');
+		$db['maba']=$this->Maba_model;
+		$this->Maba_dashboard_model->setdbvar($db);
+		$hsl=$this->Maba_dashboard_model->konf($data);
 		echo $hsl;
 	}
 
-	
+	public function rubahuserpass()
+	{
+                      
+        if(!empty($this->input->post('user'))){  
+          $data['user']=$this->input->post('user');
+          $data['pass']= md5($this->input->post('pass'));
+        } 
+
+        $data['id_peserta']= $this->session->userdata('id_peserta');
+		$db['maba']=$this->Maba_model;
+		$this->Maba_dashboard_model->setdbvar($db);
+		$hsl=$this->Maba_dashboard_model->rubahuserpass($data);
+		echo $hsl;
+	}
 
 	public function cetak(){
          $logged_in = $this->session->userdata('logged_in');

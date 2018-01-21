@@ -6,7 +6,7 @@ class Main_dashboard extends CI_Controller {
 	public function index()
 	{
 		$db['berita']=$this->Berita_model;
-		$db['wisudawan']=$this->Wisudawan_model;
+		$db['maba']=$this->Maba_model;
 		$db['priode']=$this->Priode_model;
 		$this->Main_dashboard_model->setdbvar($db);
 		$data=$this->Main_dashboard_model->rekap_data();
@@ -25,18 +25,19 @@ class Main_dashboard extends CI_Controller {
 
     public function save()
 	{
-		$data['ang']= $this->input->post('ang');
+		
+        $data['ktp']=  $this->input->post('ktp');
+		$data['nama']=  $this->input->post('nama'); 
+        $data['jk']=  $this->input->post('jk');
+        $data['tgl']=   $this->input->post('tgl');
+		$data['thnlls']= $this->input->post('thnlls');
 		$data['fak']= $this->input->post('fak');
-		$data['jk']=  $this->input->post('jk');
-		$data['ktp']=  $this->input->post('ktp');
-		$data['nama']=  $this->input->post('nama');
-		$data['nim']=   $this->input->post('nim');
-		$data['pass']=  $this->input->post('pass');
 		$data['prodi']= $this->input->post('prodi');
-		$data['tgl']=   $this->input->post('tgl');
+		$data['pass']=  $this->input->post('pass');
 		$data['user']=  $this->input->post('user');
 
-		$db['wisudawan']=$this->Wisudawan_model;
+		$db['maba']=$this->Maba_model;
+		$db['prodi']=$this->Prodi_model;
 		$this->Main_dashboard_model->setdbvar($db);
 		$ket = $this->Main_dashboard_model->save_akun($data);
 		echo $ket;
