@@ -16,12 +16,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         </li>-->
         <li class="<?php echo ($menu_idx==1 ? 'active ':''); ?>treeview">
           <a href="<?php echo base_url();?>index.php/Main_dashboard/buat_akun">
-            <i class="fa fa-edit"></i> <span>Buat Akun</span>            
+            <i class="fa fa-edit"></i> <span>Daftar Mahasiswa Baru</span>            
           </a>          
         </li>      
         <li class="<?php echo ($menu_idx==2 ? 'active ':''); ?>treeview">
-          <a href="<?php echo base_url();?>index.php/Wisudawan_dashboard/login">
-            <i class="fa fa-graduation-cap"></i> <span>Login Wisudawan</span>            
+          <a href="<?php echo base_url();?>index.php/Maba_dashboard/login">
+            <i class="fa fa-graduation-cap"></i> <span>Login Mahasiswa Baru</span>            
           </a>          
         </li>      
       </ul>

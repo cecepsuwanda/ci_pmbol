@@ -84,4 +84,10 @@ class Prodi_model extends CI_Model {
      $this->db->delete('tb_prodi');
    }
 
+   public function getkdprodi($id_prodi)
+   {
+      $data = $this->getdata("id_prodi='$id_prodi'");
+      return $data[0]['kd_prodi'];
+   }
+
 }

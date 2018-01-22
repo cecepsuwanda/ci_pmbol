@@ -8,7 +8,7 @@ class Berita_model extends CI_Model {
    public function set_priode($priode)
    {
      $this->priode = $priode;
-     $this->sql_priode ='(tgl_post < "'.$priode['wisuda'].'")';
+     $this->sql_priode ='(tgl_post < "'.$priode['akhir'].'")';
    }
 
    private function build_timeline($data)

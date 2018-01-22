@@ -7,7 +7,7 @@ $data['menu_idx']=$menu_idx;
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Admin | Dashboard</title>
+  <title>PMBOnline | Dashboard</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <!-- Bootstrap 3.3.6 -->
@@ -44,9 +44,9 @@ $data['menu_idx']=$menu_idx;
     <!-- Logo -->
     <a href="<?php echo base_url();?>" class="logo">
       <!-- mini logo for sidebar mini 50x50 pixels -->
-      <span class="logo-mini">Wisuda</span>
+      <span class="logo-mini">PMBOnline</span>
       <!-- logo for regular state and mobile devices -->
-      <span class="logo-lg">Wisuda</span>
+      <span class="logo-lg">PMBOnline</span>
     </a>
 
     <!-- Header Navbar: style can be found in header.less -->
@@ -93,11 +93,11 @@ $data['menu_idx']=$menu_idx;
             $col = array('jml'=>3,'class'=>array('col-md-3 col-sm-6 col-xs-12','col-md-3 col-sm-6 col-xs-12','col-md-3 col-sm-6 col-xs-12'));
             $content=array();
             $tmp=array();
-            $infobox = new info_box('fa fa-edit','Calon Wisudawan',$jml_calon);
+            $infobox = new info_box('fa fa-edit','Daftar',$jml_daftar);
             $tmp[]= $infobox->display();
-            $infobox = new info_box('fa fa-graduation-cap','Layak Verifikasi',$jml_layak);
+            $infobox = new info_box('fa fa-graduation-cap','Konfirmasi',$jml_konf);
             $tmp[]= $infobox->display();
-            $infobox = new info_box('fa fa-graduation-cap','Wisudawan',$jml_wisudawan);
+            $infobox = new info_box('fa fa-graduation-cap','Verifikasi',$jml_ver);
             $tmp[]= $infobox->display();
             $content[] =$tmp;
             $divrowcol = new div_row_col($row,$col,$content);
@@ -107,7 +107,7 @@ $data['menu_idx']=$menu_idx;
                    $box=array('class'=>'');
                    $header_box = array('class'=>'with-border','title'=>'Rekap Perprodi','tools'=>array(array('widget'=>'collapse','icon'=>'fa fa-minus'),array('widget'=>'remove','icon'=>'fa fa-times')));
 
-                   $header = array(array('No','Program Studi','Calon Wisudawan','Layak verifikasi','Wisudawan'));
+                   $header = array(array('No','Program Studi','Daftar','Konfirmasi','Verifikasi'));
                    $tbstat = array("id" => "rekapprodi",'width'=>'100%');
                    $isi_data = $rekap_prodi;
                    $tbl = new mytable($tbstat,$header,$isi_data,'');

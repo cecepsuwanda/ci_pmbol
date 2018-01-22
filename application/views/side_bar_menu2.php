@@ -21,7 +21,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         </li>
         <li class="<?php echo ($menu_idx==3 ? 'active ':''); ?>treeview">
           <a href="<?php echo base_url();?>index.php/Admin_dashboard/data">
-            <i class="fa fa-graduation-cap"></i> <span>Data Wisudawan</span>            
+            <i class="fa fa-graduation-cap"></i> <span>Data Mahasiswa Baru</span>            
           </a>          
         </li>      
         <li class="<?php echo ($menu_idx==4 ? 'active ':''); ?>treeview">

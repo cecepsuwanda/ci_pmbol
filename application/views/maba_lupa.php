@@ -6,7 +6,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Wisudawan | Lupa</title>
+  <title>PMBOnline | Lupa</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <!-- Bootstrap 3.3.6 -->
@@ -49,7 +49,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
     <p class="login-box-msg">Ganti username dan password</p>
 
-    <form action="<?php echo base_url();?>index.php/Wisudawan_dashboard/lupa" method="post" id="lupa">
+    <form action="<?php echo base_url();?>index.php/Maba_dashboard/lupa" method="post" id="lupa">
       
           <div class="form-group">
            <input type="text" class="form-control" id="ktp" name="ktp" placeholder="KTP/NIK ..."  data-msg="KTP/NIP Harus Diisi !!!" data-inputmask='"mask": "9999999999999999"' required data-mask>
@@ -60,8 +60,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                           <div class="form-group">
                                <select class="form-control select2" id="jk" name="jk" style="width: 100%;"  data-msg="Jenis Kelamin Harus Dipilih !!!" required >                               
                                <option value='' selected='selected'>-- Pilih Jenis Kelamin --</option>
-                               <option value='1' >Laki-laki</option>
-                               <option value='2' >Perempuan</option>
+                               <option value='L' >Laki-laki</option>
+                               <option value='P' >Perempuan</option>
                             </select>
                           </div>
                           <!-- /.form-group -->

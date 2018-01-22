@@ -7,7 +7,7 @@ $data['menu_idx']=$menu_idx;
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Wisudawan | Data</title>
+  <title>PMBOnline | Data</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <!-- Bootstrap 3.3.6 -->
@@ -49,9 +49,9 @@ $data['menu_idx']=$menu_idx;
     <!-- Logo -->
     <a href="index2.html" class="logo">
       <!-- mini logo for sidebar mini 50x50 pixels -->
-      <span class="logo-mini">Wisuda</span>
+      <span class="logo-mini">PMBOnline</span>
       <!-- logo for regular state and mobile devices -->
-      <span class="logo-lg">Wisuda</span>
+      <span class="logo-lg">PMBOnline</span>
     </a>
 
     <!-- Header Navbar: style can be found in header.less -->
@@ -82,34 +82,31 @@ $data['menu_idx']=$menu_idx;
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        Data Wisudawan        
+        Data Mahasiswa Baru        
       </h1>
       <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li class="active">Data Wisudawan</li>
+        <li class="active">Data Mahasiswa Baru</li>
       </ol>
     </section>
 
     <!-- Main content -->
-    <section class="content">
-      
-      
-     <div class="box box-primary">
-        <div class="box-header with-border">
-          <h3 class="box-title">Data Wisudawan</h3>
-        </div>
-       
-     <form id="datawisudawan" action="" method="post" enctype="multipart/form-data">    
-       <div class="box-body">       
-          
-<div id="ketdatawisudawan"></div>  
+    <section class="content">       
       <div class="row">
         <!-- left column -->
         <div class="col-md-6">
            <!-- form start -->            
-                 
+             <div class="box box-primary">
+                <div class="box-header with-border">
+                 <h3 class="box-title">Data Pribadi</h3>
+            </div>
+       
+           <form id="datamaba" action="" method="post" enctype="multipart/form-data">    
+              <div class="box-body">       
+          
+                <div id="ketdatamaba"></div>            
                  <div class="form-group">
-                 <label>Photo Wisudawan</label>
+                 <label>Photo Mahasiswa Baru</label>
                         <div id="paper">
                             <div id="console">
                                 <div id="uploadbox" onClick="singleupload_input.click();" class="singleupload">
@@ -117,7 +114,7 @@ $data['menu_idx']=$menu_idx;
                                     if(!empty($photo))
                                     {
                                   ?>
-                                    <img src="<?php echo $photo; ?>" style="width:86.4px;height:86.4px;"> 
+                                    <img src="<?php echo base_url().'assets/photo/'.$photo; ?>" style="width:86.4px;height:86.4px;"> 
                                   <?php 
                                     }
                                   ?> 
@@ -130,19 +127,29 @@ $data['menu_idx']=$menu_idx;
                       <input type='hidden' name='nm_file' id='nm_file' value='<?php echo $photo; ?>'>
                       <div id="ketuploadphoto"></div>  
                 </div>
+
+                 <div class="form-group">
+                 <label>No. Peserta</label>
+                 <input type="text" class="form-control" id="idpeserta" name="idpeserta" value="<?php echo $id_peserta; ?>"  placeholder="No. Peserta ..."  data-msg="No. Peserta Harus Diisi !!!" data-inputmask='"mask": "999999999"' required data-mask>
+                 </div>
+                      <!-- /.form-group --> 
+
                  <div class="form-group">
                  <label>No. KTP/NIK</label>
                  <input type="text" class="form-control" id="ktp" name="ktp" value="<?php echo $ktp; ?>"  placeholder="KTP/NIK ..."  data-msg="KTP/NIP Harus Diisi !!!" data-inputmask='"mask": "9999999999999999"' required data-mask>
                  </div>
                       <!-- /.form-group --> 
+                
                 <div class="form-group">
                 <label>Nama Lengkap</label>
                 <input type="text" class="form-control" id="nama" name="nama" value="<?php echo $nama; ?>" placeholder="Nama Lengkap ..."  data-msg="Nama Lengkap Harus Diisi !!!"  style="text-transform:uppercase;" on keyup="javascript:this.value=this.value.toUpperCase();" required >
                 </div>
+                
                 <div class="form-group">
                 <label>Tempat Lahir</label>
                 <input type="text" class="form-control" id="tempat" name="tempat" placeholder="Tempat Lahir ..." data-msg="Tempat Lahir Harus Diisi !!!" value="<?php echo $tmpt_lahir; ?>" required >
                 </div>
+                      
                       <div class="row">
                         <div class="col-md-6">
                           <!-- /.form-group --> 
@@ -150,9 +157,9 @@ $data['menu_idx']=$menu_idx;
                              <label>Jenis Kelamin</label>
                              <select class="form-control select2" id="jk" name="jk" style="width: 100%;"  data-msg="Jenis Kelamin Harus Dipilih !!!" required >
                                
-                               <option value='<?php echo $jk; ?>' ><?php echo ($jk==1 ? 'Laki-laki':'Perempuan') ; ?></option> 
+                               <option value='<?php echo $jk; ?>' ><?php echo ($jk=='L' ? 'Laki-laki':'Perempuan') ; ?></option> 
                                <option value=''>-- Pilih Jenis Kelamin --</option>                               
-                               <option value='<?php echo ($jk==1 ? 2 : 1); ?>' ><?php echo ($jk==1 ? 'Perempuan':'Laki-laki') ; ?></option>
+                               <option value='<?php echo ($jk=='L' ? 'P' : 'L'); ?>' ><?php echo ($jk=='L' ? 'Perempuan':'Laki-laki') ; ?></option>
 
                             </select>
                           </div>
@@ -161,38 +168,69 @@ $data['menu_idx']=$menu_idx;
                         <div class="col-md-6">  
                           <div class="form-group">
                              <label>Tanggal Lahir</label>
-                             <input type="text" class="form-control" id="datepicker" id="tgl" name="tgl" value="<?php echo $tgl_lahir; ?>"  placeholder="Tanggal Lahir ..." data-inputmask='"mask": "99-99-9999"' data-msg="Tanggal Harus Diisi !!!"  required data-mask>
+                             <input type="text" class="form-control" id="tgl" name="tgl" value="<?php echo $tgl_lahir; ?>"  placeholder="Tanggal Lahir ..." data-inputmask='"mask": "99-99-9999"' data-msg="Tanggal Harus Diisi !!!"  required data-mask>
                           </div>
                           <!-- /.form-group -->
                         </div>
                       </div> 
+
                 <div class="form-group">
                   <label>Alamat</label>
                   <textarea name="alamat" class="form-control" rows="3" placeholder="Alamat ..."><?php echo $alamat; ?></textarea>
-                </div>  
+                </div>
+                
 
                 <div class="form-group">
                  <label>No. HP</label>
                  <input type="text" class="form-control" id="hp" name="hp"  placeholder="Nomor HP ..."  value="<?php echo $hp; ?>"  data-inputmask='"mask": "999999999999"'  data-mask>
                  </div>
-                           
-                <div class="form-group">
-                         <label>Username</label>
-                         <input type="text" class="form-control"  id="user" name="user" placeholder="Username ...">
-                      </div>
-                      <!-- /.form-group --> 
+
+                 
+                 <div class="form-group">
+                 <label>E-Mail</label>
+                 <input type="email" class="form-control" id="email" name="email"  placeholder="E-Mail ..."  value="<?php echo $email; ?>" >
+                 </div>                 
+
+
                       <div class="form-group">
-                         <label>Password</label>
-                         <input type="password" class="form-control" id="pass" name="pass" placeholder="Password ...">
-                      </div>
+                        <label>Lulus SMA/SMK/MA Tahun</label>
+                        <select class="form-control select2" id="thnlls" name="thnlls" style="width: 100%;"  data-msg="Tahun Lulus Harus Dipilih !!!" required>
+                          <?php echo $drop_thnlls ?>
+                        </select>
+                      </div>                      
                       <!-- /.form-group -->
+
+                      <div class="form-group">
+                        <label>Asal SMA/SMK/MA</label>
+                        <input type="text" class="form-control" id="asal" name="asal"  placeholder="Asal SMA/SMK/MA ..."  value="<?php echo $asal; ?>" data-msg="Asal SMA/SMK/SMA Harus Dipilih !!!"    required>  
+                      </div>                      
+                      <!-- /.form-group -->                           
+           </div>
+              <!-- /.box-body -->
+
+              <div class="box-footer">
+                <button type="submit" class="btn btn-primary">Update</button>
+                
+              </div>
+      </form>    
+        </div>
+          <!-- /.box -->                    
         </div>
         <!--/.col (left) -->
         <!-- right column -->
         <div class="col-md-6">
             <!-- general form elements -->
+                  
+                <div class="box box-primary">
+                 <div class="box-header with-border">
+                  <h3 class="box-title">Pilihan Program Studi</h3>
+                 </div>
+       
+           <form id="datapil" action="" method="post">    
+              <div class="box-body">       
           
-            
+                <div id="ketdatapil"></div>
+
                      <div class="form-group">
                          <label>Fakultas</label>
                         <select class="form-control select2" id="fak" name="fak" style="width: 100%;"  data-msg="Fakultas Harus Dipilih !!!" required>
@@ -207,51 +245,63 @@ $data['menu_idx']=$menu_idx;
                         </select>
                       </div>                      
                       <!-- /.form-group -->
-                      <div class="form-group">
-                        <label>Angkatan</label>
-                        <select class="form-control select2" id="ang" name="ang" style="width: 100%;"  data-msg="Angkatan Harus Dipilih !!!" required>
-                          <?php echo $drop_ang ?>
-                        </select>
-                      </div>                      
-                      <!-- /.form-group -->
-                      <div class="form-group">
-                         <label>NIM</label>
-                         <input type="text" class="form-control" id="nim" name="nim" placeholder="NIM ..." value="<?php echo $nim; ?>" data-msg="NIM Harus Diisi !!!" data-inputmask='"mask": "A9A999999"' required data-mask>
-                      </div>
-                      <!-- /.form-group -->
-             
-              
-                
-                <div class="row">
-                        <div class="col-md-6">
-                        <!--  <div class="form-group">
-                          <label>IPK</label>
-                         <input type="text" class="form-control" id="ipk" name="ipk" placeholder="IPK ..." value="<?php echo $ipk; ?>"  data-inputmask='"mask": "9.99"'  data-mask>
-                      </div>
-                      <!-- /.form-group -->
-                        </div>
-                        <div class="col-md-6">  
-                         <!-- <div class="form-group">
-                             <label>Tanggal Lulus</label> 
-                             <input type="text" class="form-control" id="datepicker1" id="tgllls" name="tgllls" value="<?php echo $tgl_lls; ?>" placeholder="Tanggal Lulus ..." data-inputmask='"mask": "99-99-9999"'  data-mask>
-                          </div>
-                          <!-- /.form-group -->
-                        </div>
-                      </div> 
                       
                       <div class="form-group">
-                        <label>Judul Skripsi</label>
-                        <textarea name="jdlskripsi" class="form-control" rows="3"  placeholder="Judul Skripsi ..."><?php echo $jdl_skripsi; ?></textarea>
+                             <label>Kelas</label>
+                             <select class="form-control select2" id="kelas" name="kelas" style="width: 100%;"  data-msg="Kelas Harus Dipilih !!!" required >
+                              <?php if(!empty($kelas)){ ?>
+                                 <option value='<?php echo $kelas; ?>' ><?php echo ($kelas=='R' ? 'Reguler':'Karyawan') ; ?></option> 
+                                 <option value=''>-- Pilih Kelas --</option>                               
+                                 <option value='<?php echo ($kelas=='R' ? 'K' : 'R'); ?>' ><?php echo ($jk=='R' ? 'Karyawan':'Reguler') ; ?></option>
+                              <?php }else{ ?>
+                                 <option value=''>-- Pilih Kelas --</option> 
+                                 <option value='R' >Reguler</option>
+                                 <option value='K' >Karyawan</option>
+                              <?php } ?>
+                            </select>
+                          </div>
+                          <!-- /.form-group -->
+
+                     </div>
+              <!-- /.box-body -->
+
+              <div class="box-footer">
+                <button type="submit" class="btn btn-primary">Simpan</button>                
+              </div>
+      </form>    
+        </div>
+          <!-- /.box -->        
+                 
+                 <div class="box box-primary">
+                 <div class="box-header with-border">
+                  <h3 class="box-title">Konfirmasi Pembayaran</h3>
+                 </div>
+       
+           <form id="datakonf" action="" method="post" enctype="multipart/form-data">    
+              <div class="box-body">       
+          
+                <div id="ketdatakonf"></div>
+
+                     <div class="callout callout-info">
+                          <h4>Pemberitahuan</h4>
+                          <p><?php echo $konf_msg; ?></p>
                       </div>
+                
+                     <div class="form-group">
+                        <label>Bank</label>
+                        <input type="text" class="form-control" id="bank" name="bank"  placeholder="Bank ..."  value="<?php echo $bank; ?>"    data-msg="Bank Harus Diisi !!!" required>  
+                      </div>                      
+                      <!-- /.form-group -->                    
+                      
 
                       <div class="form-group">
-                             <label>Tanggal Bayar Wisuda</label> 
-                             <input type="text" class="form-control" id="datepicker2" id="tglbyr" name="tglbyr" value="<?php echo $tgl_byr; ?>" placeholder="Tanggal Bayar Wisuda ..." data-inputmask='"mask": "99-99-9999"' data-msg="Tanggal Bayar Wisuda Harus Diisi !!!" required data-mask>
+                             <label>Tanggal Transfer </label> 
+                             <input type="text" class="form-control" id="tgltrans" name="tgltrans" value="<?php echo $tgl_trans; ?>" placeholder="Tanggal Transfer ..." data-inputmask='"mask": "99-99-9999"' data-msg="Tanggal Transfer Harus Diisi !!!" required data-mask>
                           </div>
                           <!-- /.form-group -->  
 
                       <div class="form-group">
-                 <label>Upload Kwitansi Pembayaran Wisuda</label>
+                 <label>Upload Bukti Transfer</label>
                         <div id="paper">
                             <div id="console">
                                 <div id="uploadbox1" onClick="singleupload_input1.click();" class="singleupload">
@@ -259,7 +309,7 @@ $data['menu_idx']=$menu_idx;
                                     if(!empty($kwitansi))
                                     {
                                   ?>
-                                    <img src="<?php echo $kwitansi; ?>" style="width:86.4px;height:86.4px;"> 
+                                    <img src="<?php echo base_url().'assets/photo/'.$kwitansi; ?>" style="width:86.4px;height:86.4px;"> 
                                   <?php 
                                     }
                                   ?>
@@ -271,19 +321,53 @@ $data['menu_idx']=$menu_idx;
                       <input type='hidden' name='nm_file1' id='nm_file1' value='<?php echo $kwitansi; ?>'>
                       <div id="ketuploadkwitansi"></div>  
                 </div>
-          
-        </div>
-      </div> 
-       </div>
+
+                 </div>
               <!-- /.box-body -->
 
               <div class="box-footer">
-                <button type="submit" class="btn btn-primary">Update</button>
-                <button type="button" class="btn btn-primary" onclick="cetak()" <?php echo ($ver==1 ? "" :"disabled" ); ?> >Cetak</button>
+                <button type="submit" class="btn btn-primary">Simpan</button>
+                <button type="button" class="btn btn-primary" onclick="cetak()" <?php echo ($ver==1 ? "" :"disabled" ); ?> >Kartu Ujian</button>
               </div>
       </form>    
         </div>
-          <!-- /.box -->      
+          <!-- /.box -->
+
+                <div class="box box-primary">
+                 <div class="box-header with-border">
+                  <h3 class="box-title">Rubah Username dan Password</h3>
+                 </div>
+       
+           <form id="datarubah" action="" method="post">    
+              <div class="box-body">       
+          
+                <div id="ketdatarubah"></div>
+
+                <div class="form-group">
+                         <label>Username</label>
+                         <input type="text" class="form-control"  id="user" name="user" placeholder="Username ..." data-msg="Username Harus Diisi !!!" required>
+                      </div>
+                      <!-- /.form-group --> 
+                      
+                      <div class="form-group">
+                         <label>Password</label>
+                         <input type="password" class="form-control" id="pass" name="pass" placeholder="Password ..." data-msg="Password Harus Diisi !!!" required>
+                      </div>
+                      <!-- /.form-group -->
+
+                      </div>
+              <!-- /.box-body -->
+
+              <div class="box-footer">
+                <button type="submit" class="btn btn-primary">Rubah</button>                
+              </div>
+      </form>    
+        </div>
+          <!-- /.box -->
+          
+        </div>
+      </div> 
+             
 
     </section>
     <!-- /.content -->
@@ -382,22 +466,18 @@ $data['menu_idx']=$menu_idx;
     $(".select2").select2();
 
     //Date picker
-    $('#datepicker').datepicker({
+    $('#tgl').datepicker({
       format: 'dd-mm-yyyy',
       autoclose: true
     });
 
     //Date picker
-    $('#datepicker1').datepicker({
+    $('#tgltrans').datepicker({
       format: 'dd-mm-yyyy',
       autoclose: true
     });
 
-    //Date picker
-    $('#datepicker2').datepicker({
-      format: 'dd-mm-yyyy',
-      autoclose: true
-    });
+    
 
     $("#fak").change(function () {
        var idfak = $('#fak option:selected').val();
@@ -406,7 +486,10 @@ $data['menu_idx']=$menu_idx;
       });
         
 
-    $("#datawisudawan").validate();
+    $("#datamaba").validate();
+    $("#datapil").validate();
+    $("#datakonf").validate();
+    $("#datarubah").validate();
     
 
                   $('#uploadbox').singleupload({
@@ -441,14 +524,61 @@ $data['menu_idx']=$menu_idx;
                     }
                   });
 
-    $("#datawisudawan").submit(function(e) {
+    $("#datamaba").submit(function(e) {
 
         //prevent Default functionality
         e.preventDefault();
-        var isvalid = $("#datawisudawan").valid();
-        if (isvalid) {            
-            data = $("#datawisudawan").serialize();
-            myajax('ketdatawisudawan',data,'<?php echo base_url();?>index.php/Wisudawan_dashboard/updatedatawisudawan');    
+        var isvalid = $("#datamaba").valid();
+        if (isvalid) {
+            var ktp = $("#ktp").val();
+              var t = $("#tgl").val();
+              var jk = $("#jk").val();
+              if(jk=='P'){
+                var tmp =Number(t.substr(0,2))+40;
+                var sTgl = tmp.toString()+t.substr(3,2)+t.substr(8,2); 
+              }else{    
+                var sTgl = t.substr(0,2)+t.substr(3,2)+t.substr(8,2);
+              }  
+              if (ktp.search(sTgl)<0)
+              {
+                $('#ketdatamaba').html('<div class="callout callout-danger"><h4>Pemberitahuan</h4><p>Tanggal lahir dan nomor ktp-nya tidak cocok !</p> </div>');
+              }else{            
+                 data = $("#datamaba").serialize();
+                 myajax('ketdatamaba',data,'<?php echo base_url();?>index.php/Maba_dashboard/updatedatamaba');
+              }       
+        }        
+    });
+
+    $("#datapil").submit(function(e) {
+
+        //prevent Default functionality
+        e.preventDefault();
+        var isvalid = $("#datapil").valid();
+        if (isvalid) {
+                 data = $("#datapil").serialize();
+                 myajax('ketdatapil',data,'<?php echo base_url();?>index.php/Maba_dashboard/updatedatapil');                 
+        }        
+    });
+
+    $("#datakonf").submit(function(e) {
+
+        //prevent Default functionality
+        e.preventDefault();
+        var isvalid = $("#datakonf").valid();
+        if (isvalid) {
+                 data = $("#datakonf").serialize();
+                 myajax('ketdatakonf',data,'<?php echo base_url();?>index.php/Maba_dashboard/konf');                 
+        }        
+    });
+
+    $("#datarubah").submit(function(e) {
+
+        //prevent Default functionality
+        e.preventDefault();
+        var isvalid = $("#datarubah").valid();
+        if (isvalid) {
+                 data = $("#datarubah").serialize();
+                 myajax('ketdatarubah',data,'<?php echo base_url();?>index.php/Maba_dashboard/rubahuserpass');                 
         }        
     });
 

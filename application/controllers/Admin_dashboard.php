@@ -8,7 +8,7 @@ class Admin_dashboard extends CI_Controller {
 		$logged_in = $this->session->userdata('logged_in');
 		if($logged_in){
           
-           $db['wisudawan']=$this->Wisudawan_model;
+           $db['maba']=$this->Maba_model;
 		   $db['priode']=$this->Priode_model;
 		   $this->Admin_dashboard_model->setdbvar($db);
 		   $data=$this->Admin_dashboard_model->rekap_data();
@@ -40,27 +40,28 @@ class Admin_dashboard extends CI_Controller {
 		
 	}
 
-    public function baca_data_wisudawan()
+    public function baca_data_maba()
     {
-          $id_wisuda=$this->input->post('id_wisuda'); 
+          $id_peserta=$this->input->post('id_peserta'); 
 
           $db['fakultas']=$this->Fakultas_model;
 		  $db['prodi']=$this->Prodi_model;
-		  $db['wisudawan']=$this->Wisudawan_model;
+		  $db['maba']=$this->Maba_model;
+		  $db['priode']=$this->Priode_model;
 		  $this->Admin_dashboard_model->setdbvar($db);
-		  $data=$this->Admin_dashboard_model->baca_data_wisudawan($id_wisuda);
+		  $data=$this->Admin_dashboard_model->baca_data_maba($id_peserta);
           
 		  echo $this->load->view('modal',$data,true);
 
     }
 
-    public function hapus_data_wisudawan()
+    public function hapus_data_maba()
     {
-          $id_wisuda=$this->input->post('id_wisuda'); 
+          $id_peserta=$this->input->post('id_peserta'); 
           
-		  $db['wisudawan']=$this->Wisudawan_model;
+		  $db['maba']=$this->Maba_model;
 		  $this->Admin_dashboard_model->setdbvar($db);
-		  $data=$this->Admin_dashboard_model->hapus_data_wisudawan($id_wisuda);	  
+		  $data=$this->Admin_dashboard_model->hapus_data_maba($id_peserta);	  
 
     }
 
@@ -134,12 +135,12 @@ class Admin_dashboard extends CI_Controller {
 	{
 		$logged_in = $this->session->userdata('logged_in');
 		if($logged_in){
-		  $db['wisudawan']=$this->Wisudawan_model;
+		  $db['maba']=$this->Maba_model;
 		  $db['priode']=$this->Priode_model;
 		  $this->Admin_dashboard_model->setdbvar($db);
 		  $data = $this->Admin_dashboard_model->baca_data();		  
           $data['menu_idx']=3; 
-		  $this->load->view('admin_wisudawan_data',$data);
+		  $this->load->view('admin_maba_data',$data);
 		}else{
 			redirect('/Admin_dashboard/login');
 		}
@@ -152,8 +153,8 @@ class Admin_dashboard extends CI_Controller {
       $logged_in = $this->session->userdata('logged_in');
 		if($logged_in){  
 	        $db['log_admin']=$this->Log_user_model;
-			$db['log_wisudawan']=$this->Log_wisudawan_model;
-			$db['wisudawan']=$this->Wisudawan_model;
+			$db['log_maba']=$this->Log_maba_model;
+			$db['maba']=$this->Maba_model;
 			$this->Admin_dashboard_model->setdbvar($db);
 	        $data=$this->Admin_dashboard_model->baca_log();
 	        $data['menu_idx']=1;
