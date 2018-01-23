@@ -123,7 +123,7 @@ $data['menu_idx']=$menu_idx;
                    $content1[]=array($tempbox->display()); 
 
                                   
-                   $header = array(array('No','ID Wisuda','Photo','Ket'));
+                   $header = array(array('No','ID Peserta','Photo','Ket'));
                    $tbstat = array("id" => "tbphoto",'width'=>'100%');
                    $isi_data = $photo;
                    $tbl = new mytable($tbstat,$header,$isi_data,'');

@@ -7,7 +7,7 @@ $data['menu_idx']=$menu_idx;
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Admin | Dashboard</title>
+  <title>PMBOnline | Dashboard</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <!-- Bootstrap 3.3.6 -->
@@ -51,9 +51,9 @@ $data['menu_idx']=$menu_idx;
     <!-- Logo -->
     <a href="<?php echo base_url();?>" class="logo">
       <!-- mini logo for sidebar mini 50x50 pixels -->
-      <span class="logo-mini">Wisuda</span>
+      <span class="logo-mini">PMBOnline</span>
       <!-- logo for regular state and mobile devices -->
-      <span class="logo-lg">Wisuda</span>
+      <span class="logo-lg">PMBOnline</span>
     </a>
 
     <!-- Header Navbar: style can be found in header.less -->
@@ -96,7 +96,7 @@ $data['menu_idx']=$menu_idx;
     <section class="content">
        <?php 
                     
-                    $header = array(array('Id','Awal Daftar','Akhir Daftar','Wisuda','Aktif','Aksi'));
+                    $header = array(array('Tahun','Awal Daftar','Akhir Daftar','Aktif','Aksi'));
                     $tbstat = array("id" => "priode",'width'=>'100%');
                     $isi_data = $data_priode;
                     $tbl = new mytable($tbstat,$header,$isi_data,'');
@@ -108,7 +108,7 @@ $data['menu_idx']=$menu_idx;
                     $body=$divrowcol->display();
                     
                     $box=array('class'=>'collapsed-box');
-                    $header_box = array('class'=>'with-border','title'=>'Tanggal Pendaftaran Wisuda dan Tanggal Wisuda','tools'=>array(array('widget'=>'collapse','icon'=>'fa fa-plus'),array('widget'=>'remove','icon'=>'fa fa-times')));
+                    $header_box = array('class'=>'with-border','title'=>'Priode Pendaftaran Mahasiswa Baru','tools'=>array(array('widget'=>'collapse','icon'=>'fa fa-plus'),array('widget'=>'remove','icon'=>'fa fa-times')));
                     $tempbox=new box($box,$header_box,$body); 
                     $content1=array(array($tempbox->display()));
 
@@ -285,14 +285,26 @@ $data['menu_idx']=$menu_idx;
       window.location.href = "<?php echo site_url('Admin_dashboard/setting'); ?>";
      });
 
-    $("[data-mask]").inputmask();
+     $("[data-mask]").inputmask();
+     
+     $(".select2").select2();
 
+     $("#datapriode").validate();
 
-    //Date picker
-    $('#datepicker').datepicker({
-      format: 'dd-mm-yyyy',
-      autoclose: true
-    });
+     $('#usm1').datepicker({
+        format: 'dd-mm-yyyy',
+        autoclose: true
+      });
+
+      $('#usm2').datepicker({
+        format: 'dd-mm-yyyy',
+        autoclose: true
+      });
+
+      $('#usm3').datepicker({
+        format: 'dd-mm-yyyy',
+        autoclose: true
+      });    
 
     $('#datepicker1').daterangepicker(
      {
@@ -311,15 +323,67 @@ $data['menu_idx']=$menu_idx;
        $(this).val('');
     });
 
+     $('#glmb1').daterangepicker(
+     {
+      locale: {
+           format: 'DD-MM-YYYY',
+           cancelLabel: 'Clear'
+        }
+    }
+      );
+
+     $('#glmb1').on('apply.daterangepicker', function(ev, picker) {
+      $(this).val(picker.startDate.format('DD-MM-YYYY') + ' - ' + picker.endDate.format('DD-MM-YYYY'));
+     });
+
+     $('#glmb1').on('cancel.daterangepicker', function(ev, picker) {
+       $(this).val('');
+    });
+
+     $('#glmb2').daterangepicker(
+     {
+      locale: {
+           format: 'DD-MM-YYYY',
+           cancelLabel: 'Clear'
+        }
+    }
+      );
+
+     $('#glmb2').on('apply.daterangepicker', function(ev, picker) {
+      $(this).val(picker.startDate.format('DD-MM-YYYY') + ' - ' + picker.endDate.format('DD-MM-YYYY'));
+     });
+
+     $('#glmb2').on('cancel.daterangepicker', function(ev, picker) {
+       $(this).val('');
+    });
+
+     $('#glmb3').daterangepicker(
+     {
+      locale: {
+           format: 'DD-MM-YYYY',
+           cancelLabel: 'Clear'
+        }
+    }
+      );
+
+     $('#glmb3').on('apply.daterangepicker', function(ev, picker) {
+      $(this).val(picker.startDate.format('DD-MM-YYYY') + ' - ' + picker.endDate.format('DD-MM-YYYY'));
+     });
+
+     $('#glmb3').on('cancel.daterangepicker', function(ev, picker) {
+       $(this).val('');
+    });
+
    
     $("#datapriode").submit(function(e) {
 
         //prevent Default functionality
         e.preventDefault();
-
+          var isvalid = $("#datapriode").valid();
+          if (isvalid) { 
             data = $("#datapriode").serialize();
             myajax('ketdatapriode',data,'<?php echo base_url();?>index.php/Admin_dashboard/savedatapriode');    
-                
+          }      
     });
 
 
@@ -400,12 +464,12 @@ $data['menu_idx']=$menu_idx;
   }
 
 
-  function priode(isedit,id)
+  function priode(isedit,thn)
   {
     if(isedit==0){
      myajax('modal','',"<?php echo base_url();?>index.php/Admin_dashboard/add_priode_admin",null,after);
     }else{
-     myajax('modal','id='+id,"<?php echo base_url();?>index.php/Admin_dashboard/edit_priode_admin",null,after); 
+     myajax('modal','thn='+thn,"<?php echo base_url();?>index.php/Admin_dashboard/edit_priode_admin",null,after); 
     }
     
   }

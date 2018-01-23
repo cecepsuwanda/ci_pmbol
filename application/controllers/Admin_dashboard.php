@@ -542,24 +542,30 @@ class Admin_dashboard extends CI_Controller {
 
 	public function edit_priode_admin()
 	{
-        $id= $this->input->post('id');
+        $thn= $this->input->post('thn');
         $db['priode']=$this->Priode_model;
         $this->Admin_dashboard_model->setdbvar($db);
-        $data = $this->Admin_dashboard_model->baca_priode($id);
-        $data['judul']='Edit Tanggal Daftar dan Tanggal Wisuda';
+        $data = $this->Admin_dashboard_model->baca_priode($thn);
+        $data['judul']='Edit Priode Pendaftar Mahasiswa Baru';
 		echo $this->load->view('priode_modal',$data,true);
 	}
 
 	public function savedatapriode()
 	{
-		$data['id']=$this->input->post('id');
-		$data['wisuda']=$this->input->post('tglwisuda');
+		$data['thn_old']=$this->input->post('thn_old');
+		$data['thn']=$this->input->post('thn');
 		$data['daftar']=$this->input->post('tgldaftar');
+		
+		$data['byr']=$this->input->post('byr');
+		$data['bank']=$this->input->post('bank');
+		$data['rek']=$this->input->post('rek');
+		$data['an']=$this->input->post('an');
+
 		$data['aktif']=$this->input->post('aktif');
 		
 		$db['priode']=$this->Priode_model;
 		$this->Admin_dashboard_model->setdbvar($db);
-        if(empty($data['id'])){
+        if(empty($data['thn'])){
          echo $this->Admin_dashboard_model->insertdatapriode($data);
         }else{
          echo $this->Admin_dashboard_model->updatedatapriode($data);

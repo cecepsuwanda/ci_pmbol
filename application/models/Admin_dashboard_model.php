@@ -503,13 +503,21 @@ class Admin_dashboard_model extends CI_Model {
      return $data;
    }
 
-   public function baca_priode($id)
+   public function baca_priode($thn)
    {
-     $tmp = $this->db['priode']->getdata('id='.$id);
-     $data['wisuda']=date("d-m-Y", strtotime($tmp[0]['wisuda']));
+     $tmp = $this->db['priode']->getdata('thn='.$thn);
      $data['daftar']=date("d-m-Y", strtotime($tmp[0]['awal'])).' - '.date("d-m-Y", strtotime($tmp[0]['akhir']));
      $data['aktif']=$tmp[0]['aktif'];
-     $data['id']=$tmp[0]['id'];
+     $data['thn']=$tmp[0]['thn'];
+     $arr_thn=$this->thnlls($tmp[0]['thn']);     
+     $data['drop_thn']=$this->build_dropdown($arr_thn,array(0,1),'','--- Pilih Tahun PMB ---');    
+     $data['drop_thn']= "<option value='".$tmp[0]['thn']."' selected='selected' >".$tmp[0]['thn']."</option>".$data['drop_thn'];
+     
+     $data['byr']=$tmp[0]['byr'];
+     $data['bank']=$tmp[0]['bank'];
+     $data['rek']=$tmp[0]['rek'];
+     $data['an']=$tmp[0]['an'];
+
      return $data;
    }
 
@@ -523,7 +531,7 @@ class Admin_dashboard_model extends CI_Model {
 
    public function insertdatapriode($data)
    {
-      $data['wisuda'] = date('Y-m-d', strtotime($data['wisuda']));
+      
       $tmp = explode('-',$data['daftar']);      
       $data['awal'] = date('Y-m-d', strtotime($tmp[0] .'-'. $tmp[1].'-'.$tmp[2])); 
       $data['akhir'] = date('Y-m-d', strtotime($tmp[3] .'-'. $tmp[4].'-'.$tmp[5]));  
@@ -535,7 +543,7 @@ class Admin_dashboard_model extends CI_Model {
 
    public function updatedatapriode($data)
    {
-      $data['wisuda'] = date('Y-m-d', strtotime($data['wisuda']));
+      
       $tmp = explode('-',$data['daftar']);
       $data['awal'] = date('Y-m-d', strtotime($tmp[0] .'-'. $tmp[1].'-'.$tmp[2])); 
       $data['akhir'] = date('Y-m-d', strtotime($tmp[3] .'-'. $tmp[4].'-'.$tmp[5]));       

@@ -1,11 +1,11 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class Priode_model extends CI_Model {
+class Glmb_model extends CI_Model {
 
    public function getdata($where)
    {      
       $this->db->select('*');
-      $this->db->from('tb_priode');
+      $this->db->from('tb_glmb');
       if(!empty($where)){
         $this->db->where($where);      
       }

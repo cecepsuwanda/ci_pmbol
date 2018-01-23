@@ -12,17 +12,84 @@ defined('BASEPATH') OR exit('No direct script access allowed');
          <div class="row">
         <!-- left column -->
         <div class="col-md-6">
-                          <input type="hidden" name="id" value="<?php echo (!isset($id)?'':$id); ?>">
+                          <input type="hidden" name="thn_old" value="<?php echo (!isset($thn)?'':$thn); ?>">
                           <div class="form-group">
-                             <label>Tanggal Wisuda</label> 
-                             <input type="text" class="form-control" id="datepicker" id="tglwisuda" name="tglwisuda" value="<?php echo !isset($wisuda)?'':$wisuda; ?>" placeholder="Tanggal Wisuda ..." data-inputmask='"mask": "99-99-9999"' data-mask>
+                             <label>PMB Tahun</label> 
+                             <select class="form-control select2" id="thn" name="thn" style="width: 100%;" required>                               
+                               <?php 
+                                 echo $drop_thn;
+                               ?>                               
+                            </select>
                           </div>
                           <!-- /.form-group --> 
                           <div class="form-group">
-                             <label>Tanggal Daftar Wisuda</label> 
-                             <input type="text" class="form-control" id="datepicker1" id="tgldaftar" name="tgldaftar" value="<?php echo !isset($daftar)?'':$daftar; ?>" placeholder="Tanggal Daftar Wisuda ..." data-inputmask='"mask": "99-99-9999 - 99-99-9999"' data-mask>
+                             <label>Priode Pendaftaran</label> 
+                             <input type="text" class="form-control" id="datepicker1" id="tgldaftar" name="tgldaftar" value="<?php echo !isset($daftar)?'':$daftar; ?>" data-inputmask='"mask": "99-99-9999 - 99-99-9999"' data-mask required>
                           </div>
-                          <!-- /.form-group --> 
+                          <!-- /.form-group -->
+                         
+                          <div class="form-group">
+                             <label>Pendaftaran Gelombang 1</label> 
+                             <input type="text" class="form-control" id="glmb1" name="glmb[1]" value="<?php echo !isset($glmb)?'':$glmb[1]; ?>" data-inputmask='"mask": "99-99-9999 - 99-99-9999"' data-mask required>
+                          </div>
+                          <!-- /.form-group -->
+
+                          <div class="form-group">
+                             <label>USM 1</label>
+                             <input type="text" class="form-control" id="usm1" name="usm[1]" value="<?php echo !isset($usm)?'':$usm[1]; ?>"  placeholder="Tanggal USM 1 ..." data-inputmask='"mask": "99-99-9999"' data-msg="Tanggal USM 1 Harus Diisi !!!"  required data-mask>
+                          </div>
+                          <!-- /.form-group -->
+
+                          <div class="form-group">
+                             <label>Pendaftaran Gelombang 2</label> 
+                             <input type="text" class="form-control" id="glmb2" name="glmb[2]" value="<?php echo !isset($glmb)?'':$glmb[2]; ?>" data-inputmask='"mask": "99-99-9999 - 99-99-9999"' data-mask required>
+                          </div>
+                          <!-- /.form-group -->
+                          
+                          <div class="form-group">
+                             <label>USM 2</label>
+                             <input type="text" class="form-control" id="usm2" name="usm[2]" value="<?php echo !isset($usm)?'':$usm[2]; ?>"  placeholder="Tanggal USM 2 ..." data-inputmask='"mask": "99-99-9999"' data-msg="Tanggal USM 2 Harus Diisi !!!"  required data-mask>
+                          </div>
+                          <!-- /.form-group -->
+                          
+                          <div class="form-group">
+                             <label>Pendaftaran Gelombang 3</label> 
+                             <input type="text" class="form-control" id="glmb3" name="glmb[3]" value="<?php echo !isset($glmb)?'':$glmb[3]; ?>" data-inputmask='"mask": "99-99-9999 - 99-99-9999"' data-mask required>
+                          </div>
+                          <!-- /.form-group -->
+
+                          <div class="form-group">
+                             <label>USM 3</label>
+                             <input type="text" class="form-control" id="usm3" name="usm[3]" value="<?php echo !isset($usm)?'':$usm[3]; ?>"  placeholder="Tanggal USM 3 ..." data-inputmask='"mask": "99-99-9999"' data-msg="Tanggal USM 3 Harus Diisi !!!"  required data-mask>
+                          </div>
+                          <!-- /.form-group -->
+
+                          
+                          <div class="form-group">
+                            <label>Biaya Pendaftaran</label>
+                            <input type="text" class="form-control"  id="byr" name="byr" value="<?php echo !isset($byr)?'':$byr; ?>" placeholder="Biaya Pendaftaran ..."   data-msg="Biaya Harus Diisi !!!" required>
+                          </div>
+                         <!-- /.form-group --> 
+
+                         <div class="form-group">
+                             <label>Bank</label>
+                             <input type="text" class="form-control"  id="bank" name="bank" value="<?php echo !isset($bank)?'':$bank; ?>" placeholder="Bank ..."  data-msg="Bank Harus Diisi !!!" required>
+                         </div>
+                         <!-- /.form-group -->
+                      
+                         <div class="form-group">
+                             <label>Nomor Rekening</label>
+                             <input type="text" class="form-control"  id="rek" name="rek" value="<?php echo !isset($rek)?'':$rek; ?>" placeholder="Nomor Rekening ..."  data-msg="Nomor Rekening Harus Diisi !!!" required>
+                         </div>
+                          <!-- /.form-group -->
+
+                         <div class="form-group">
+                             <label>Atas Nama</label>
+                             <input type="text" class="form-control"  id="an" name="an" value="<?php echo !isset($an)?'':$an; ?>" placeholder="Atas Nama ..."  data-msg="Atas Nama Harus Diisi !!!" required>
+                         </div>
+                          <!-- /.form-group -->
+
+
                           <div class="form-group">
                              <label>Aktif</label>
                              <select class="form-control" id="aktif" name="aktif" style="width: 100%;">                               
