@@ -236,11 +236,11 @@ class Maba_model extends CI_Model {
 
    public function insertdataadmin($data)
    {
-     $data['id_wisuda']=date('YmdHis');
+     $data['id_peserta']=date('YmdHis');
      $data['user_name']=$data['ktp'];
      $data['user_pass']=md5('123456');
      
-     $this->db->insert('tb_wisudawan',$data);
+     $this->db->insert('tb_maba',$data);
 
    }
 

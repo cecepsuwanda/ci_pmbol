@@ -42,11 +42,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
     <form action="<?php echo base_url();?>index.php/Admin_dashboard/login" method="post" id="login">
       <div class="form-group has-feedback">
-        <input type="text" name="un" value="" class="form-control" placeholder="Username" data-msg="Username Harus Diisi !!!"  required>
+        <input type="text" name="un" value="" maxlength="10" class="form-control" placeholder="Username" data-msg="Username Harus Diisi !!!"  required>
         <span class="glyphicon glyphicon-user form-control-feedback"></span>
       </div>
       <div class="form-group has-feedback">
-        <input type="password" name="psw" value="" class="form-control" placeholder="Password" data-msg="Password Harus Diisi !!!"  required>
+        <input type="password" name="psw" maxlength="10" value="" class="form-control" placeholder="Password" data-msg="Password Harus Diisi !!!"  required>
         <span class="glyphicon glyphicon-lock form-control-feedback"></span>
       </div>
       <div class="row">

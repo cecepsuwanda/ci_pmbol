@@ -300,19 +300,13 @@ $('.myImg').click(function() {
     $(".select2").select2();
 
     //Date picker
-    $('#datepicker').datepicker({
+    $('#tgl').datepicker({
       format: 'dd-mm-yyyy',
       autoclose: true
     });
 
     //Date picker
-    $('#datepicker1').datepicker({
-      format: 'dd-mm-yyyy',
-      autoclose: true
-    });
-
-    //Date picker
-    $('#datepicker2').datepicker({
+    $('#tgltrans').datepicker({
       format: 'dd-mm-yyyy',
       autoclose: true
     });
@@ -321,7 +315,11 @@ $('.myImg').click(function() {
        var idfak = $('#fak option:selected').val();
        data = "idfak=" + idfak;
        myajax('prodi',data,'<?php echo base_url();?>index.php/Main_dashboard/get_prodi');       
-      });        
+      });
+
+    $("#datamaba").validate();
+    $("#datapil").validate();
+    $("#datakonf").validate();        
 
                  $('#uploadbox').singleupload({
                     action: 'do_upload', //action: 'do_upload.json'
@@ -355,13 +353,56 @@ $('.myImg').click(function() {
                     }
                   });
 
-    $("#datawisudawan").submit(function(e) {
-
+    $("#datamaba").submit(function(e) {
         //prevent Default functionality
         e.preventDefault();
-                  
-            data = $("#datawisudawan").serialize()+'&'+data;
-            myajax('ketdatawisudawan',data,'<?php echo base_url();?>index.php/Admin_dashboard/updatedatawisudawan');    
+        var isvalid = $("#datamaba").valid();
+        if (isvalid) {
+            var ktp = $("#ktp").val();
+              var t = $("#tgl").val();
+              var jk = $("#jk").val();
+              if(jk=='P'){
+                var tmp =Number(t.substr(0,2))+40;
+                var sTgl = tmp.toString()+t.substr(3,2)+t.substr(8,2); 
+              }else{    
+                var sTgl = t.substr(0,2)+t.substr(3,2)+t.substr(8,2);
+              }  
+              if (ktp.search(sTgl)<0)
+              {
+                $('#ketdatamaba').html('<div class="callout callout-danger"><h4>Pemberitahuan</h4><p>Tanggal lahir dan nomor ktp-nya tidak cocok !</p> </div>');
+              }else{                  
+                  data = $("#datamaba").serialize()+'&'+data;
+                  myajax('ketdatamaba',data,'<?php echo base_url();?>index.php/Admin_dashboard/updatedatamaba');    
+              }       
+        }       
+    });
+
+    $("#datapil").submit(function(e) {
+        //prevent Default functionality
+        e.preventDefault(); 
+        var isvalid = $("#datapil").valid();
+        if (isvalid) {                 
+            data = $("#datapil").serialize()+'&'+data;
+            myajax('ketdatapil',data,'<?php echo base_url();?>index.php/Admin_dashboard/updatedatapil');    
+         }       
+    });
+
+    $("#datakonf").submit(function(e) {
+        //prevent Default functionality
+        e.preventDefault(); 
+        var isvalid = $("#datakonf").valid();
+        if (isvalid) {                 
+            data = $("#datakonf").serialize()+'&'+data;
+            myajax('ketdatakonf',data,'<?php echo base_url();?>index.php/Admin_dashboard/konf');    
+        }        
+    });
+
+    $("#dataket").submit(function(e) {
+        //prevent Default functionality
+        e.preventDefault(); 
+        
+        data = $("#dataket").serialize()+'&'+data;
+        myajax('ketdataket',data,'<?php echo base_url();?>index.php/Admin_dashboard/ket');    
                 
     });
 

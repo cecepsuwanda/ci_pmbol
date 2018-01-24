@@ -85,7 +85,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
       </h1>
       <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li class="active">Buat Akun</li>
+        <li class="active">Daftar Mahasiswa Baru</li>
       </ol>
     </section>
 
@@ -187,12 +187,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                         
                       <div class="form-group">
                          <label>Username</label>
-                         <input type="text" class="form-control"  id="user" name="user" placeholder="Username ..." data-msg="Username Harus Diisi !!!" <?php echo $isbuka==0 ? 'disabled' :''; ?> required>
+                         <input type="text" class="form-control"  id="user" maxlength="10" name="user" placeholder="Username ..." data-msg="Username Harus Diisi !!!" <?php echo $isbuka==0 ? 'disabled' :''; ?> required>
                       </div>
                       <!-- /.form-group --> 
                       <div class="form-group">
                          <label>Password</label>
-                         <input type="password" class="form-control" id="pass" name="pass" placeholder="Password ..." data-msg="Password Harus Diisi !!!" <?php echo $isbuka==0 ? 'disabled' :''; ?> required>
+                         <input type="password" class="form-control" id="pass" maxlength="10" name="pass" placeholder="Password ..." data-msg="Password Harus Diisi !!!" <?php echo $isbuka==0 ? 'disabled' :''; ?> required>
                       </div>
                       <!-- /.form-group -->
 
@@ -269,86 +269,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <!-- AdminLTE for demo purposes -->
 <script src="<?php echo base_url();?>assets/dist/js/demo.js"></script> 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.js"></script>
-
+<script src="<?php echo base_url();?>assets/dist/myjs/buat_akun.js"></script> 
 <script>
-  
-  function myajax(id,data1,url,fbefore=null,fafter=null) {
-        
-        if(fbefore != null){
-            if(typeof fbefore==='function'){
-               fbefore();
-            }
-        }
-        
-        $.ajax({
-            "type" : "post",
-            "url" : url,
-            "cache" : false,
-            "data" : data1,
-            success : function (data) {
-                if(id!=''){                  
-                  $('#'+id).html(data);
-                }
-                
-                if(fafter != null){
-                    if(typeof fafter==='function'){
-                       fafter(data);
-                    }
-                }
-            }
-        });
-     }
-
 
   $(function () {
-    
-    $("[data-mask]").inputmask();
-    
-    
-    $(".select2").select2();
-
-    //Date picker
-    $('#tgl').datepicker({
-      format: 'dd-mm-yyyy',
-      autoclose: true
-    });
-
-    $("#fak").change(function () {
-       var idfak = $('#fak option:selected').val();
-       data = "idfak=" + idfak;
-       myajax('prodi',data,'<?php echo base_url();?>index.php/Main_dashboard/get_prodi');       
-      });
-        
-
-    $("#buat_akun").validate();
-
-    $("#buat_akun").submit(function(e) {
-
-        //prevent Default functionality
-        e.preventDefault();
-        var isvalid = $("#buat_akun").valid();
-        if (isvalid) {
-              var ktp = $("#ktp").val();
-              var t = $("#tgl").val();
-              var jk = $("#jk").val();
-              if(jk=='P'){
-                var tmp =Number(t.substr(0,2))+40;
-                var sTgl = tmp.toString()+t.substr(3,2)+t.substr(8,2); 
-              }else{    
-                var sTgl = t.substr(0,2)+t.substr(3,2)+t.substr(8,2);
-              }  
-              if (ktp.search(sTgl)<0)
-              {
-                $('#ket').html('<div class="callout callout-danger"><h4>Pemberitahuan</h4><p>Tanggal lahir dan nomor ktp-nya tidak cocok !</p> </div>');
-              }else{     
-                   data = $("#buat_akun").serialize();
-                   myajax('ket',data,'<?php echo base_url();?>index.php/Main_dashboard/save');    
-              }
-        }        
-    });
-
-
-    
+    init(<?php echo "'".base_url()."'";?>);    
   });
 </script>
 </body>

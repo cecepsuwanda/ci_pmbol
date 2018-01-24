@@ -76,12 +76,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
                       <div class="form-group">
                          <!-- <label>Username</label> -->
-                         <input type="text" class="form-control"  id="user" name="user" placeholder="Username ..." data-msg="Username Harus Diisi !!!"  required>
+                         <input type="text" class="form-control"  id="user" maxlength="10" name="user" placeholder="Username ..." data-msg="Username Harus Diisi !!!"  required>
                       </div>
                       <!-- /.form-group --> 
                       <div class="form-group">
                          <!-- <label>Password</label> -->
-                         <input type="password" class="form-control" id="pass" name="pass" placeholder="Password ..." data-msg="Password Harus Diisi !!!"  required>
+                         <input type="password" class="form-control" id="pass" maxlength="10"  name="pass" placeholder="Password ..." data-msg="Password Harus Diisi !!!"  required>
                       </div>
                       <!-- /.form-group -->
 

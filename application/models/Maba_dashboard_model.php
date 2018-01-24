@@ -203,13 +203,12 @@ class Maba_dashboard_model extends CI_Model {
 
    public function updatedatamaba($data)
    {
-     $tmp=$this->db['maba']->getdata("ktp='$data[ktp]' and id_peserta<>'$data[id_peserta]'");
+      if(!empty($data['ktp'])){   
+         $tmp=$this->db['maba']->getdata("ktp='$data[ktp]' and id_peserta<>'$data[id_peserta]'");
          if(!empty($tmp)){
              return "<div class='callout callout-danger'><h4>Pemberitahuan</h4><p>Mahasiswa baru dengan ktp/nik = $data[ktp], sudah ada !!!</p> </div>"; 
          }else{
-
-             
-                   
+              
                        if(isset($data['photo'])){
                             if(file_exists('./assets/photo/'.basename($data['photo']))){
                                  $ext = explode('.',basename($data['photo']));
@@ -220,7 +219,6 @@ class Maba_dashboard_model extends CI_Model {
                              }
                            }
 
-                   
                       
                          $this->db['maba']->updatedata($data);
 
@@ -245,26 +243,33 @@ class Maba_dashboard_model extends CI_Model {
                              } 
                          }
 
-
                          return "<div class='callout callout-info'><h4>Pemberitahuan</h4><p>Mahasiswa baru dengan id peserta = $data[id_peserta], berhasil di update !!!</p> </div>"; 
-                         
-                 
          }
+      }else{
+         return "<div class='callout callout-danger'><h4>Pemberitahuan</h4><p>No. KTP/NIK tidak boleh kosong !!!</p> </div>";
+      }   
    }
 
    public function updatedatapil($data)
    {
-     
-     $this->db['maba']->updatedata($data);
+     if(!empty($data['id_prodi'])){
+        if(!empty($data['kelas'])){
+           $this->db['maba']->updatedata($data);
 
-     return "<div class='callout callout-info'><h4>Pemberitahuan</h4><p>Mahasiswa baru dengan id peserta = $data[id_peserta], berhasil di update !!!</p> </div>"; 
-                       
+           return "<div class='callout callout-info'><h4>Pemberitahuan</h4><p>Mahasiswa baru dengan id peserta = $data[id_peserta], berhasil di update !!!</p> </div>"; 
+        }else{
+           return "<div class='callout callout-danger'><h4>Pemberitahuan</h4><p>Kelas tidak boleh kosong !!!</p> </div>";  
+        } 
+     }else{
+        return "<div class='callout callout-danger'><h4>Pemberitahuan</h4><p>Prodi. tidak boleh kosong !!!</p> </div>";
+     }                    
         
    }
 
    public function konf($data)
    {
-     
+         if(!empty($data['nm_bank'])){
+           if(!empty($data['tgltrans'])){
 
                            if(isset($data['kwitansi'])){
                               if(file_exists('./assets/photo/'.basename($data['kwitansi']))){
@@ -302,12 +307,22 @@ class Maba_dashboard_model extends CI_Model {
 
 
                          return "<div class='callout callout-info'><h4>Pemberitahuan</h4><p>Mahasiswa baru dengan id peserta = $data[id_peserta], berhasil di update !!!</p> </div>"; 
+          }else{
+           return "<div class='callout callout-danger'><h4>Pemberitahuan</h4><p>Tanggal Transfer tidak boleh kosong !!!</p> </div>";  
+        } 
+     }else{
+        return "<div class='callout callout-danger'><h4>Pemberitahuan</h4><p>Bank tidak boleh kosong !!!</p> </div>";
+     }                 
  
    }
 
 
    public function rubahuserpass($data)
    {
+           if(!empty($data['user'])){
+             if(!empty($data['pass'])){
+                    
+
                     if(isset($data['user'])){ 
                        $tmp=$this->db['maba']->getdata("user='$data[user]' and id_peserta<>'$data[id_peserta]'");
                        if(!empty($tmp)){                         
@@ -318,6 +333,13 @@ class Maba_dashboard_model extends CI_Model {
 
                        }
                     }               
+
+            }else{
+           return "<div class='callout callout-danger'><h4>Pemberitahuan</h4><p>Pass tidak boleh kosong !!!</p> </div>";  
+        } 
+     }else{
+        return "<div class='callout callout-danger'><h4>Pemberitahuan</h4><p>User tidak boleh kosong !!!</p> </div>";
+     }    
                       
    }
     

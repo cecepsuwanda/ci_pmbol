@@ -44,7 +44,7 @@ class Admin_dashboard_model extends CI_Model {
               foreach ($row as $key=>$value) {
                 if($key!='id'){
                   if($key=='id_peserta'){
-                     $temp=$this->db['maba']->getdata("id_wisuda='$value'");
+                     $temp=$this->db['maba']->getdata("id_peserta='$value'");
                      $tmp[]=array((isset($temp[0]['id_peserta']) ? $temp[0]['id_peserta'] : ''),array());
                      $tmp[]=array((isset($temp[0]['nm']) ? $temp[0]['nm'] : ''),array());
                   }else{
@@ -392,46 +392,128 @@ class Admin_dashboard_model extends CI_Model {
 
    
 
-   public function updatedatawisudawan($data)
+   public function updatedatamaba($data)
    {
-     $tmp=$this->db['wisudawan']->getdata("ktp='$data[ktp]' and id_wisuda<>'$data[id_wisuda]'");
-         
+     if(!empty($data['ktp'])){   
+         $tmp=$this->db['maba']->getdata("ktp='$data[ktp]' and id_peserta<>'$data[id_peserta]'");
          if(!empty($tmp)){
-             return "<div class='callout callout-danger'><h4>Pemberitahuan</h4><p>Calon wisudawan dengan ktp/nik = $data[ktp], sudah ada !!!</p> </div>"; 
+             return "<div class='callout callout-danger'><h4>Pemberitahuan</h4><p>Mahasiswa baru dengan ktp/nik = $data[ktp], sudah ada !!!</p> </div>"; 
          }else{
-
-             $tmp=$this->db['wisudawan']->getdata("nim='$data[nim]' and id_wisuda<>'$data[id_wisuda]'");
-                if(!empty($tmp)){
-                      return "<div class='callout callout-danger'><h4>Pemberitahuan</h4><p>Calon wisudawan dengan nim = $data[nim], sudah ada !!!</p> </div>"; 
-                }else{
-                
-
+              
                        if(isset($data['photo'])){
-                              if(file_exists('./assets/photo/'.basename($data['photo']))){
+                            if(file_exists('./assets/photo/'.basename($data['photo']))){
                                  $ext = explode('.',basename($data['photo']));
-                                 rename('./assets/photo/'.basename($data['photo']),'./assets/photo/photo_'.$data['id_wisuda'].'.'.$ext[1]);
-                                 $data['photo']=base_url().'assets/photo/photo_'.$data['id_wisuda'].'.'.$ext[1];
+                                 rename('./assets/photo/'.basename($data['photo']),'./assets/photo/'.$data['id_peserta'].'.'.$ext[1]);
+                                 $data['photo']=$data['id_peserta'].'.'.$ext[1];
                              }else{
-                               unset($data['photo']);
-                             }
-                           }
-
-                           if(isset($data['kwitansi'])){
-                              if(file_exists('./assets/photo/'.basename($data['kwitansi']))){
-                                 $ext = explode('.',basename($data['kwitansi']));
-                                 rename('./assets/photo/'.basename($data['kwitansi']),'./assets/photo/kwitansi_'.$data['id_wisuda'].'.'.$ext[1]);
-                                 $data['kwitansi']=base_url().'assets/photo/kwitansi_'.$data['id_wisuda'].'.'.$ext[1];
-                             }else{
-                               unset($data['kwitansi']);
+                                unset($data['photo']);
                              }
                            }
 
                       
-                         $this->db['wisudawan']->updatedata($data);
-                         return "<div class='callout callout-info'><h4>Pemberitahuan</h4><p>Calon Wisudawan dengan id wisuda = $data[id_wisuda], berhasil di update !!!</p> </div>"; 
-                         
-               }    
+                         $this->db['maba']->updatedata($data);
+
+                         $id_peserta = $data['id_peserta'];
+                         $nm_file = 'temp_'.$id_peserta;
+
+                         $file = directory_map('./assets/photo/');
+
+                         if(!empty($file))                          
+                         {
+                            foreach ($file as $nmfile) {
+                               $ext = explode('.',basename($nmfile));
+                               $tmp = explode('_',$ext[0]);
+                               
+                               if(isset($tmp[1])){
+                                 if(($tmp[0].'_'.$tmp[1])==$nm_file)
+                                 {
+                                    unlink('./assets/photo/'.$nmfile);   
+                                 }
+                               }  
+
+                             } 
+                         }
+
+                         return "<div class='callout callout-info'><h4>Pemberitahuan</h4><p>Mahasiswa baru dengan id peserta = $data[id_peserta], berhasil di update !!!</p> </div>"; 
          }
+      }else{
+         return "<div class='callout callout-danger'><h4>Pemberitahuan</h4><p>No. KTP/NIK tidak boleh kosong !!!</p> </div>";
+      }
+   }
+
+  public function updatedatapil($data)
+   {
+     if(!empty($data['id_prodi'])){
+        if(!empty($data['kelas'])){
+           $this->db['maba']->updatedata($data);
+
+           return "<div class='callout callout-info'><h4>Pemberitahuan</h4><p>Mahasiswa baru dengan id peserta = $data[id_peserta], berhasil di update !!!</p> </div>"; 
+        }else{
+           return "<div class='callout callout-danger'><h4>Pemberitahuan</h4><p>Kelas tidak boleh kosong !!!</p> </div>";  
+        } 
+     }else{
+        return "<div class='callout callout-danger'><h4>Pemberitahuan</h4><p>Prodi. tidak boleh kosong !!!</p> </div>";
+     }                    
+        
+   }
+
+   public function ket($data)
+   {
+     
+           $this->db['maba']->updatedata($data);
+
+           return "<div class='callout callout-info'><h4>Pemberitahuan</h4><p>Mahasiswa baru dengan id peserta = $data[id_peserta], berhasil di update !!!</p> </div>";                        
+        
+   }
+
+   public function konf($data)
+   {
+         if(!empty($data['nm_bank'])){
+           if(!empty($data['tgltrans'])){
+
+                           if(isset($data['kwitansi'])){
+                              if(file_exists('./assets/photo/'.basename($data['kwitansi']))){
+                                 $ext = explode('.',basename($data['kwitansi']));
+                                 rename('./assets/photo/'.basename($data['kwitansi']),'./assets/photo/kwitansi_'.$data['id_peserta'].'.'.$ext[1]);
+                                 $data['kwitansi']='kwitansi_'.$data['id_peserta'].'.'.$ext[1];
+                             }else{
+                              unset($data['kwitansi']);
+                             }
+                           }
+                         
+                         $data['konf']=1;
+                         $data['tglkonf']=date('Y-m-d'); 
+                     
+                         $this->db['maba']->updatedata($data);
+
+                         $id_peserta = $data['id_peserta'];
+                         $nm_file = 'temp_'.$id_peserta;
+
+                         $file = directory_map('./assets/photo/');
+
+                         if(!empty($file))                          
+                         {
+                            foreach ($file as $nmfile) {
+                               $ext = explode('.',basename($nmfile));
+                               $tmp = explode('_',$ext[0]);
+                               if(isset($tmp[1])){
+                                 if(($tmp[0].'_'.$tmp[1])==$nm_file)
+                                 {
+                                    unlink('./assets/photo/'.$nmfile);   
+                                 }
+                               }
+                             } 
+                         }
+
+
+                         return "<div class='callout callout-info'><h4>Pemberitahuan</h4><p>Mahasiswa baru dengan id peserta = $data[id_peserta], berhasil di update !!!</p> </div>"; 
+          }else{
+           return "<div class='callout callout-danger'><h4>Pemberitahuan</h4><p>Tanggal Transfer tidak boleh kosong !!!</p> </div>";  
+        } 
+     }else{
+        return "<div class='callout callout-danger'><h4>Pemberitahuan</h4><p>Bank tidak boleh kosong !!!</p> </div>";
+     }                 
+ 
    }
 
    public function tambahdatawisudawan($data)
@@ -518,6 +600,17 @@ class Admin_dashboard_model extends CI_Model {
      $data['rek']=$tmp[0]['rek'];
      $data['an']=$tmp[0]['an'];
 
+     $tmp = $this->db['glmb']->getglmbjdwl($thn);
+     
+     $data['glmb'] = array();
+     $data['usm'] = array();
+
+     for ($i=1;$i<=3;$i++) {
+       $data['glmb'][$i] = date("d-m-Y", strtotime($tmp[$i]['awal'])).' - '.date("d-m-Y", strtotime($tmp[$i]['akhir'])); 
+       $data['usm'][$i] = date("d-m-Y", strtotime($tmp[$i]['ujian']));       
+     }
+
+
      return $data;
    }
 
@@ -548,7 +641,26 @@ class Admin_dashboard_model extends CI_Model {
       $data['awal'] = date('Y-m-d', strtotime($tmp[0] .'-'. $tmp[1].'-'.$tmp[2])); 
       $data['akhir'] = date('Y-m-d', strtotime($tmp[3] .'-'. $tmp[4].'-'.$tmp[5]));       
       unset($data['daftar']);
+      
+      $data1=array();
+      foreach ($data['glmb'] as $key => $value) {
+        $tmp   = explode('-',$value);
+        $awal  = date('Y-m-d', strtotime($tmp[0] .'-'. $tmp[1].'-'.$tmp[2])); 
+        $akhir = date('Y-m-d', strtotime($tmp[3] .'-'. $tmp[4].'-'.$tmp[5]));
+        $tmp   = explode('-',$data['usm'][$key]);   
+        $ujian = date('Y-m-d', strtotime($tmp[0] .'-'. $tmp[1].'-'.$tmp[2])); 
+        $thn =  $data['thn'];
+        $thn_old = $data['thn_old'];
+        $thn_old = $thn != $thn_old ? $thn : $thn_old;
+        $data1[$key]=array('thn'=>$thn,'thn_old'=>$thn_old,'awal'=>$awal,'akhir'=>$akhir,'ujian'=>$ujian);
+      }
+
+
+      unset($data['glmb']);
+      unset($data['usm']);
+
       $this->db['priode']->updatedata($data);
+      $this->db['glmb']->updatedata($data1);
       return "<div class='callout callout-info'><h4>Pemberitahuan</h4><p>Data Berhasil Diupdate !!!</p> </div>";
    }   
 

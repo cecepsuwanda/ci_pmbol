@@ -132,6 +132,7 @@ class Priode_model extends CI_Model {
      if($data['aktif']==1)
      {
        $this->db->set('aktif',0);
+       $this->db->where('thn!=',$data['thn_old']);
        $this->db->update('tb_priode'); 
      }
      

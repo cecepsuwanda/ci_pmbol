@@ -379,59 +379,116 @@ class Admin_dashboard extends CI_Controller {
                         }else{
                           echo json_encode(array('code' => 0, 'url' => ''));         	
                         } 
-                }
-
-
-        
-		
-        
+                }        
 	}
 
-	public function updatedatawisudawan()
+	public function updatedatamaba()
 	{
-        $data['alamat']=$this->input->post('alamat');
-        $data['hp']=$this->input->post('hp');
-        $data['jk']= $this->input->post('jk');
-        $data['ktp']=$this->input->post('ktp');
-        $data['nama']=$this->input->post('nama');
-        $data['tmpt_lahir']= $this->input->post('tempat');
-        $data['tgl_lahir']= date('Y-m-d', strtotime($this->input->post('tgl')));
-        if(!empty($this->input->post('nm_file')))
-        {
-         $data['photo']= $this->input->post('nm_file');
-        }
+        if($this->input->is_ajax_request()){
+         if($this->input->method()==='post'){    
+	        $data['ktp']=$this->input->post('ktp');
+	        $data['nm']=$this->input->post('nama');
+	        $data['tmplhr']= $this->input->post('tempat');
+	        $data['jk']= $this->input->post('jk');
+	        $data['tgllhr']= date('Y-m-d', strtotime($this->input->post('tgl')));
 
-        $data['angkatan']=$this->input->post('ang');
-        $data['id_prodi']= $this->input->post('prodi');
-        $data['nim']=$this->input->post('nim');
+	        $data['alamat']=$this->input->post('alamat');
+	        $data['hp']=$this->input->post('hp');
+	        $data['email']=$this->input->post('email');
+	        $data['thnlls']=$this->input->post('thnlls');
+	        $data['asalsma']=$this->input->post('asal'); 
+	        
+	        if(!empty($this->input->post('nm_file')))
+	        {
+	         $data['photo']= $this->input->post('nm_file');
+	        }
 
-        $data['ket']=$this->input->post('keterangan');
-        $data['ver']= $this->input->post('verifikasi');
-        $data['tgl_ver']=date('Y-m-d H:i:s');
-        $data['admin_name']=$this->session->userdata('user_name');
+	        $data['id_peserta']= $this->input->post('id_peserta_old');
+			$db['maba']=$this->Maba_model;
+			$this->Admin_dashboard_model->setdbvar($db);
+			$hsl=$this->Admin_dashboard_model->updatedatamaba($data);
+			echo $hsl;
 
-       // $data['ipk']= $this->input->post('ipk');
-        
-        $data['jdl_skripsi']= $this->input->post('jdlskripsi');
-        
-       // if(!empty($this->input->post('tgllls'))){
-      //    $data['tgl_lls']= date('Y-m-d', strtotime($this->input->post('tgllls')));
-       // }
-        
-        if(!empty($this->input->post('tglbyr'))){
-          $data['tgl_byr']= date('Y-m-d', strtotime($this->input->post('tglbyr')));
-        }
-        
-        if(!empty($this->input->post('nm_file1')))
-        {
-         $data['kwitansi']= $this->input->post('nm_file1');
-        }
+			}else{
+         	show_error('Not an authorized access !!!');
+         }
+		}else{
+			show_error('Not an authorized access !!!');
+		}
+	}
 
-        $data['id_wisuda']= $this->input->post('id_wisuda');
-		$db['wisudawan']=$this->Wisudawan_model;
-		$this->Admin_dashboard_model->setdbvar($db);
-		$hsl=$this->Admin_dashboard_model->updatedatawisudawan($data);
-		echo $hsl;
+	public function updatedatapil()
+	{
+          if($this->input->is_ajax_request()){
+            if($this->input->method()==='post'){         
+		        $data['id_prodi']= $this->input->post('prodi');
+		        $data['kelas']= $this->input->post('kelas');
+
+		        $data['id_peserta']= $this->input->post('id_peserta_old');
+				$db['maba']=$this->Maba_model;
+				$this->Admin_dashboard_model->setdbvar($db);
+				$hsl=$this->Admin_dashboard_model->updatedatapil($data);
+				echo $hsl;
+		  }else{
+         	show_error('Not an authorized access !!!');
+         }
+		}else{
+			show_error('Not an authorized access !!!');
+		}		
+	}
+
+	public function konf()
+	{
+        if($this->input->is_ajax_request()){
+            if($this->input->method()==='post'){                         
+		        $data['nm_bank']= $this->input->post('bank');
+		                
+		        if(!empty($this->input->post('tgltrans'))){
+		          $data['tgltrans']= date('Y-m-d', strtotime($this->input->post('tgltrans')));
+		        }
+		        
+		        if(!empty($this->input->post('nm_file1')))
+		        {
+		         $data['kwitansi']= $this->input->post('nm_file1');
+		        }
+
+		        $data['id_peserta']= $this->input->post('id_peserta_old');
+				$db['maba']=$this->Maba_model;
+				$this->Admin_dashboard_model->setdbvar($db);
+				$hsl=$this->Admin_dashboard_model->konf($data);
+				echo $hsl;
+	    }else{
+         	show_error('Not an authorized access !!!');
+         }
+		}else{
+			show_error('Not an authorized access !!!');
+		}			
+	}
+
+	public function ket()
+	{
+        if($this->input->is_ajax_request()){
+            if($this->input->method()==='post'){                         
+		        
+                $data['ket']= $this->input->post('keterangan');
+                $data['verified']= $this->input->post('verifikasi');
+                
+                if($data['verified']==1){
+                  $data['tglveri']=date('Y-m-d');
+                }
+                //$data['nm_bank']= $this->input->post('bank');
+
+		        $data['id_peserta']= $this->input->post('id_peserta_old');
+				$db['maba']=$this->Maba_model;
+				$this->Admin_dashboard_model->setdbvar($db);
+				$hsl=$this->Admin_dashboard_model->ket($data);
+				echo $hsl;
+	    }else{
+         	show_error('Not an authorized access !!!');
+         }
+		}else{
+			show_error('Not an authorized access !!!');
+		}			
 	}
 
 	public function tambahdatawisudawan()
@@ -544,6 +601,7 @@ class Admin_dashboard extends CI_Controller {
 	{
         $thn= $this->input->post('thn');
         $db['priode']=$this->Priode_model;
+        $db['glmb']=$this->Glmb_model;
         $this->Admin_dashboard_model->setdbvar($db);
         $data = $this->Admin_dashboard_model->baca_priode($thn);
         $data['judul']='Edit Priode Pendaftar Mahasiswa Baru';
@@ -563,7 +621,11 @@ class Admin_dashboard extends CI_Controller {
 
 		$data['aktif']=$this->input->post('aktif');
 		
+		$data['glmb']=$this->input->post('glmb');
+        $data['usm']=$this->input->post('usm');
+
 		$db['priode']=$this->Priode_model;
+		$db['glmb']=$this->Glmb_model;
 		$this->Admin_dashboard_model->setdbvar($db);
         if(empty($data['thn'])){
          echo $this->Admin_dashboard_model->insertdatapriode($data);

@@ -18,7 +18,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                  <h3 class="box-title">Data Pribadi</h3>
             </div>
        
-           <form id="datamaba" action="" method="post" enctype="multipart/form-data">    
+           <form id="datamaba" action="" method="post" enctype="multipart/form-data">
+              <input type="hidden" name="id_peserta_old" value="<?php echo (!isset($id_peserta)?'':$id_peserta); ?>">    
               <div class="box-body">       
           
                 <div id="ketdatamaba"></div>            
@@ -143,7 +144,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                   <h3 class="box-title">Pilihan Program Studi</h3>
                  </div>
        
-           <form id="datapil" action="" method="post">    
+           <form id="datapil" action="" method="post"> 
+              <input type="hidden" name="id_peserta_old" value="<?php echo (!isset($id_peserta)?'':$id_peserta); ?>">   
               <div class="box-body">       
           
                 <div id="ketdatapil"></div>
@@ -169,7 +171,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                               <?php if(!empty($kelas)){ ?>
                                  <option value='<?php echo $kelas; ?>' ><?php echo ($kelas=='R' ? 'Reguler':'Karyawan') ; ?></option> 
                                  <option value=''>-- Pilih Kelas --</option>                               
-                                 <option value='<?php echo ($kelas=='R' ? 'K' : 'R'); ?>' ><?php echo ($jk=='R' ? 'Karyawan':'Reguler') ; ?></option>
+                                 <option value='<?php echo ($kelas=='R' ? 'K' : 'R'); ?>' ><?php echo ($kelas=='R' ? 'Karyawan':'Reguler') ; ?></option>
                               <?php }else{ ?>
                                  <option value=''>-- Pilih Kelas --</option> 
                                  <option value='R' >Reguler</option>
@@ -194,7 +196,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                   <h3 class="box-title">Konfirmasi Pembayaran</h3>
                  </div>
        
-           <form id="datakonf" action="" method="post" enctype="multipart/form-data">    
+           <form id="datakonf" action="" method="post" enctype="multipart/form-data"> 
+           <input type="hidden" name="id_peserta_old" value="<?php echo (!isset($id_peserta)?'':$id_peserta); ?>">   
               <div class="box-body">       
           
                 <div id="ketdatakonf"></div>
@@ -246,8 +249,48 @@ defined('BASEPATH') OR exit('No direct script access allowed');
       </form>    
         </div>
           <!-- /.box -->
+          <div class="box box-primary">
+                 <div class="box-header with-border">
+                  <h3 class="box-title">Keterangan</h3>
+                 </div> 
+            <form id="dataket" action="" method="post" enctype="multipart/form-data"> 
+            <input type="hidden" name="id_peserta_old" value="<?php echo (!isset($id_peserta)?'':$id_peserta); ?>">   
+              <div class="box-body">       
+          
+                <div id="ketdataket"></div>
 
-                
+                <div class="form-group">
+                  <label>Keterangan</label>
+                  <textarea name="keterangan" class="form-control" rows="3" placeholder="Keterangan ..."> <?php echo $keterangan; ?></textarea>
+                </div>  
+
+                <div class="form-group">
+                 <label>Verifikasi</label>
+                  <div class="radio">
+                    <label>
+                      <input type="radio" name="verifikasi"  value="1" <?php echo (($ver==1)? 'checked':''); ?> >
+                      Yes
+                    </label>
+                  </div>
+                  <div class="radio">
+                    <label>
+                      <input type="radio" name="verifikasi"  value="0" <?php echo (($ver==0)? 'checked':''); ?> >
+                      No
+                    </label>
+                  </div>
+                  
+                 </div>
+                      <!-- /.form-group -->     
+
+                 </div>
+              <!-- /.box-body -->
+
+              <div class="box-footer">
+                <button type="submit" class="btn btn-primary">Simpan</button>
+              </div>
+      </form>    
+        </div>
+          <!-- /.box -->     
           
         </div>
       </div> 

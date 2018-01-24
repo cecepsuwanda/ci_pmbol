@@ -65,7 +65,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                           <!-- /.form-group -->
 
                           
-                          <div class="form-group">
+                          
+                        </div>
+                       <!--/.col (left) -->           
+               <!-- right column -->
+          <div class="col-md-6">
+          
+                  <div class="form-group">
                             <label>Biaya Pendaftaran</label>
                             <input type="text" class="form-control"  id="byr" name="byr" value="<?php echo !isset($byr)?'':$byr; ?>" placeholder="Biaya Pendaftaran ..."   data-msg="Biaya Harus Diisi !!!" required>
                           </div>
@@ -105,10 +111,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                             </select>
                           </div>
                           <!-- /.form-group -->
-                        </div>
-                   
+
+          </div>
+        <!--/.col (right) -->         
+
         </div>
-        <!--/.col (left) -->
+        
+
         
         </div>
       </div>

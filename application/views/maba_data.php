@@ -252,7 +252,7 @@ $data['menu_idx']=$menu_idx;
                               <?php if(!empty($kelas)){ ?>
                                  <option value='<?php echo $kelas; ?>' ><?php echo ($kelas=='R' ? 'Reguler':'Karyawan') ; ?></option> 
                                  <option value=''>-- Pilih Kelas --</option>                               
-                                 <option value='<?php echo ($kelas=='R' ? 'K' : 'R'); ?>' ><?php echo ($jk=='R' ? 'Karyawan':'Reguler') ; ?></option>
+                                 <option value='<?php echo ($kelas=='R' ? 'K' : 'R'); ?>' ><?php echo ($kelas=='R' ? 'Karyawan':'Reguler') ; ?></option>
                               <?php }else{ ?>
                                  <option value=''>-- Pilih Kelas --</option> 
                                  <option value='R' >Reguler</option>

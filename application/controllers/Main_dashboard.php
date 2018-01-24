@@ -25,22 +25,29 @@ class Main_dashboard extends CI_Controller {
 
     public function save()
 	{
-		
-        $data['ktp']=  $this->input->post('ktp');
-		$data['nama']=  $this->input->post('nama'); 
-        $data['jk']=  $this->input->post('jk');
-        $data['tgl']=   $this->input->post('tgl');
-		$data['thnlls']= $this->input->post('thnlls');
-		$data['fak']= $this->input->post('fak');
-		$data['prodi']= $this->input->post('prodi');
-		$data['pass']=  $this->input->post('pass');
-		$data['user']=  $this->input->post('user');
+		if($this->input->is_ajax_request()){
+         if($this->input->method()==='post'){
+            $data['ktp']=  $this->input->post('ktp');
+		    $data['nama']=  $this->input->post('nama'); 
+            $data['jk']=  $this->input->post('jk');
+            $data['tgl']=   $this->input->post('tgl');
+		    $data['thnlls']= $this->input->post('thnlls');
+		    $data['fak']= $this->input->post('fak');
+		    $data['prodi']= $this->input->post('prodi');
+		    $data['pass']=  $this->input->post('pass');
+		    $data['user']=  $this->input->post('user');
 
-		$db['maba']=$this->Maba_model;
-		$db['prodi']=$this->Prodi_model;
-		$this->Main_dashboard_model->setdbvar($db);
-		$ket = $this->Main_dashboard_model->save_akun($data);
-		echo $ket;
+		    $db['maba']=$this->Maba_model;
+		    $db['prodi']=$this->Prodi_model;
+		    $this->Main_dashboard_model->setdbvar($db);
+		    $ket = $this->Main_dashboard_model->save_akun($data);
+		    echo $ket;            
+         }else{
+         	show_error('Not an authorized access !!!');
+         }
+		}else{
+			show_error('Not an authorized access !!!');
+		}
 	}    
 
 
@@ -56,11 +63,19 @@ class Main_dashboard extends CI_Controller {
 
 	public function get_prodi()
 	{
-        $fak = $this->input->post('idfak');
-        $db['prodi']=$this->Prodi_model;		
-		$this->Main_dashboard_model->setdbvar($db);
-		$data=$this->Main_dashboard_model->get_prodi($fak);
-		echo $data;
+       if($this->input->is_ajax_request()){ 
+         if($this->input->method()==='post'){ 
+           $fak = $this->input->post('idfak');
+           $db['prodi']=$this->Prodi_model;		
+		   $this->Main_dashboard_model->setdbvar($db);
+		   $data=$this->Main_dashboard_model->get_prodi($fak);
+		   echo $data;
+         }else{
+           show_error('Not an authorized access !!!');	
+         }
+	   }else{
+	   	 show_error('Not an authorized access !!!');
+	   }
 	}
 
 

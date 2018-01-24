@@ -111,14 +111,12 @@ class Maba_dashboard extends CI_Controller {
           
 		}
 		redirect('/Main_dashboard/');
-		
-
-
 	}
 
 	public function do_upload()
 	{
-		header('Content-type: application/json');
+		 
+		        header('Content-type: application/json');
         
                 $id_peserta = $this->session->userdata('id_peserta');
                 $nm_file = 'temp_'.$id_peserta.'_'.date('YmdHis');
@@ -146,85 +144,116 @@ class Maba_dashboard extends CI_Controller {
                         }else{
                           echo json_encode(array('code' => 0, 'url' => ''));         	
                         }  
-                }        
-		
-        
+                }  
+                
 	}
 
 	public function updatedatamaba()
 	{
-        
-        $data['ktp']=$this->input->post('ktp');
-        $data['nm']=$this->input->post('nama');
-        $data['tmplhr']= $this->input->post('tempat');
-        $data['jk']= $this->input->post('jk');
-        $data['tgllhr']= date('Y-m-d', strtotime($this->input->post('tgl')));
+       if($this->input->is_ajax_request()){
+         if($this->input->method()==='post'){    
+	        $data['ktp']=$this->input->post('ktp');
+	        $data['nm']=$this->input->post('nama');
+	        $data['tmplhr']= $this->input->post('tempat');
+	        $data['jk']= $this->input->post('jk');
+	        $data['tgllhr']= date('Y-m-d', strtotime($this->input->post('tgl')));
 
-        $data['alamat']=$this->input->post('alamat');
-        $data['hp']=$this->input->post('hp');
-        $data['email']=$this->input->post('email');
-        $data['thnlls']=$this->input->post('thnlls');
-        $data['asalsma']=$this->input->post('asal'); 
-        
-        if(!empty($this->input->post('nm_file')))
-        {
-         $data['photo']= $this->input->post('nm_file');
-        }
-        
-        $data['id_peserta']= $this->session->userdata('id_peserta');
-		$db['maba']=$this->Maba_model;
-		$this->Maba_dashboard_model->setdbvar($db);
-		$hsl=$this->Maba_dashboard_model->updatedatamaba($data);
-		echo $hsl;
+	        $data['alamat']=$this->input->post('alamat');
+	        $data['hp']=$this->input->post('hp');
+	        $data['email']=$this->input->post('email');
+	        $data['thnlls']=$this->input->post('thnlls');
+	        $data['asalsma']=$this->input->post('asal'); 
+	        
+	        if(!empty($this->input->post('nm_file')))
+	        {
+	         $data['photo']= $this->input->post('nm_file');
+	        }
+	        
+	        $data['id_peserta']= $this->session->userdata('id_peserta');
+			$db['maba']=$this->Maba_model;
+			$this->Maba_dashboard_model->setdbvar($db);
+			$hsl=$this->Maba_dashboard_model->updatedatamaba($data);
+			echo $hsl;
+        }else{
+         	show_error('Not an authorized access !!!');
+         }
+		}else{
+			show_error('Not an authorized access !!!');
+		}
+
 	}
 
 	public function updatedatapil()
 	{
-               
-        $data['id_prodi']= $this->input->post('prodi');
-        $data['kelas']= $this->input->post('kelas');
+          if($this->input->is_ajax_request()){
+            if($this->input->method()==='post'){         
+		        $data['id_prodi']= $this->input->post('prodi');
+		        $data['kelas']= $this->input->post('kelas');
 
-        $data['id_peserta']= $this->session->userdata('id_peserta');
-		$db['maba']=$this->Maba_model;
-		$this->Maba_dashboard_model->setdbvar($db);
-		$hsl=$this->Maba_dashboard_model->updatedatapil($data);
-		echo $hsl;
+		        $data['id_peserta']= $this->session->userdata('id_peserta');
+				$db['maba']=$this->Maba_model;
+				$this->Maba_dashboard_model->setdbvar($db);
+				$hsl=$this->Maba_dashboard_model->updatedatapil($data);
+				echo $hsl;
+		  }else{
+         	show_error('Not an authorized access !!!');
+         }
+		}else{
+			show_error('Not an authorized access !!!');
+		}		
 	}
 
 	public function konf()
 	{
-                        
-        $data['nm_bank']= $this->input->post('bank');
-                
-        if(!empty($this->input->post('tgltrans'))){
-          $data['tgltrans']= date('Y-m-d', strtotime($this->input->post('tgltrans')));
-        }
-        
-        if(!empty($this->input->post('nm_file1')))
-        {
-         $data['kwitansi']= $this->input->post('nm_file1');
-        }
+        if($this->input->is_ajax_request()){
+            if($this->input->method()==='post'){                         
+		        $data['nm_bank']= $this->input->post('bank');
+		                
+		        if(!empty($this->input->post('tgltrans'))){
+		          $data['tgltrans']= date('Y-m-d', strtotime($this->input->post('tgltrans')));
+		        }
+		        
+		        if(!empty($this->input->post('nm_file1')))
+		        {
+		         $data['kwitansi']= $this->input->post('nm_file1');
+		        }
 
-        $data['id_peserta']= $this->session->userdata('id_peserta');
-		$db['maba']=$this->Maba_model;
-		$this->Maba_dashboard_model->setdbvar($db);
-		$hsl=$this->Maba_dashboard_model->konf($data);
-		echo $hsl;
+		        $data['id_peserta']= $this->session->userdata('id_peserta');
+				$db['maba']=$this->Maba_model;
+				$this->Maba_dashboard_model->setdbvar($db);
+				$hsl=$this->Maba_dashboard_model->konf($data);
+				echo $hsl;
+	    }else{
+         	show_error('Not an authorized access !!!');
+         }
+		}else{
+			show_error('Not an authorized access !!!');
+		}			
 	}
 
 	public function rubahuserpass()
-	{
+	{   
+		 if($this->input->is_ajax_request()){
+            if($this->input->method()==='post'){                         
                       
-        if(!empty($this->input->post('user'))){  
-          $data['user']=$this->input->post('user');
-          $data['pass']= md5($this->input->post('pass'));
-        } 
+	        if(!empty($this->input->post('user'))){  
+	          $data['user']=$this->input->post('user');
+	          $data['pass']= md5($this->input->post('pass'));
+	        } 
 
-        $data['id_peserta']= $this->session->userdata('id_peserta');
-		$db['maba']=$this->Maba_model;
-		$this->Maba_dashboard_model->setdbvar($db);
-		$hsl=$this->Maba_dashboard_model->rubahuserpass($data);
-		echo $hsl;
+	        $data['id_peserta']= $this->session->userdata('id_peserta');
+			$db['maba']=$this->Maba_model;
+			$this->Maba_dashboard_model->setdbvar($db);
+			$hsl=$this->Maba_dashboard_model->rubahuserpass($data);
+			echo $hsl;
+
+          }else{
+         	show_error('Not an authorized access !!!');
+         }
+		}else{
+			show_error('Not an authorized access !!!');
+		} 
+
 	}
 
 	public function cetak(){
