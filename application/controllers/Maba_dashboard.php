@@ -91,7 +91,7 @@ class Maba_dashboard extends CI_Controller {
 		if($logged_in){
               $this->load->view('wisudawan_message');
 			}else{
-			redirect('/Wisudawan_dashboard/login');
+			redirect('/Maba_dashboard/login');
 		}
 	}
 
@@ -261,15 +261,17 @@ class Maba_dashboard extends CI_Controller {
 		 if($logged_in){ 
             $db['fakultas']=$this->Fakultas_model;
 		    $db['prodi']=$this->Prodi_model;
-		    $db['wisudawan']=$this->Wisudawan_model;
-		    $this->Wisudawan_dashboard_model->setdbvar($db);
-		    $data = $this->Wisudawan_dashboard_model->cetak_data(); 
+		    $db['maba']=$this->Maba_model;
+		    $db['priode']=$this->Priode_model;
+		    $db['glmb']=$this->Glmb_model;
+		    $this->Maba_dashboard_model->setdbvar($db);
+		    $data = $this->Maba_dashboard_model->cetak_data(); 
             $this->load->library('pdf');
             $this->pdf->load_view('cetak',$data);
-            $this->pdf->render();
-            $this->pdf->stream("welcome.pdf");
+            $this->pdf->render();            
+            $this->pdf->stream("Kartu Ujian.pdf");
          }else{
-			redirect('/Wisudawan_dashboard/login');
+			redirect('/Maba_dashboard/login');
 		}   
     }
 

@@ -30,6 +30,7 @@ $data['menu_idx']=$menu_idx;
        folder instead of downloading all of them to reduce the load. -->
   <link rel="stylesheet" href="<?php echo base_url();?>assets/dist/css/skins/_all-skins.min.css">
   <link rel="stylesheet" href="<?php echo base_url();?>assets/plugins/singleuploadimages/main.css">
+  <link rel="icon" href="<?php echo base_url();?>assets/img/unibba.ico" type="image/gif">
 <style type="text/css">
   
 </style>
@@ -456,7 +457,7 @@ $data['menu_idx']=$menu_idx;
      function cetak()
      {
       //myajax('','','<?php echo base_url();?>index.php/Wisudawan_dashboard/cetak');
-      window.location = '<?php echo base_url();?>index.php/Wisudawan_dashboard/cetak';
+      window.location = '<?php echo base_url();?>index.php/Maba_dashboard/cetak';
      }
 
   $(function () {

@@ -32,6 +32,7 @@ $data['menu_idx']=$menu_idx;
        folder instead of downloading all of them to reduce the load. -->
   <link rel="stylesheet" href="<?php echo base_url();?>assets/dist/css/skins/_all-skins.min.css">
   <link rel="stylesheet" href="<?php echo base_url();?>assets/plugins/singleuploadimages/main.css">
+  <link rel="icon" href="<?php echo base_url();?>assets/img/unibba.ico" type="image/gif">
 <style type="text/css">
 
 </style>
@@ -96,7 +97,7 @@ $data['menu_idx']=$menu_idx;
     <section class="content">
        <?php 
                     
-                    $header = array(array('Tahun','Awal Daftar','Akhir Daftar','Aktif','Aksi'));
+                    $header = array(array('Tahun','Pendaftaran','Test & Wawancara','Bank','Aktif','Aksi'));
                     $tbstat = array("id" => "priode",'width'=>'100%');
                     $isi_data = $data_priode;
                     $tbl = new mytable($tbstat,$header,$isi_data,'');
@@ -506,9 +507,9 @@ $data['menu_idx']=$menu_idx;
     window.location.href = "<?php echo site_url('Admin_dashboard/setting'); ?>";
   }
 
-  function deletepriode(id)
+  function deletepriode(thn)
   {
-    data = "id="+id;
+    data = "thn="+thn;
     myajax('',data,'<?php echo base_url();?>index.php/Admin_dashboard/deletedatapriode',null,after1); 
   }
   

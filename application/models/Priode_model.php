@@ -23,29 +23,27 @@ class Priode_model extends CI_Model {
    }
 
    
-   private function build_tag_db($data)
+   private function build_tag_db($data,$arr_tbjdwl)
    {
       
       $table=array();
       if(!empty($data))       
       {         
           foreach ($data as $row) {
-              $tmp=array();          
-              foreach ($row as $key=>$value) {
-                   if($key=='aktif'){
-                     $tmp[]=array($value==1 ?'True':'False',array());                                
-                   }else{
-                       if(in_array($key, array('awal','akhir')))
-                       {
-                         $tmp[]=array(date("d F Y", strtotime($value)),array());
-                       }else{ 
-                           if($key=='thn'){
-                            $tmp[]=array($value,array());
-                           } 
-                         }
-                     }
-                   
-              }
+              $tmp=array(); 
+              $tmp[]=array($row['thn'],array());         
+              $rent=date("d M Y", strtotime($row['awal'])).' - '.date("d M Y", strtotime($row['akhir']));
+              $tb_jdwl="<table><tr><td>Priode</td><td>:</td><td>$rent</td></tr>".$arr_tbjdwl[$row['thn']]['glmb'].'</table>';
+              $tmp[]=array($tb_jdwl,array());     
+              $tmp[]=array($arr_tbjdwl[$row['thn']]['usm'],array());     
+              
+              $bank = "<table><tr><td>Bayar</td><td>:</td><td>$row[byr]</td></tr>
+                              <tr><td>Bank</td><td>:</td><td>$row[bank]</td></tr>
+                              <tr><td>Rek</td><td>:</td><td>$row[rek]</td></tr>
+                              <tr><td>a.n.</td><td>:</td><td>$row[an]</td></tr>
+                      </table>";
+              $tmp[]=array($bank,array());
+              $tmp[]=array($row['aktif']==1 ?'True':'False',array());
               $tmp[]=array("<a onclick='priode(1,$row[thn])' href='javascript:void(0);'>Edit</a><br>
                             <a onclick='deletepriode($row[thn])' href='javascript:void(0);'>Delete</a>",array());              
           $table[]=$tmp;
@@ -53,8 +51,9 @@ class Priode_model extends CI_Model {
       }
       $tmp=array();
       $tmp[]=array('[thn]',array());
-      $tmp[]=array('[Awal]',array());
-      $tmp[]=array('[Akhir]',array());
+      $tmp[]=array('[Pendaftaran]',array());
+      $tmp[]=array('[Test & Wawancara]',array());
+      $tmp[]=array('[Bank]',array());
       $tmp[]=array('[Aktif]',array());
       $tmp[]=array("<a onclick='priode(0)' href='javascript:void(0);'>Add</a><br>",array());
       $table[]=$tmp;
@@ -64,16 +63,17 @@ class Priode_model extends CI_Model {
 
 
 
-   public function getsettingpriode()
+   public function getsettingpriode($arr_tbjdwl)
    {
       $data = $this->getdata('');
-      $tmp = $this->build_tag_db($data); 
+      $tmp = $this->build_tag_db($data,$arr_tbjdwl); 
       return $tmp;
    }
 
    public function priode_aktif()
    {
      $priode=$this->getdata('aktif=1');
+     $data['thn']=$priode[0]['thn'];
      $data['awal']=$priode[0]['awal'];
      $data['akhir']=$priode[0]['akhir'];
      return $data;
@@ -146,9 +146,9 @@ class Priode_model extends CI_Model {
      $this->db->update('tb_priode');
    }
 
-   public function deletedata($id)
+   public function deletedata($thn)
    {
-     $this->db->where('id', $id);
+     $this->db->where('thn', $thn);
      $this->db->delete('tb_priode');
    }
 

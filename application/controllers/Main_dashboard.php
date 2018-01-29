@@ -23,6 +23,17 @@ class Main_dashboard extends CI_Controller {
 		$this->load->view('berita',$data);
 	}
 
+	public function jadwal_syarat()
+	{
+		
+        $db['priode']=$this->Priode_model;
+        $db['glmb']=$this->Glmb_model;
+        $this->Main_dashboard_model->setdbvar($db);
+        $data=$this->Main_dashboard_model->jadwal_syarat(); 
+        $data['menu_idx']=3;
+		$this->load->view('jadwal_syarat',$data);
+	}
+
     public function save()
 	{
 		if($this->input->is_ajax_request()){

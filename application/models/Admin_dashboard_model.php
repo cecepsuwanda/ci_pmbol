@@ -293,7 +293,8 @@ class Admin_dashboard_model extends CI_Model {
      $data['bank']=empty($tmp[0]['nm_bank']) ? '' : $tmp[0]['nm_bank'];
      $data['kelas']=empty($tmp[0]['kelas']) ? '' : $tmp[0]['kelas'];     
     
-     $data['ver']=$tmp[0]['verified'];     
+     $data['ver']=$tmp[0]['verified'];
+     $data['usm']=$tmp[0]['usm'];     
 
      $data['keterangan']=empty($tmp[0]['ket']) ? '' : $tmp[0]['ket'];
      
@@ -459,7 +460,11 @@ class Admin_dashboard_model extends CI_Model {
 
    public function ket($data)
    {
-     
+           $priode=$this->db['priode']->priode_aktif();
+           $this->db['maba']->set_priode($priode);
+           
+           $data['nousm']=$this->db['maba']->getnousm($data['usm']);
+
            $this->db['maba']->updatedata($data);
 
            return "<div class='callout callout-info'><h4>Pemberitahuan</h4><p>Mahasiswa baru dengan id peserta = $data[id_peserta], berhasil di update !!!</p> </div>";                        
@@ -578,7 +583,9 @@ class Admin_dashboard_model extends CI_Model {
 
    public function baca_setting($id)
    {
-     $data['data_priode'] = $this->db['priode']->getsettingpriode();
+     $dt_jdwl = $this->db['glmb']->getallglmbjdwl();
+     $arr_tbjdwl = $this->db['glmb']->alltotb($dt_jdwl);     
+     $data['data_priode'] = $this->db['priode']->getsettingpriode($arr_tbjdwl);
      $data['data_admin'] = $this->db['user']->getsettinguser($id);     
      $data['data_fak'] = $this->db['fak']->getsettingfak('');
      $data['data_prodi'] = $this->db['prodi']->getsettingprodi('');
@@ -587,29 +594,34 @@ class Admin_dashboard_model extends CI_Model {
 
    public function baca_priode($thn)
    {
-     $tmp = $this->db['priode']->getdata('thn='.$thn);
-     $data['daftar']=date("d-m-Y", strtotime($tmp[0]['awal'])).' - '.date("d-m-Y", strtotime($tmp[0]['akhir']));
-     $data['aktif']=$tmp[0]['aktif'];
-     $data['thn']=$tmp[0]['thn'];
-     $arr_thn=$this->thnlls($tmp[0]['thn']);     
-     $data['drop_thn']=$this->build_dropdown($arr_thn,array(0,1),'','--- Pilih Tahun PMB ---');    
-     $data['drop_thn']= "<option value='".$tmp[0]['thn']."' selected='selected' >".$tmp[0]['thn']."</option>".$data['drop_thn'];
-     
-     $data['byr']=$tmp[0]['byr'];
-     $data['bank']=$tmp[0]['bank'];
-     $data['rek']=$tmp[0]['rek'];
-     $data['an']=$tmp[0]['an'];
+      if(!empty($thn)){
+         $tmp = $this->db['priode']->getdata('thn='.$thn);
+         $data['daftar']=date("d-m-Y", strtotime($tmp[0]['awal'])).' - '.date("d-m-Y", strtotime($tmp[0]['akhir']));
+         $data['aktif']=$tmp[0]['aktif'];
+         $data['thn']=$tmp[0]['thn'];
+         $arr_thn=$this->thnlls($tmp[0]['thn']);     
+         $data['drop_thn']=$this->build_dropdown($arr_thn,array(0,1),'','--- Pilih Tahun PMB ---');    
+         $data['drop_thn']= "<option value='".$tmp[0]['thn']."' selected='selected' >".$tmp[0]['thn']."</option>".$data['drop_thn'];
+         
+         $data['byr']=$tmp[0]['byr'];
+         $data['bank']=$tmp[0]['bank'];
+         $data['rek']=$tmp[0]['rek'];
+         $data['an']=$tmp[0]['an'];
 
-     $tmp = $this->db['glmb']->getglmbjdwl($thn);
-     
-     $data['glmb'] = array();
-     $data['usm'] = array();
+         $tmp = $this->db['glmb']->getglmbjdwl($thn);
+         
+         $data['glmb'] = array();
+         $data['usm'] = array();
 
-     for ($i=1;$i<=3;$i++) {
-       $data['glmb'][$i] = date("d-m-Y", strtotime($tmp[$i]['awal'])).' - '.date("d-m-Y", strtotime($tmp[$i]['akhir'])); 
-       $data['usm'][$i] = date("d-m-Y", strtotime($tmp[$i]['ujian']));       
-     }
-
+         for ($i=1;$i<=3;$i++) {
+           $data['glmb'][$i] = date("d-m-Y", strtotime($tmp[$i]['awal'])).' - '.date("d-m-Y", strtotime($tmp[$i]['akhir'])); 
+           $data['usm'][$i] = date("d-m-Y", strtotime($tmp[$i]['ujian']));       
+         }
+      }else{
+         $arr_thn=$this->thnlls('');     
+         $data['drop_thn']=$this->build_dropdown($arr_thn,array(0,1),'','--- Pilih Tahun PMB ---');    
+         
+      }
 
      return $data;
    }
@@ -625,11 +637,31 @@ class Admin_dashboard_model extends CI_Model {
    public function insertdatapriode($data)
    {
       
-      $tmp = explode('-',$data['daftar']);      
+      
+      $tmp = explode('-',$data['daftar']);
       $data['awal'] = date('Y-m-d', strtotime($tmp[0] .'-'. $tmp[1].'-'.$tmp[2])); 
-      $data['akhir'] = date('Y-m-d', strtotime($tmp[3] .'-'. $tmp[4].'-'.$tmp[5]));  
+      $data['akhir'] = date('Y-m-d', strtotime($tmp[3] .'-'. $tmp[4].'-'.$tmp[5]));       
       unset($data['daftar']);
+      
+      $data1=array();
+      foreach ($data['glmb'] as $key => $value) {
+        $tmp   = explode('-',$value);
+        $awal  = date('Y-m-d', strtotime($tmp[0] .'-'. $tmp[1].'-'.$tmp[2])); 
+        $akhir = date('Y-m-d', strtotime($tmp[3] .'-'. $tmp[4].'-'.$tmp[5]));
+        $tmp   = explode('-',$data['usm'][$key]);   
+        $ujian = date('Y-m-d', strtotime($tmp[0] .'-'. $tmp[1].'-'.$tmp[2])); 
+        $thn =  $data['thn'];
+        $thn_old = $data['thn_old'];
+        $thn_old = $thn != $thn_old ? $thn : $thn_old;
+        $data1[$key]=array('thn'=>$thn,'thn_old'=>$thn_old,'awal'=>$awal,'akhir'=>$akhir,'ujian'=>$ujian);
+      }
+
+      unset($data['thn_old']);
+      unset($data['glmb']);
+      unset($data['usm']);
+
       $this->db['priode']->insertdata($data);
+      $this->db['glmb']->insertdata($data1);      
       return "<div class='callout callout-info'><h4>Pemberitahuan</h4><p>Data Berhasil Disimpan !!!</p> </div>";      
 
    }
@@ -664,9 +696,10 @@ class Admin_dashboard_model extends CI_Model {
       return "<div class='callout callout-info'><h4>Pemberitahuan</h4><p>Data Berhasil Diupdate !!!</p> </div>";
    }   
 
-   public function deletedatapriode($id)
+   public function deletedatapriode($thn)
    {
-     $this->db['priode']->deletedata($id);
+     $this->db['priode']->deletedata($thn);
+     $this->db['glmb']->deletedata($thn);
    }
 
    public function baca_fak($id)

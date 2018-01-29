@@ -88,27 +88,24 @@ class Maba_dashboard_model extends CI_Model {
 
    public function cetak_data()
    {
-     $id_wisuda = $this->session->userdata('id_wisuda');
+     $id_peserta = $this->session->userdata('id_peserta');
+     $data['id_peserta']=$id_peserta;
      
-     $tmp=$this->db['wisudawan']->getdata('id_wisuda="'.$id_wisuda.'"');
-          
-     $data['ang']= $tmp[0]['angkatan'];
+     $tmp=$this->db['maba']->getdata('id_peserta="'.$id_peserta.'"');
+     $usm = $tmp[0]['usm'];
+     $data['nousm']=$tmp[0]['usm'].'-'.$id_peserta.'-'.sprintf("%03d", $tmp[0]['nousm']);
 
      $tmp_prodi=$this->db['prodi']->getdata('id_prodi="'.$tmp[0]['id_prodi'].'"');     
-     $tmp_fak=$this->db['fakultas']->getdata('id_fak="'.$tmp_prodi[0]['fak_prodi'].'"');
-     $data['fak']= 'Fakultas '.$tmp_fak[0]['nm_fak'];
-     $data['prodi']= 'Prodi. '.$tmp_prodi[0]['nm_prodi'];
+     $data['nm_prodi']= 'Prodi. '.$tmp_prodi[0]['nm_prodi'];
      
-     $data['nama']=$tmp[0]['nama'];
-     $data['jk']=$tmp[0]['jk']==1 ? 'Laki-laki' : 'Perempuan';
-     $data['tmpt_lahir']=$tmp[0]['tmpt_lahir'];
-     $data['tgl_lahir']=date("d-m-Y", strtotime($tmp[0]['tgl_lahir']));
-     $data['alamat']=empty($tmp[0]['alamat']) ? '' : $tmp[0]['alamat'];
-     $data['hp']=$tmp[0]['hp'];
+     $data['nama']=$tmp[0]['nm'];
      $data['photo']=$tmp[0]['photo'];
-     $data['tgl_byr']= is_null($tmp[0]['tgl_byr'])  ? '' : date("d-m-Y", strtotime($tmp[0]['tgl_byr']));
-     $data['jdl_skripsi']=$tmp[0]['jdl_skripsi'];
-     $data['nim']=$tmp[0]['nim'];
+
+     $tmp=$this->db['priode']->priode_aktif();
+     $data['TA']=$tmp['thn'].'-'.($tmp['thn']+1);
+     
+     $tmp=$this->db['glmb']->getglmbjdwl($tmp['thn']);    
+     $data['tgl_usm']=date("d M Y", strtotime($tmp[$usm]['ujian']));
      
      return $data;
 

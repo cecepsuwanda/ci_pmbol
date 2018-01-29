@@ -30,6 +30,7 @@ $data['menu_idx']=$menu_idx;
        folder instead of downloading all of them to reduce the load. -->
   <link rel="stylesheet" href="<?php echo base_url();?>assets/dist/css/skins/_all-skins.min.css">
   <link rel="stylesheet" href="<?php echo base_url();?>assets/plugins/singleuploadimages/main.css">
+  <link rel="icon" href="<?php echo base_url();?>assets/img/unibba.ico" type="image/gif">
 <style type="text/css">
 .myImg {
     border-radius: 5px;
@@ -125,7 +126,7 @@ $data['menu_idx']=$menu_idx;
 
                     $box=array('class'=>'collapsed-box');
                     $header_box = array('class'=>'with-border','title'=>'Verifikasi','tools'=>array(array('widget'=>'collapse','icon'=>'fa fa-plus'),array('widget'=>'remove','icon'=>'fa fa-times')));
-                    $footer = '<button type="button" class="btn btn-primary" onclick="Cetak()">Cetak Data Wisudawan</button>';
+                    $footer = '<button type="button" class="btn btn-primary" onclick="Cetak()">Cetak Data Mahasiswa Baru</button>';
                     $tempbox=new box($box,$header_box,$body,$footer); 
                     $content1=array(array($tempbox->display()));
                  
@@ -138,7 +139,7 @@ $data['menu_idx']=$menu_idx;
                     $body=$divrowcol->display();
 
                     $header_box['title']='Konfirmasi';
-                    $footer = '<button type="button" class="btn btn-primary" onclick="Verifikasi()">Cetak Form Verifikasi</button>'; 
+                    $footer = ''; 
                     $tempbox=new box($box,$header_box,$body,$footer); 
                     $content1[]=array($tempbox->display());
                  

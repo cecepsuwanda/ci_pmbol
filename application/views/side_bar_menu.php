@@ -14,6 +14,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             <i class="fa fa-newspaper-o"></i> <span>Berita</span>            
           </a>          
         </li>-->
+        <li class="<?php echo ($menu_idx==3 ? 'active ':''); ?>treeview">
+          <a href="<?php echo base_url();?>index.php/Main_dashboard/jadwal_syarat">
+            <i class="fa fa-edit"></i> <span>Jadwal & Syarat Pendaftaran</span>            
+          </a>          
+        </li>      
         <li class="<?php echo ($menu_idx==1 ? 'active ':''); ?>treeview">
           <a href="<?php echo base_url();?>index.php/Main_dashboard/buat_akun">
             <i class="fa fa-edit"></i> <span>Daftar Mahasiswa Baru</span>            

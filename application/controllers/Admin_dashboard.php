@@ -247,7 +247,7 @@ class Admin_dashboard extends CI_Controller {
 		}
 	}
 
-	public function cetak_wisudawan()
+	public function cetak_maba()
 	{
 		$logged_in = $this->session->userdata('logged_in');
 		if($logged_in){ 
@@ -261,7 +261,7 @@ class Admin_dashboard extends CI_Controller {
 
 			$tmp_borders = $this->excel->build_borders(PHPExcel_Style_Border::BORDER_THIN,PHPExcel_Style_Border::BORDER_MEDIUM);
 
-			$jdl=array(array('add'=>'A1','txt'=>'DATA WISUDAWAN','merge'=>true,'madd'=>'A1:E1','v'=>PHPExcel_Style_Alignment::VERTICAL_CENTER,'h'=>PHPExcel_Style_Alignment::HORIZONTAL_CENTER,'font'=>$tmp_font),
+			$jdl=array(array('add'=>'A1','txt'=>'DATA MAHASISWA BARU','merge'=>true,'madd'=>'A1:E1','v'=>PHPExcel_Style_Alignment::VERTICAL_CENTER,'h'=>PHPExcel_Style_Alignment::HORIZONTAL_CENTER,'font'=>$tmp_font),
 	                   array('add'=>'A','row'=>4,'txt'=>'NO','v'=>PHPExcel_Style_Alignment::VERTICAL_CENTER,'h'=>PHPExcel_Style_Alignment::HORIZONTAL_CENTER,'font'=>$tmp_font,'wbrdawl'=>'A','wbrdakh'=>'E','wbrdjml'=>0,'wborders'=>$tmp_borders),
 	                   array('add'=>'B4','txt'=>'NIM','v'=>PHPExcel_Style_Alignment::VERTICAL_CENTER,'h'=>PHPExcel_Style_Alignment::HORIZONTAL_CENTER,'font'=>$tmp_font),  
 	                   array('add'=>'C4','txt'=>'NAMA','v'=>PHPExcel_Style_Alignment::VERTICAL_CENTER,'h'=>PHPExcel_Style_Alignment::HORIZONTAL_CENTER,'font'=>$tmp_font),
@@ -472,13 +472,16 @@ class Admin_dashboard extends CI_Controller {
 		        
                 $data['ket']= $this->input->post('keterangan');
                 $data['verified']= $this->input->post('verifikasi');
+                $data['usm']= $this->input->post('usm');
                 
                 if($data['verified']==1){
                   $data['tglveri']=date('Y-m-d');
                 }
-                //$data['nm_bank']= $this->input->post('bank');
+                
+
 
 		        $data['id_peserta']= $this->input->post('id_peserta_old');
+				$db['priode']=$this->Priode_model;
 				$db['maba']=$this->Maba_model;
 				$this->Admin_dashboard_model->setdbvar($db);
 				$hsl=$this->Admin_dashboard_model->ket($data);
@@ -578,6 +581,7 @@ class Admin_dashboard extends CI_Controller {
 		$logged_in = $this->session->userdata('logged_in');
 		if($logged_in){ 		
             $db['priode']=$this->Priode_model;
+            $db['glmb']=$this->Glmb_model;
             $db['user']=$this->User_model;
             $db['fak']=$this->Fakultas_model;
             $db['prodi']=$this->Prodi_model;
@@ -593,8 +597,9 @@ class Admin_dashboard extends CI_Controller {
 
 	public function add_priode_admin()
 	{
-        $data['judul']='Add Tanggal Daftar dan Tanggal Wisuda';
-		echo $this->load->view('priode_modal',$data,true);
+        $data = $this->Admin_dashboard_model->baca_priode('');
+        $data['judul']='Add Priode Pendaftar Mahasiswa Baru';
+        echo $this->load->view('priode_modal',$data,true);
 	}
 
 	public function edit_priode_admin()
@@ -627,7 +632,7 @@ class Admin_dashboard extends CI_Controller {
 		$db['priode']=$this->Priode_model;
 		$db['glmb']=$this->Glmb_model;
 		$this->Admin_dashboard_model->setdbvar($db);
-        if(empty($data['thn'])){
+        if(empty($data['thn_old'])){
          echo $this->Admin_dashboard_model->insertdatapriode($data);
         }else{
          echo $this->Admin_dashboard_model->updatedatapriode($data);
@@ -638,10 +643,11 @@ class Admin_dashboard extends CI_Controller {
 
 	public function deletedatapriode()
 	{
-      $id= $this->input->post('id');
+      $thn= $this->input->post('thn');
       $db['priode']=$this->Priode_model;
+      $db['glmb']=$this->Glmb_model;
 	  $this->Admin_dashboard_model->setdbvar($db);
-	  $this->Admin_dashboard_model->deletedatapriode($id);
+	  $this->Admin_dashboard_model->deletedatapriode($thn);
 	}
 
 	public function add_user_admin()

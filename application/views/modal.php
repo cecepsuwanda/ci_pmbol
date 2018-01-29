@@ -261,7 +261,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
                 <div class="form-group">
                   <label>Keterangan</label>
-                  <textarea name="keterangan" class="form-control" rows="3" placeholder="Keterangan ..."> <?php echo $keterangan; ?></textarea>
+                  <textarea name="keterangan" class="form-control" rows="3" placeholder="Keterangan ..."><?php echo $keterangan; ?></textarea>
                 </div>  
 
                 <div class="form-group">
@@ -280,7 +280,30 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                   </div>
                   
                  </div>
-                      <!-- /.form-group -->     
+                      <!-- /.form-group -->
+
+                 <div class="form-group">
+                 <label>USM</label>
+                  <div class="radio">
+                    <label>
+                      <input type="radio" name="usm"  value="1" <?php echo (($usm==1)? 'checked':''); ?> >
+                      1
+                    </label>
+                  </div>
+                  <div class="radio">
+                    <label>
+                      <input type="radio" name="usm"  value="2" <?php echo (($usm==2)? 'checked':''); ?> >
+                      2
+                    </label>
+                  </div>
+                  <div class="radio">
+                    <label>
+                      <input type="radio" name="usm"  value="3" <?php echo (($usm==3)? 'checked':''); ?> >
+                      3
+                    </label>
+                  </div>
+                 </div>
+                      <!-- /.form-group -->          
 
                  </div>
               <!-- /.box-body -->

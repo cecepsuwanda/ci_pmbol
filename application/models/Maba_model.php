@@ -287,4 +287,25 @@ class Maba_model extends CI_Model {
       return $hsl; 
    }
 
+   public function getnousm($usm)
+   {
+      $this->db->select('max(nousm) as akhir');
+      $this->db->from('tb_maba');
+
+      $where = 'usm='.$usm.' and '.$this->sql_priode;
+     
+      $this->db->where($where);
+
+      $this->query = $this->db->get();
+      $hsl=1;
+      $this->numrows = $this->query->num_rows();
+      if($this->query->num_rows()>0)
+      {
+        $row=$this->query->result_array();
+        $hsl=$row[0]['akhir']+1;
+      }
+      return $hsl;        
+           
+   }
+
 }

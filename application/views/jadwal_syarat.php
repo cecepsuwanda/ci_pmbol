@@ -1,6 +1,8 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
-$data['menu_idx']=$menu_idx;
+  
+  $header = array(array('Gelombang','Jadwal Pendaftaran','Test & Wawancara')); 
+  $data['menu_idx']=$menu_idx;
 ?>
 <!DOCTYPE html>
 <html>
@@ -67,8 +69,8 @@ $data['menu_idx']=$menu_idx;
   <!-- Left side column. contains the logo and sidebar -->
   <aside class="main-sidebar">
     <!-- sidebar: style can be found in sidebar.less -->
-    <section class="sidebar">
-      <?php $this->load->view('side_bar_menu2',$data);  ?>      
+    <section class="sidebar">      
+      <?php $this->load->view('side_bar_menu',$data);  ?>
     </section>
     <!-- /.sidebar -->
   </aside>
@@ -78,60 +80,99 @@ $data['menu_idx']=$menu_idx;
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        Berita        
+        Jadwal & Syarat Pendaftaran        
       </h1>
       <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li class="active">Berita</li>
+        <li class="active">Jadwal & Syarat Pendaftaran</li>
       </ol>
     </section>
 
     <!-- Main content -->
     <section class="content">
-                  
-                  <?php 
-                       $content=array(array('<div class="form-group">'.
-                            form_label('Berita').
-                            form_textarea(array('name'=>'berita',
-                                                'class'=>'form-control', 
-                                                'rows'=>'3',
-                                                'maxlength'=>'1000',
-                                                'placeholder'=>'Berita ...')).
-                            '</div>'));
-
-
-                           $row = array('jml'=>1);
-                           $col = array('jml'=>1,'class'=>array('col-md-12'));
-                           $divrowcol = new div_row_col($row,$col,$content);
-                           $body = $divrowcol->display();
-
-                           $box=array('class'=>'');
-                           $header_box = array('class'=>'with-border','title'=>'Buat Berita Baru','tools'=>array(array('widget'=>'collapse','icon'=>'fa fa-minus'),array('widget'=>'remove','icon'=>'fa fa-times')));
-
-                           $tempbox=new box($box,$header_box,$body,form_submit('','Post',array('class'=>'btn btn-primary'))); 
-                           $content1 = array(array(form_open('#',array('action'=>'','id'=>'postberita')).$tempbox->display().form_close()));
-                  
+      
+      
+       <?php 
                    
-
-                   $hlp_timeline = new timeline($timeline);
-                   $content = array(array($hlp_timeline->display(1))); 
-                   $divrowcol = new div_row_col($row,$col,$content);
-                   $body = $divrowcol->display();
-
-                   $header_box['title']='Timeline Berita';
-                   $tempbox=new box($box,$header_box,$body);
-                   $content1[] = array($tempbox->display());
-
-                           $row = array('jml'=>2);
-                           $col = array('jml'=>1,'class'=>array('col-md-12'));
-                           $divrowcol = new div_row_col($row,$col,$content1);
-                           echo $divrowcol->display();
-
-                 ?>  
+                     $box=array('class'=>'');
+                     $header_box = array('class'=>'with-border','title'=>'Jadwal Pendaftaran','tools'=>array(array('widget'=>'collapse','icon'=>'fa fa-minus'),array('widget'=>'remove','icon'=>'fa fa-times')));
 
 
+                     $row = array('jml'=>1);
+                     $col = array('jml'=>1,'class'=>array('col-md-12'));
+                     
+                     $tbstat = array("id" => "ver",'width'=>'100%');
+                     $isi_data = $tb_jdwl;//$data_ver;
+                     $tbl = new mytable($tbstat,$header,$isi_data,''); 
+                     $content = array(array('<div>'.$tbl->display().'</div>'));
+                     $divrowcol = new div_row_col($row,$col,$content);
+                     $body = $divrowcol->display();
+                     $tempbox=new box($box,$header_box,$body); 
+                     $content1=array(array($tempbox->display()));                
+                     
+
+                    
+
+                   $row = array('jml'=>4);
+                   $col = array('jml'=>1,'class'=>array('col-md-12'));
+
+                   $divrowcol = new div_row_col($row,$col,$content1);
+                   echo $divrowcol->display();
+
+
+            ?>   
+
+            <div class="row">
+              <div class="col-md-12">      
+                  <div class="box">
+                      <div class="box-header with-border">
+                        <h3 class="box-title">Syarat Pendaftaran</h3>
+
+                        <div class="box-tools pull-right">
+                          <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                          </button>                
+                          <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                        </div>
+                      </div>
+                      <!-- /.box-header -->
+                      <div class="box-body">
+                         <div class="row">
+                           <div class="col-md-12">
+                               <ul class="todo-list">
+                                    <li>                 
+                                      <!-- todo text -->
+                                      <span class="text">1. Warga Negara Indonesia atau Warga Negara Keturunan Asing dikukuhkan dengan surat bukti kewarganegaraan</span>
+                                      <!-- Emphasis label -->                  
+                                    </li>
+                                    <li>
+                                       <span class="text">2. Warga Negara Asing dengan izin tertulis dari Direktorat Jendral Pendidikan Tinggi Diknas RI</span>                  
+                                    </li>
+                                    <li>
+                                      <span class="text">3. Membayar biaya pendaftaran</span>                  
+                                    </li>
+                                    <li>
+                                      <span class="text">4. Memiliki Ijazah/STTB SLTA umum, kejuruan/sederajat</span>                  
+                                    </li>
+                                    <li>
+                                      <span class="text">5. Surat keterangan sehat dan tidak buta warna khusus mahasiswa FIKES dari institusi kesehatan</span>                
+                                    </li>
+                                    <li>
+                                      <span class="text">6. Pas photo 2x3, 3x4, 4x5 masing-masing 2 lembar</span>
+                                    </li>
+                                    <li>
+                                      <span class="text">7. Mengikuti ujian saringan masuk</span>                
+                                    </li>
+                                  </ul>
+                           </div>
+                         </div>
+                      </div>
+                  </div>        
+              </div>
+            </div>    
       
 
+
+     
     </section>
     <!-- /.content -->
   </div>
@@ -141,7 +182,7 @@ $data['menu_idx']=$menu_idx;
     <div class="pull-right hidden-xs">
       <b>Version</b> 1.0.0
     </div>
-    <strong>Copyright &copy; September 2017 <a href="#">Cecep Suwanda</a> Powered by AdminLTE.</strong> All rights
+    <strong>Copyright &copy; September 2017 by <a href="<?php echo base_url();?>index.php/Admin_dashboard/login">Cecep Suwanda</a>, Template by AdminLTE.</strong> All rights
     reserved.
   </footer>
 
@@ -178,72 +219,9 @@ $data['menu_idx']=$menu_idx;
 <!-- AdminLTE for demo purposes 
 <script src="<?php echo base_url();?>assets/dist/js/demo.js"></script> -->
 <script>
-  
-  function myajax(id,data1,url,fbefore=null,fafter=null) {
-        
-        if(fbefore != null){
-            if(typeof fbefore==='function'){
-               fbefore();
-            }
-        }
-        
-        $.ajax({
-            "type" : "post",
-            "url" : url,
-            "cache" : false,
-            "data" : data1,
-            success : function (data) {
-                if(id!=''){                  
-                  $('#'+id).html(data);
-                }
-                
-                if(fafter != null){
-                    if(typeof fafter==='function'){
-                       fafter(data);
-                    }
-                }
-            }
-        });
-     }
-
-    function after(data)
-    {
-       window.location.href = "<?php echo site_url('Admin_dashboard/berita'); ?>";
-    }
-
-  function delete_berita(id)
-  {
-    myajax('','id_berita='+id,"<?php echo base_url();?>index.php/Admin_dashboard/delete_berita",null,after);
-    
-  }
-
-  function edit_berita(id)
-  {
-    $('#edit_'+id).hide();
-    $('#save_'+id).show();
-    myajax('msgbdy_'+id,'id_berita='+id,"<?php echo base_url();?>index.php/Admin_dashboard/edit_berita");
-    
-  }
-
-  function save_berita(id)
-  {
-    isi_berita=$('#berita_'+id).val();
-    myajax('','id_berita='+id+'&isi_berita='+isi_berita,"<?php echo base_url();?>index.php/Admin_dashboard/save_berita",null,after);
-    
-  }
-
-
   $(function () {
-   $("#postberita").submit(function(e) {
-
-        //prevent Default functionality
-        e.preventDefault();
-                   
-            data = $("#postberita").serialize();
-            myajax('',data,'<?php echo base_url();?>index.php/Admin_dashboard/addberita',null,after);    
-                
-    });        
-    
+    $("#ver").DataTable({"bPaginate": false,"ordering": false,"searching": false,"info": false});
+        
   });
 </script>
 </body>

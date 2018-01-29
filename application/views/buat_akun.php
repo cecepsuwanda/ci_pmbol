@@ -29,6 +29,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
   <!-- AdminLTE Skins. Choose a skin from the css/skins
        folder instead of downloading all of them to reduce the load. -->
   <link rel="stylesheet" href="<?php echo base_url();?>assets/dist/css/skins/_all-skins.min.css">
+  <link rel="icon" href="<?php echo base_url();?>assets/img/unibba.ico" type="image/gif">
 <style type="text/css">
   
 </style>
@@ -92,6 +93,82 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <!-- Main content -->
     <section class="content">
      
+      <div class="row">
+         <div class="col-md-6">
+            <!-- TO DO List -->
+          <div class="box box-primary">
+            <div class="box-header">
+              <i class="ion ion-clipboard"></i>
+              <h3 class="box-title">Petunjuk Pendaftaran</h3>              
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body">
+              <ul class="todo-list">
+                <li>                 
+                  <!-- todo text -->
+                  <span class="text">1. Melakukan pendaftaran melalui form di bawah ini </span>
+                  <!-- Emphasis label -->                  
+                </li>
+                <li>
+                   <span class="text">2. Membayar biaya pendaftaran</span>                  
+                </li>
+                <li>
+                  <span class="text">3. Login, lengkapi data dan upload bukti pembayaran</span>                  
+                </li>
+                <li>
+                  <span class="text">4. Admin akan memverifikasi data anda</span>                  
+                </li>
+                <li>
+                  <span class="text">5. Setelah admin memverifikasi, anda dapat mencetak kartu ujian</span>                  
+                </li>
+               <!-- <li>
+                      <span class="handle">
+                        <i class="fa fa-ellipsis-v"></i>
+                        <i class="fa fa-ellipsis-v"></i>
+                      </span>
+                  
+                  <span class="text">Let theme shine like a star</span>
+                  
+                  
+                </li>-->
+              </ul>
+            </div>
+            <!-- /.box-body -->
+            <div class="box-footer clearfix no-border">
+              
+            </div>
+          </div>
+          <!-- /.box -->
+         </div> 
+         <div class="col-md-6">
+            <!-- TO DO List -->
+          <div class="box box-primary">
+            <div class="box-header">
+              <i class="ion ion-clipboard"></i>
+              <h3 class="box-title">Petunjuk Pembayaran</h3>              
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body">
+              <dl class="dl-horizontal">
+                <dt>Biaya Pendaftaran</dt>
+                <dd><?php echo 'Rp. '.number_format($byr,2,',','.'); ?></dd>
+                <dt>Bank</dt>
+                <dd><?php echo $bank; ?></dd>
+                <dt>Nomor Rekening</dt>
+                <dd><?php echo $rek; ?></dd>
+                <dt>Atas Nama</dt>
+                <dd><?php echo $an; ?></dd>
+              </dl>
+            </div>
+            <!-- /.box-body -->
+            <div class="box-footer clearfix no-border">
+              
+            </div>
+          </div>
+          <!-- /.box -->
+         </div> 
+      </div>  
+
       <div class="row">
         <div class="col-md-12">
           <div class="box">

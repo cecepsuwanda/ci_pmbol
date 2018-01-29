@@ -48,7 +48,10 @@ class Main_dashboard_model extends CI_Model {
    
    public function buat_akun()
    {
-   	$tmp=$this->db['fakultas']->getdata('');
+   	
+    $data = $this->db['priode']->getrek();
+
+    $tmp=$this->db['fakultas']->getdata('');
     $data['drop_fak']=$this->build_dropdown($tmp,array('id_fak','nm_fak'),'Fakultas ','--- Pilih Fakultas ---');
     $tmp=$this->thnlls();
     $data['drop_thnlls']=$this->build_dropdown($tmp,array(0,1),'','--- Pilih Tahun Lulus ---');
@@ -60,8 +63,7 @@ class Main_dashboard_model extends CI_Model {
 
     if($this->db['priode']->isawal()==1){
       $data['msg']='Pendaftaran Online Belum Dibuka !!!';
-    }    
-   	
+    }   	
     return $data;
    }
 
@@ -109,6 +111,17 @@ class Main_dashboard_model extends CI_Model {
       $tmp=$this->db['berita']->getdata('');
       $data['timeline'] = $this->build_timeline($tmp);
       return $data;
+   }
+
+   
+
+   public function jadwal_syarat()
+   {
+      $data=$this->db['priode']->priode_aktif();
+      $data=$this->db['glmb']->getglmbjdwl($data['thn']);
+        
+      $tmp['tb_jdwl'] = $this->db['glmb']->build_tag_db($data);
+      return $tmp;
    }
 
 }

@@ -77,7 +77,7 @@ $db['default'] = array(
 	'dsn'	=> 'mysql:host=localhost;dbname=ci_pmbol',
 	'hostname' => 'localhost',
 	'username' => 'root',
-	'password' => '',
+	'password' => '123456',
 	'database' => 'ci_pmbol',
 	'dbdriver' => 'pdo',
 	'dbprefix' => '',
