@@ -28,6 +28,8 @@ function myajax(id,data1,url,fbefore=null,fafter=null) {
 
 function init(base_url)
 {
+    
+   
     $("[data-mask]").inputmask();    
     
     $(".select2").select2();

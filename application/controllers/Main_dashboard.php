@@ -65,7 +65,10 @@ class Main_dashboard extends CI_Controller {
     public function buat_akun()
 	{
 		$db['fakultas']=$this->Fakultas_model;
-		$db['priode']=$this->Priode_model;		
+		$db['priode']=$this->Priode_model;
+		$db['glmb']=$this->Glmb_model;	
+		$db['maba']=$this->Maba_model;	
+		$db['berita']=$this->Berita_model;
 		$this->Main_dashboard_model->setdbvar($db);
 		$data=$this->Main_dashboard_model->buat_akun();
 		$data['menu_idx']=1;

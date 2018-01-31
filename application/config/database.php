@@ -73,12 +73,29 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 $active_group = 'default';
 $query_builder = TRUE;
 
+    $dsn='mysql:host=localhost;dbname=ci_pmbol';
+	$hostname = 'localhost';
+	$username = 'root';
+	$password = '123456';
+	$database = 'ci_pmbol';
+
+if ($_SERVER['HTTP_HOST']=='pmbonline.unibba.ac.id') {
+    $dsn='mysql:host=localhost;dbname=uni10000_pmbol';
+	$hostname = 'localhost';
+	$username = 'uni10000_pmbol';
+	$password = 'pmbonline2015';
+	$database = 'uni10000_pmbol';	
+}
+	
+
+	
+
 $db['default'] = array(
-	'dsn'	=> 'mysql:host=localhost;dbname=ci_pmbol',
-	'hostname' => 'localhost',
-	'username' => 'root',
-	'password' => '123456',
-	'database' => 'ci_pmbol',
+	'dsn'	=> $dsn,
+	'hostname' => $hostname,
+	'username' => $username,
+	'password' => $password,
+	'database' => $database,
 	'dbdriver' => 'pdo',
 	'dbprefix' => '',
 	'pconnect' => FALSE,

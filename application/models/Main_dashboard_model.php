@@ -63,7 +63,24 @@ class Main_dashboard_model extends CI_Model {
 
     if($this->db['priode']->isawal()==1){
       $data['msg']='Pendaftaran Online Belum Dibuka !!!';
-    }   	
+    } 
+
+    $tmp=$this->db['priode']->priode_aktif();
+    $tmp=$this->db['glmb']->getglmbjdwl($tmp['thn']);
+        
+    $data['tb_jdwl'] = $this->db['glmb']->build_tag_db($tmp);
+
+     $priode=$this->db['priode']->priode_aktif();
+     $this->db['maba']->set_priode($priode);
+     $this->db['berita']->set_priode($priode);
+     
+     $data['data_daf']=$this->db['maba']->getmaba_jn_prodi(0);
+     $data['data_konf']=$this->db['maba']->getmaba_jn_prodi(1);
+     $data['data_ver']=$this->db['maba']->getmaba_jn_prodi(1,1);
+     $data['timeline'] =$this->db['berita']->getdata('');
+
+
+
     return $data;
    }
 
