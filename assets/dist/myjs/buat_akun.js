@@ -28,7 +28,12 @@ function myajax(id,data1,url,fbefore=null,fafter=null) {
 
 function init(base_url)
 {
-    
+   $("#ver").DataTable();
+    $("#konf").DataTable();
+    $("#daf").DataTable();     
+
+    $("#jdwl").DataTable({"bPaginate": false,"ordering": false,"searching": false,"info": false}); 
+   
    
     $("[data-mask]").inputmask();    
     

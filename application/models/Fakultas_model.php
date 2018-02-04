@@ -74,6 +74,23 @@ class Fakultas_model extends CI_Model {
     return $drop_fak;
    } 
 
+   public function getdropdownfak1()
+   {
+    $tmp=$this->getdata('');
+    
+    $data=array();
+    if(!empty($tmp))
+    {
+      foreach ($tmp as $row) {
+        $data[$row['id_fak']] = 'Fakultas '. $row['nm_fak'];
+      }
+    }
+
+    return $data;
+   } 
+
+
+
    public function insertdata($data)
    {
      $tmp['id_fak']=$data['id'];

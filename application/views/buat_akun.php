@@ -93,155 +93,59 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <!-- Main content -->
     <section class="content">
      
-     <div class="row">
-         <div class="col-md-12">
-                     <!-- Custom Tabs -->
-          <div class="nav-tabs-custom">
-            <ul class="nav nav-tabs">
-              <li class="active"><a href="#tab_1" data-toggle="tab">Petunjuk</a></li>
-              <li><a href="#tab_2" data-toggle="tab">Jadwal & Syarat Pendaftaran</a></li>
-              <li><a href="#tab_3" data-toggle="tab">Data Masuk</a></li>
-              <li><a href="#tab_4" data-toggle="tab">Berita</a></li>
-              <li class="pull-right"><a href="#" class="text-muted"><i class="fa fa-gear"></i></a></li>
-            </ul>
-            <div class="tab-content">
-              <div class="tab-pane active" id="tab_1">
-                 <div class="row">
-                 <div class="col-md-6">
-                      <!-- TO DO List -->
-                      <div class="box box-primary">
-                        <div class="box-header">
-                          <i class="ion ion-clipboard"></i>
-                          <h3 class="box-title">Petunjuk Pendaftaran</h3>              
-                        </div>
-                        <!-- /.box-header -->
-                        <div class="box-body">
-                          <ul class="todo-list">
-                            <li>                 
-                              <!-- todo text -->
-                              <span class="text">Melakukan pendaftaran melalui form di bawah ini </span>
-                              <!-- Emphasis label -->                  
-                            </li>
-                            <li>
-                               <span class="text">Membayar biaya pendaftaran</span>                  
-                            </li>
-                            <li>
-                              <span class="text">Login, lengkapi data dan upload bukti pembayaran</span>                  
-                            </li>
-                            <li>
-                              <span class="text">Admin akan memverifikasi data anda</span>                  
-                            </li>
-                            <li>
-                              <span class="text">Setelah admin memverifikasi, anda dapat mencetak kartu ujian</span>                  
-                            </li>
-                           
-                          </ul>
-                        </div>
-                        <!-- /.box-body -->
-                        <div class="box-footer clearfix no-border">
-                          
-                        </div>
-                      </div>
-                      <!-- /.box -->  
-                 </div> 
-                 <div class="col-md-6">
-                    <!-- TO DO List -->
-                    <div class="box box-primary">
-                        <div class="box-header">
-                          <i class="ion ion-clipboard"></i>
-                          <h3 class="box-title">Petunjuk Pembayaran</h3>              
-                        </div>
-                        <!-- /.box-header -->
-                        <div class="box-body">
-                          <dl class="dl-horizontal">
-                            <dt>Biaya Pendaftaran</dt>
-                            <dd><?php echo 'Rp. '.number_format($byr,2,',','.'); ?></dd>
-                            <dt>Bank</dt>
-                            <dd><?php echo $bank; ?></dd>
-                            <dt>Nomor Rekening</dt>
-                            <dd><?php echo $rek; ?></dd>
-                            <dt>Atas Nama</dt>
-                            <dd><?php echo $an; ?></dd>
-                          </dl>
-                        </div>
-                        <!-- /.box-body -->
-                        <div class="box-footer clearfix no-border">
-                          
-                        </div>
-                      </div>
-                      <!-- /.box -->
-                 </div> 
-              </div> 
-                
-              </div>
-              <!-- /.tab-pane -->
-              <div class="tab-pane" id="tab_2">
-                <div class="row">
-              <div class="col-md-6">      
-                  <div class="box box-primary">
-                      <div class="box-header">
-                        <h3 class="box-title">Syarat Pendaftaran</h3>                        
-                      </div>
-                      <!-- /.box-header -->
-                      <div class="box-body">
-                         <div class="row">
-                           <div class="col-md-12">
-                               <ul class="todo-list">
-                                    <li>                                      
-                                      <!-- todo text -->
-                                      <span class="text">Warga Negara Indonesia atau Warga Negara Keturunan Asing dikukuhkan dengan surat bukti kewarganegaraan</span>
-                                      <!-- Emphasis label -->                  
-                                    </li>
-                                    <li>
-                                       <span class="text">Warga Negara Asing dengan izin tertulis dari Direktorat Jendral Pendidikan Tinggi Diknas RI</span>                  
-                                    </li>
-                                    <li>
-                                      <span class="text">Membayar biaya pendaftaran</span>                  
-                                    </li>
-                                    <li>
-                                      <span class="text">Memiliki Ijazah/STTB SLTA umum, kejuruan/sederajat</span>                  
-                                    </li>
-                                    <li>
-                                      <span class="text">Surat keterangan sehat dan tidak buta warna khusus mahasiswa FIKES dari institusi kesehatan</span>                
-                                    </li>
-                                    <li>
-                                      <span class="text">Pas photo 2x3, 3x4, 4x5 masing-masing 2 lembar</span>
-                                    </li>
-                                    <li>
-                                      <span class="text">Mengikuti ujian saringan masuk</span>                
-                                    </li>
-                                  </ul>
-                           </div>
-                         </div>
-                      </div>
-                  </div>        
-              </div>
-              <div class="col-md-6">
-                 <?php
+           <?php    
+
+                    $todo=new todo_list($pendaftaran);
+                             
+                    $box=array('class'=>'box-primary');
+                    $header_box = array('class'=>'','title'=>'Petunjuk Pendaftaran');
+                    $body = $todo->display(); 
+                    $tempbox=new box($box,$header_box,$body); 
+                    $tmp1=$tempbox->display();
+                 
+                    $desc = new desc($bayar);
+                             
+                    $box=array('class'=>'box-primary');
+                    $header_box = array('class'=>'','title'=>'Petunjuk Pembayaran');
+                    $body = $desc->display('dl-horizontal'); 
+                    $tempbox=new box($box,$header_box,$body); 
+                    $tmp2= $tempbox->display();
+
+                    $row = array('jml'=>1);
+                    $col = array('jml'=>2,'class'=>array('col-md-6','col-md-6'));
+
+                    $divrowcol = new div_row_col($row,$col,array(array($tmp1,$tmp2)));
+                     
+                    $tab_content = array(); 
+                    $tab_content[] = $divrowcol->display();
+                            
+                     $todo=new todo_list($syarat);                               
+
+                     $box=array('class'=>'box-primary');
+                     $header_box = array('class'=>'','title'=>'Syarat Pendaftaran');
+                     $body = $todo->display(); 
+                     $tempbox=new box($box,$header_box,$body); 
+                     $tmp1=$tempbox->display();
+              
+                 
                      $header = array(array('Gelombang','Jadwal Pendaftaran','Test & Wawancara')); 
                      $box=array('class'=>'box-primary');
                      $header_box = array('class'=>'','title'=>'Jadwal Pendaftaran');
-
-
-                     $row = array('jml'=>1);
-                     $col = array('jml'=>1,'class'=>array('col-md-12'));
                      
                      $tbstat = array("id" => "jdwl",'width'=>'100%');
                      $isi_data = $tb_jdwl;
                      $tbl = new mytable($tbstat,$header,$isi_data,''); 
-                     $content = array(array('<div>'.$tbl->display().'</div>'));
-                     $divrowcol = new div_row_col($row,$col,$content);
-                     $body = $divrowcol->display();
+                     $content = '<div>'.$tbl->display().'</div>';
+                     $body = $content;
                      $tempbox=new box($box,$header_box,$body); 
-                     echo $tempbox->display();
-                 ?>
-              </div>
-            </div> 
-              
-              </div>
-              <!-- /.tab-pane -->
-              <div class="tab-pane" id="tab_3">
-                  <?php   
+                     $tmp2=$tempbox->display();
+
+                     $row = array('jml'=>1);
+                     $col = array('jml'=>2,'class'=>array('col-md-6','col-md-6'));
+
+                     $divrowcol = new div_row_col($row,$col,array(array($tmp1,$tmp2)));
+                     $tab_content[] = $divrowcol->display();
+          
                      $header = array(array('No','No Peserta','Nama','Fakultas','Prodi','Keterangan')); 
                      $box=array('class'=>'');
                      $header_box = array('class'=>'with-border','title'=>'Verifikasi','tools'=>array(array('widget'=>'collapse','icon'=>'fa fa-minus'),array('widget'=>'remove','icon'=>'fa fa-times')));
@@ -288,12 +192,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                    $col = array('jml'=>1,'class'=>array('col-md-12'));
 
                    $divrowcol = new div_row_col($row,$col,$content1);
-                   echo $divrowcol->display();
-                ?> 
-              </div>
-              <!-- /.tab-pane -->
-              <div class="tab-pane" id="tab_4">
-                <?php
+                   $tab_content[] = $divrowcol->display();
+              
                    $hlp_timeline = new timeline($timeline);
                    $content = array(array($hlp_timeline->display())); 
                    $divrowcol = new div_row_col($row,$col,$content);
@@ -308,145 +208,164 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                    $col = array('jml'=>1,'class'=>array('col-md-12'));
 
                    $divrowcol = new div_row_col($row,$col,$content2);
-                   echo $divrowcol->display();
-                ?>   
-              </div>
-              <!-- /.tab-pane -->
-
-            </div>
-            <!-- /.tab-content -->
-          </div>
-          <!-- nav-tabs-custom --> 
-
-         </div>
-     </div>          
+                   $tab_content[] = $divrowcol->display();
 
 
-      
+                   $header = array('Petunjuk','Jadwal & Syarat Pendaftaran','Data Masuk','Berita');                   
+                   $mytabs = new mytabs('tb',$header,$tab_content);
+                   $tabs=$mytabs->display();
+     
 
-      <div class="row">
-        <div class="col-md-12">
-          <div class="box">
-            <div class="box-header with-border">
-              <h3 class="box-title">Daftar Mahasiswa Baru</h3>
+                    $txt_msg =''; 
+                    if(!empty($msg)){                        
+                       $callout = new callout('callout-danger','Pemberitahuan',$msg);
+                       $txt_msg .= $callout->display(); 
+                       }
+                       $txt_msg.='<div id="ket"></div>'; 
+                       
+                       $row = array('jml'=>1);
+                       $col = array('jml'=>1,'class'=>array('col-md-12'));
 
-              <div class="box-tools pull-right">
-                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
-                </button>                
-                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
-              </div>
-            </div>
-            <!-- /.box-header -->
-            <div class="box-body">
-            <div class="row">
-                 <div class="col-md-12">
-                  <?php if(!empty($msg)){ ?>
-                      <div class="callout callout-danger">
-                          <h4>Pemberitahuan</h4>
-                          <p><?php echo $msg; ?></p>
-                      </div>
-                   <?php } ?> 
-                     <div id="ket">
-
-                     <div>  
-                 </div>
-            </div>      
+                       $divrowcol = new div_row_col($row,$col,array(array($txt_msg)));
+                       $body = $divrowcol->display();
              
-             <form action="#" id="buat_akun" name="buat_akun" method="post" >
-             <div class="row">
-                 <div class="col-md-6">
-                      <div class="form-group">
-                         <label>No. KTP/NIK</label>
-                         <input type="text" class="form-control" id="ktp" name="ktp"  placeholder="KTP/NIK ..." <?php echo $isbuka==0 ? 'disabled' :''; ?> data-msg="KTP/NIP Harus Diisi !!!" data-inputmask='"mask": "9999999999999999"' required data-mask>
-                      </div>
-                      <!-- /.form-group --> 
-                     <div class="form-group">
-                         <label>Nama Lengkap</label>
-                         <input type="text" class="form-control" id="nama" name="nama" placeholder="Nama Lengkap ..." <?php echo $isbuka==0 ? 'disabled' :''; ?> data-msg="Nama Lengkap Harus Diisi !!!" style="text-transform:uppercase;" on keyup="javascript:this.value=this.value.toUpperCase();" required >
-                      </div>
-                      
-                      <div class="row">
-                        <div class="col-md-6">
-                          <!-- /.form-group --> 
-                          <div class="form-group">
-                             <label>Jenis Kelamin</label>
-                             <select class="form-control select2" id="jk" name="jk" style="width: 100%;" <?php echo $isbuka==0 ? 'disabled' :''; ?> data-msg="Jenis Kelamin Harus Dipilih !!!" required >
-                               <option value='' selected='selected'>-- Pilih Jenis Kelamin --</option>
-                               <option value='L' >Laki-laki</option>
-                               <option value='P' >Perempuan</option>
-                            </select>
-                          </div>
-                          <!-- /.form-group -->
-                        </div>
-                        <div class="col-md-6">  
-                          <div class="form-group">
-                             <label>Tanggal Lahir</label>
-                             <input type="text" class="form-control" id="tgl" name="tgl" placeholder="Tanggal Lahir ..." data-inputmask='"mask": "99-99-9999"' data-msg="Tanggal Harus Diisi !!!" <?php echo $isbuka==0 ? 'disabled' :''; ?> required data-mask>
-                          </div>
-                          <!-- /.form-group -->
-                        </div>
-                      </div>
-                     
-                      <div class="form-group">
-                        <label>Lulus SMA/SMK/MA Tahun</label>
-                        <select class="form-control select2" id="thnlls" name="thnlls" style="width: 100%;" <?php echo $isbuka==0 ? 'disabled' :''; ?> data-msg="Tahun Lulus Harus Dipilih !!!" required>
-                          <?php echo $drop_thnlls ?>
-                        </select>
-                      </div>                      
-                      <!-- /.form-group -->
-                      
-                     
-                 </div>
-                 <!-- /.col -->
-                 <div class="col-md-6">
-                      
-                      <div class="form-group">
-                        <label>Fakultas</label>
-                        <select class="form-control select2" id="fak" name="fak" style="width: 100%;" <?php echo $isbuka==0 ? 'disabled' :''; ?> data-msg="Fakultas Harus Dipilih !!!" required>
-                          <?php echo $drop_fak ?>
-                        </select>
-                      </div>
-                      <!-- /.form-group -->
-                      
-                      <div class="form-group">
-                        <label>Prodi</label>
-                        <select class="form-control select2" id="prodi" name="prodi" style="width: 100%;" <?php echo $isbuka==0 ? 'disabled' :''; ?> data-msg="Prodi Harus Dipilih !!!" required>
-                          <option value = '' selected="selected">--- Pilih Prodi ---</option>                          
-                        </select>
-                      </div>                      
-                      <!-- /.form-group -->
+                                $from = new html_form(); 
+                                $attr = array('class'=>'form-control',
+                                              'id'=>'ktp',
+                                              'placeholder'=>'KTP/NIK ...',
+                                              'data-msg'=>'KTP/NIP Harus Diisi !!!',
+                                              'data-inputmask'=>'"mask": "9999999999999999"',
+                                              'required'=>'required',
+                                              'data-mask'=>'data-mask',
+                                              'width'=>'100%');
+                                
+                                if($isbuka==0){
+                                   $attr['disabled']='disabled';
+                                }
+
+                                $input = $from->addInput('text','ktp','',$attr); 
+                                $form_group = new form_group('No. KTP/NIK',$input);
+                                $kiri = $form_group->display();
+                         
+                                
+                                $attr['id']='nama'; 
+                                $attr['placeholder']='Nama Lengkap ...';
+                                $attr['data-msg']='Nama Lengkap Harus Diisi !!!';
+                                $attr['style']='text-transform:uppercase;';
+                                $attr['onkeyup']='javascript:this.value=this.value.toUpperCase();';
+                                unset($attr['data-inputmask']);
+                                unset($attr['data-mask']);
+
+                                $input = $from->addInput('text','nama','',$attr); 
+                                $form_group = new form_group('Nama Lengkap',$input);
+                                $kiri .= $form_group->display();
+
+                                    
+                                $attr['class'] = 'form-control select2';
+                                unset($attr['name']);
+                                unset($attr['placeholder']);
+                                $attr['id']='jk';
+                                $attr['data-msg']='Jenis Kelamin Harus Dipilih !!!';
+                                
+                                $input = $from->addSelectList('jk',array(''=>'-- Pilih Jenis Kelamin --','L'=>'Laki-laki','P'=>'Perempuan'),true,null,null,$attr); 
+                                $form_group = new form_group('Jenis Kelamin',$input);
+                                $input_jk = $form_group->display();
+
+                                
+                                $attr['class']='form-control';
+                                $attr['id']='tgl'; 
+                                $attr['placeholder']='Tanggal Lahir ...';
+                                $attr['data-msg']='Tanggal Lahir Harus Diisi !!!';
+                                unset($attr['style']);
+                                unset($attr['onkeyup']);
+                                $attr['data-inputmask']='"mask": "99-99-9999"';
+                                $attr['data-mask']='data-mask'; 
+                                
+                                $input = $from->addInput('text','tgl','',$attr); 
+                                $form_group = new form_group('Tanggal Lahir',$input);
+                                $input_tgl=$form_group->display();
+                                
+                                $row = array('jml'=>1);
+                                $col = array('jml'=>2,'class'=>array('col-md-6','col-md-6'));
+
+                                $divrowcol = new div_row_col($row,$col,array(array($input_jk,$input_tgl)));
+                                $kiri .= $divrowcol->display();
+
+                                $attr['class'] = 'form-control select2';
+                                unset($attr['name']);
+                                unset($attr['placeholder']);
+                                unset($attr['data-inputmask']);
+                                unset($attr['data-mask']); 
+                                $attr['id']='thnlls';
+                                $attr['data-msg']='Tahun Lulus Harus Dipilih !!!';
+                                
+                                $input = $from->addSelectList('thnlls',$drop_thnlls,true,null,'--- Pilih Tahun Lulus ---',$attr); 
+                                $form_group = new form_group('Lulus SMA/SMK/MA Tahun',$input);
+                                $kiri .= $form_group->display();
 
                         
-                      <div class="form-group">
-                         <label>Username</label>
-                         <input type="text" class="form-control"  id="user" maxlength="10" name="user" placeholder="Username ..." data-msg="Username Harus Diisi !!!" <?php echo $isbuka==0 ? 'disabled' :''; ?> required>
-                      </div>
-                      <!-- /.form-group --> 
-                      <div class="form-group">
-                         <label>Password</label>
-                         <input type="password" class="form-control" id="pass" maxlength="10" name="pass" placeholder="Password ..." data-msg="Password Harus Diisi !!!" <?php echo $isbuka==0 ? 'disabled' :''; ?> required>
-                      </div>
-                      <!-- /.form-group -->
+                                $attr['class'] = 'form-control select2';
+                                $attr['id']='fak';
+                                $attr['data-msg']='Fakultas Harus Dipilih !!!';
+                                
+                                $input = $from->addSelectList('fak',$drop_fak,true,null,'--- Pilih Fakultas ---',$attr); 
+                                $form_group = new form_group('Fakultas',$input);
+                                $kanan = $form_group->display(); 
 
+                                $attr['class'] = 'form-control select2';
+                                $attr['id']='prodi';
+                                $attr['data-msg']='Prodi Harus Dipilih !!!';
+                                
+                                $input = $from->addSelectList('prodi',array(),true,null,'--- Pilih Prodi ---',$attr); 
+                                $form_group = new form_group('Prodi',$input);
+                                $kanan .= $form_group->display(); 
 
-                 </div>
-                 <!-- /.col -->
-             </div>
-             <!-- /.row --> 
-             <div class="box-footer">
-               <button type="submit" class="btn btn-info pull-right"  <?php echo $isbuka==0 ? 'disabled' :''; ?> >Buat Akun</button>
-             </div>
-             <!-- /.row --> 
-             </form>
-            </div>
-            <!-- ./box-body -->
-            
-          </div>
-          <!-- /.box -->
-        </div>
-        <!-- /.col -->
-      </div>
-      <!-- /.row -->     
+                                $attr['class']='form-control';
+                                $attr['id']='user'; 
+                                $attr['placeholder']='Username ...';
+                                $attr['data-msg']='Username Harus Diisi !!!';
+                                $attr['maxlength']=10;
+                                
+                                $input = $from->addInput('text','user','',$attr); 
+                                $form_group = new form_group('Username',$input);
+                                $kanan .= $form_group->display();
+
+                                $attr['class']='form-control';
+                                $attr['id']='pass'; 
+                                $attr['placeholder']='Password ...';
+                                $attr['data-msg']='Password Harus Diisi !!!';
+                                $attr['maxlength']=10;
+                                
+                                $input = $from->addInput('password','pass','',$attr); 
+                                $form_group = new form_group('Password',$input);
+                                $kanan .= $form_group->display();
+
+                                $divrowcol = new div_row_col($row,$col,array(array($kiri,$kanan)));
+                                $body .= $divrowcol->display();
+
+                                $box=array('class'=>'');
+                                $header_box = array('class'=>'with-border','title'=>'Daftar Mahasiswa Baru','tools'=>array(array('widget'=>'collapse','icon'=>'fa fa-minus'),array('widget'=>'remove','icon'=>'fa fa-times')));
+                                
+                                $btn_attr=array();
+                                $btn_attr['class']='btn btn-info pull-right'; 
+                                if($isbuka==0){
+                                   $btn_attr['disabled']='disabled';
+                                }   
+
+                                $footer = $from->addButton('submit','','Buat Akun',$btn_attr); 
+
+                                $tempbox=new box($box,$header_box,$body,$footer);
+                                
+                                $form = $from->startForm('#','buat_akun','post',array('name'=>'buat_akun')).$tempbox->display().$from->endForm(); 
+
+                                $row = array('jml'=>2);
+                                $col = array('jml'=>1,'class'=>array('col-md-12'));
+
+                                $divrowcol = new div_row_col($row,$col,array(array($tabs),array($form)) );
+                                echo $divrowcol->display(); 
+
+                      ?>
+        
     </section>
     <!-- /.content -->
   </div>
@@ -505,12 +424,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <script>
 
   $(function () {
-    init(<?php echo "'".base_url()."'";?>);
-    $("#ver").DataTable();
-    $("#konf").DataTable();
-    $("#daf").DataTable();     
-
-    $("#jdwl").DataTable({"bPaginate": false,"ordering": false,"searching": false,"info": false});    
+    init(<?php echo "'".base_url()."'";?>);        
   });
 </script>
 </body>

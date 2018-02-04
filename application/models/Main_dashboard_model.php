@@ -41,7 +41,7 @@ class Main_dashboard_model extends CI_Model {
 
      $ang=array();
      for ($i=2008; $i <= $curYear ; $i++) { 
-     	 $ang[]=array($i,$i);
+     	 $ang[$i]=$i;
      }
      return $ang;
    }
@@ -49,12 +49,18 @@ class Main_dashboard_model extends CI_Model {
    public function buat_akun()
    {
    	
-    $data = $this->db['priode']->getrek();
+    $tmp = $this->db['priode']->getrek();
 
-    $tmp=$this->db['fakultas']->getdata('');
-    $data['drop_fak']=$this->build_dropdown($tmp,array('id_fak','nm_fak'),'Fakultas ','--- Pilih Fakultas ---');
+    $data['bayar'] = array('Biaya Pendaftaran'=>'Rp. '.number_format($tmp['byr'],2,',','.'),
+                   'Bank'=>$tmp['bank'],
+                   'Nomor Rekening'=>$tmp['rek'],
+                   'Atas Nama'=>$tmp['an']
+                   );
+
+    
+    $data['drop_fak']=$this->db['fakultas']->getdropdownfak1();
     $tmp=$this->thnlls();
-    $data['drop_thnlls']=$this->build_dropdown($tmp,array(0,1),'','--- Pilih Tahun Lulus ---');
+    $data['drop_thnlls']= $tmp;//$this->build_dropdown($tmp,array(0,1),'','--- Pilih Tahun Lulus ---');
             
     $data['isbuka']= $this->db['priode']->isbuka();
     if($this->db['priode']->istutup()==1){
@@ -79,7 +85,19 @@ class Main_dashboard_model extends CI_Model {
      $data['data_ver']=$this->db['maba']->getmaba_jn_prodi(1,1);
      $data['timeline'] =$this->db['berita']->getdata('');
 
+     $data['pendaftaran'] = array('Melakukan pendaftaran melalui form di bawah ini',
+                               'Membayar biaya pendaftaran',
+                               'Login, lengkapi data dan upload bukti pembayaran',
+                               'Admin akan memverifikasi data anda',
+                               'Setelah admin memverifikasi, anda dapat mencetak kartu ujian');
 
+     $data['syarat'] = array('Warga Negara Indonesia atau Warga Negara Keturunan Asing dikukuhkan dengan surat bukti kewarganegaraan',
+                             'Warga Negara Asing dengan izin tertulis dari Direktorat Jendral Pendidikan Tinggi Diknas RI',
+                             'Membayar biaya pendaftaran',
+                             'Memiliki Ijazah/STTB SLTA umum, kejuruan/sederajat',
+                             'Surat keterangan sehat dan tidak buta warna khusus mahasiswa FIKES dari institusi kesehatan',
+                             'Pas photo 2x3, 3x4, 4x5 masing-masing 2 lembar',
+                             'Mengikuti ujian saringan masuk');
 
     return $data;
    }
