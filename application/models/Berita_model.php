@@ -27,7 +27,7 @@ class Berita_model extends CI_Model {
    }
 
 
-   public function getdata($where)
+   public function getdata($where,$idx=0)
    {      
       $this->db->select('*');
       $this->db->from('tb_berita');
@@ -42,7 +42,11 @@ class Berita_model extends CI_Model {
       $hsl=array();
       if($this->query->num_rows()>0)
       {
-        $hsl=$this->build_timeline($this->query->result_array());        
+         if($idx==0){
+          $hsl=$this->build_timeline($this->query->result_array());        
+         }else{
+           $hsl=$this->query->result_array();
+         }
       }
       return $hsl; 
    }

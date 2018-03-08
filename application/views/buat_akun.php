@@ -145,73 +145,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
                      $divrowcol = new div_row_col($row,$col,array(array($tmp1,$tmp2)));
                      $tab_content[] = $divrowcol->display();
-          
-                     $header = array(array('No','No Peserta','Nama','Fakultas','Prodi','Keterangan')); 
-                     $box=array('class'=>'');
-                     $header_box = array('class'=>'with-border','title'=>'Verifikasi','tools'=>array(array('widget'=>'collapse','icon'=>'fa fa-minus'),array('widget'=>'remove','icon'=>'fa fa-times')));
 
-
-                     $row = array('jml'=>1);
-                     $col = array('jml'=>1,'class'=>array('col-md-12'));
-
-                     $callout=new callout('callout-info','Pemberitahuan','Verifikasi adalah mahasiswa baru yang sudah bayar pendaftaran dan diverifikasi oleh Admin');
-                     $tbstat = array("id" => "ver",'width'=>'100%');
-                     $isi_data = $data_ver;
-                     $tbl = new mytable($tbstat,$header,$isi_data,''); 
-                     $content = array(array( $callout->display().'<div>'.$tbl->display().'</div>'));
-                     $divrowcol = new div_row_col($row,$col,$content);
-                     $body = $divrowcol->display();
-                     $tempbox=new box($box,$header_box,$body); 
-                     $content1=array(array($tempbox->display())); 
-
-               
-                     $callout=new callout('callout-info','Pemberitahuan','Konfirmasi adalah mahasiswa baru yang sudah bayar pendaftaran');
-                     $tbstat = array("id" => "konf",'width'=>'100%');
-                     $isi_data = $data_konf;
-                     $tbl = new mytable($tbstat,$header,$isi_data,''); 
-                     $content = array(array( $callout->display().'<div>'.$tbl->display().'</div>'));
-                     $divrowcol = new div_row_col($row,$col,$content);
-                     $body = $divrowcol->display();
-                     $header_box['title']='Konfirmasi';
-                     $tempbox=new box($box,$header_box,$body); 
-                    $content1[]=array($tempbox->display()); 
-
-                    $callout=new callout('callout-info','Pemberitahuan','Daftar adalah mahasiswa baru yang baru daftar');
-                     $tbstat = array("id" => "daf",'width'=>'100%');
-                     $isi_data = $data_daf;
-                     $tbl = new mytable($tbstat,$header,$isi_data,''); 
-                     $content = array(array( $callout->display().'<div>'.$tbl->display().'</div>'));
-                     $divrowcol = new div_row_col($row,$col,$content);
-                     $body = $divrowcol->display();
-                     $header_box['title']='Daftar';
-                     $tempbox=new box($box,$header_box,$body); 
-                    $content1[]=array($tempbox->display()); 
-                  
-
-                   $row = array('jml'=>3);
-                   $col = array('jml'=>1,'class'=>array('col-md-12'));
-
-                   $divrowcol = new div_row_col($row,$col,$content1);
-                   $tab_content[] = $divrowcol->display();
-              
-                   $hlp_timeline = new timeline($timeline);
-                   $content = array(array($hlp_timeline->display())); 
-                   $divrowcol = new div_row_col($row,$col,$content);
-                   $body = $divrowcol->display();
-                   $box['class']='';
-                   $header_box['title']='Timeline Berita';
-                   $header_box['tools'][0]['icon']='fa fa-minus';
-                   $tempbox=new box($box,$header_box,$body); 
-                   $content2[]=array($tempbox->display()); 
-
-                   $row = array('jml'=>1);
-                   $col = array('jml'=>1,'class'=>array('col-md-12'));
-
-                   $divrowcol = new div_row_col($row,$col,$content2);
-                   $tab_content[] = $divrowcol->display();
-
-
-                   $header = array('Petunjuk','Jadwal & Syarat Pendaftaran','Data Masuk','Berita');                   
+                   $header = array('Petunjuk','Jadwal & Syarat Pendaftaran');                   
                    $mytabs = new mytabs('tb',$header,$tab_content);
                    $tabs=$mytabs->display();
      
@@ -356,15 +291,15 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
                                 $tempbox=new box($box,$header_box,$body,$footer);
                                 
-                                $form = $from->startForm('#','buat_akun','post',array('name'=>'buat_akun')).$tempbox->display().$from->endForm(); 
+                                $form = $from->startForm('#','post','buat_akun',array('name'=>'buat_akun')).$tempbox->display().$from->endForm(); 
 
                                 $row = array('jml'=>2);
                                 $col = array('jml'=>1,'class'=>array('col-md-12'));
 
                                 $divrowcol = new div_row_col($row,$col,array(array($tabs),array($form)) );
-                                echo $divrowcol->display(); 
+                                echo $divrowcol->display();
 
-                      ?>
+                      ?>                     
         
     </section>
     <!-- /.content -->

@@ -220,6 +220,7 @@ $data['menu_idx']=$menu_idx;
   function edit_berita(id)
   {
     $('#edit_'+id).hide();
+    $('#delete_'+id).hide();
     $('#save_'+id).show();
     myajax('msgbdy_'+id,'id_berita='+id,"<?php echo base_url();?>index.php/Admin_dashboard/edit_berita");
     

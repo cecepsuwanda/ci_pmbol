@@ -147,7 +147,7 @@ class Maba_model extends CI_Model {
       return $hsl; 
    }
 
-   public function getmaba_jn_prodi_admin($konf=0,$ver=0)
+   public function getmaba_jn_prodi_admin($konf=0,$ver=0,$idx=0)
    {      
       
       $this->db->select('photo,id_peserta,nm,tgltrans,kwitansi,fak_prodi,nm_prodi,ket');
@@ -162,13 +162,13 @@ class Maba_model extends CI_Model {
       $this->query = $this->db->get();
       $hsl=array();
       
-         //if($idx==0){
+         if($idx==0){
           $hsl = $this->build_tag_db_admin($this->query->result_array(),0,0);
-         //}else{
-          //foreach ($this->query->result_array() as $row) {
-          //  $hsl[]=$row;
-          //}
-         //} 
+         }else{
+          foreach ($this->query->result_array() as $row) {
+            $hsl[]=$row;
+          }
+         } 
 
       
       return $hsl; 

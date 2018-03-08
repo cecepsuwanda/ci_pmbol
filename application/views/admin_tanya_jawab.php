@@ -1,12 +1,13 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
+$data['menu_idx']=$menu_idx;
 ?>
 <!DOCTYPE html>
 <html>
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Wisuda | Dashboard</title>
+  <title>PMBOnline | Tanya Jawab</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <!-- Bootstrap 3.3.6 -->
@@ -24,6 +25,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
   <!-- AdminLTE Skins. Choose a skin from the css/skins
        folder instead of downloading all of them to reduce the load. -->
   <link rel="stylesheet" href="<?php echo base_url();?>assets/dist/css/skins/_all-skins.min.css">
+  <link rel="icon" href="<?php echo base_url();?>assets/img/unibba.ico" type="image/gif">
 <style type="text/css">
   
 </style>
@@ -43,9 +45,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <!-- Logo -->
     <a href="<?php echo base_url();?>" class="logo">
       <!-- mini logo for sidebar mini 50x50 pixels -->
-      <span class="logo-mini">Wisuda</span>
+      <span class="logo-mini">PMBOnline</span>
       <!-- logo for regular state and mobile devices -->
-      <span class="logo-lg">Wisuda</span>
+      <span class="logo-lg">PMBOnline</span>
     </a>
 
     <!-- Header Navbar: style can be found in header.less -->
@@ -66,7 +68,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
   <aside class="main-sidebar">
     <!-- sidebar: style can be found in sidebar.less -->
     <section class="sidebar">
-      <?php $this->load->view('side_bar_menu');  ?>      
+      <?php $this->load->view('side_bar_menu2',$data);  ?>      
     </section>
     <!-- /.sidebar -->
   </aside>
@@ -76,36 +78,37 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        Berita        
+        Tanya Jawab        
       </h1>
       <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li class="active">Berita</li>
+        <li class="active">Tanya Jawab</li>
       </ol>
     </section>
 
     <!-- Main content -->
-    <section class="content">     
-     <?php
-
+    <section class="content">
+                  
+                  <?php 
+                   $chat_box = new chat_box($arr_tanya,$arr_jawab);
                    $box=array('class'=>'');
-                   $header_box = array('class'=>'with-border','title'=>'Verifikasi','tools'=>array(array('widget'=>'collapse','icon'=>'fa fa-minus'),array('widget'=>'remove','icon'=>'fa fa-times')));
+                   $header_box = array('class'=>'with-border','title'=>'Pertanyaan dan Jawaban','tools'=>array(array('widget'=>'collapse','icon'=>'fa fa-minus'),array('widget'=>'remove','icon'=>'fa fa-times')));
+                   $body = array('class'=>'chat','content'=>$chat_box->display(1),'id'=>'chat-box'); 
+                   $tempbox=new box($box,$header_box,$body); 
+                   $content3[]=array($tempbox->display());
+
 
                    $row = array('jml'=>1);
                    $col = array('jml'=>1,'class'=>array('col-md-12'));
-                   
-                   $hlp_timeline = new timeline($timeline);
-                   $content = array(array($hlp_timeline->display())); 
-                   $divrowcol = new div_row_col($row,$col,$content);
-                   $body = $divrowcol->display();
-                   
-                   $box['class']='';
-                   $header_box['title']='Timeline Berita';
-                   $header_box['tools'][0]['icon']='fa fa-minus';
-                   $tempbox=new box($box,$header_box,$body); 
-                   echo $tempbox->display();
 
-     ?>    
+                   $divrowcol = new div_row_col($row,$col,$content3);
+                   echo $divrowcol->display(); 
+
+                 ?>  
+
+
+      
+
     </section>
     <!-- /.content -->
   </div>
@@ -152,9 +155,78 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <!-- AdminLTE for demo purposes 
 <script src="<?php echo base_url();?>assets/dist/js/demo.js"></script> -->
 <script>
+  
+  function myajax(id,data1,url,fbefore=null,fafter=null) {
+        
+        if(fbefore != null){
+            if(typeof fbefore==='function'){
+               fbefore();
+            }
+        }
+        
+        $.ajax({
+            "type" : "post",
+            "url" : url,
+            "cache" : false,
+            "data" : data1,
+            success : function (data) {
+                if(id!=''){                  
+                  $('#'+id).html(data);
+                }
+                
+                if(fafter != null){
+                    if(typeof fafter==='function'){
+                       fafter(data);
+                    }
+                }
+            }
+        });
+     }
+
+    function after(data)
+    {
+       window.location.href = "<?php echo site_url('Admin_dashboard/tanya_jawab'); ?>";
+    }
+
+  function delete_jawab(id)
+  {
+    myajax('','id_jawab='+id,"<?php echo base_url();?>index.php/Admin_dashboard/delete_jawab",null,after);
+    
+  }
+
+  function edit_jawab(id)
+  {
+    $('#edit_'+id).hide();
+    $('#delete_'+id).hide();
+    $('#save_'+id).show();
+    myajax('msgbdy_'+id,'id_jawab='+id,"<?php echo base_url();?>index.php/Admin_dashboard/edit_jawab");
+    
+  }
+
+  function save_jawab(id)
+  {
+    isi_jawab=$('#jawab_'+id).val();
+    myajax('','id_jawab='+id+'&isi_jawab='+isi_jawab,"<?php echo base_url();?>index.php/Admin_dashboard/save_jawab",null,after);
+    
+  }
+
+  function add_jawab(id)
+  {
+    isi_jawab=$('#jawab').val();
+    myajax('','id_tanya='+id+'&isi_jawab='+isi_jawab,"<?php echo base_url();?>index.php/Admin_dashboard/addjawab",null,after);
+  }
+
+
   $(function () {
-    $("#wisudawan").DataTable();
-    $("#calon").DataTable();
+   $("#postberita").submit(function(e) {
+
+        //prevent Default functionality
+        e.preventDefault();
+                   
+            data = $("#postberita").serialize();
+            myajax('',data,'<?php echo base_url();?>index.php/Admin_dashboard/addberita',null,after);    
+                
+    });        
     
   });
 </script>

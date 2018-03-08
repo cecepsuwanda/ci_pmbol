@@ -28,9 +28,7 @@ function myajax(id,data1,url,fbefore=null,fafter=null) {
 
 function init(base_url)
 {
-   $("#ver").DataTable();
-    $("#konf").DataTable();
-    $("#daf").DataTable();     
+   
 
     $("#jdwl").DataTable({"bPaginate": false,"ordering": false,"searching": false,"info": false}); 
    
@@ -41,6 +39,11 @@ function init(base_url)
 
     //Date picker
     $('#tgl').datepicker({
+      format: 'dd-mm-yyyy',
+      autoclose: true
+    });
+
+    $('#tgl_tanya').datepicker({
       format: 'dd-mm-yyyy',
       autoclose: true
     });

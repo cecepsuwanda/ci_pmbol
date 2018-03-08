@@ -30,7 +30,7 @@ class timeline
                                 
                    $timeline .= $isadmin==0 ? '' : '<div class="timeline-footer">
                                 <a class="btn btn-danger btn-xs" id="edit_'.$value['id'].'"  onclick="edit_berita('."'$value[id]'".')" href="javascript:void(0);">Edit</a>
-                                <a class="btn btn-danger btn-xs"   onclick="delete_berita('."'$value[id]'".')" href="javascript:void(0);" >Delete</a>
+                                <a class="btn btn-danger btn-xs" id="delete_'.$value['id'].'"  onclick="delete_berita('."'$value[id]'".')" href="javascript:void(0);" >Delete</a>
                                 <a class="btn btn-danger btn-xs" id="save_'.$value['id'].'"  onclick="save_berita('."'$value[id]'".')" href="javascript:void(0);" style="display: none;" >Save</a>
                                 </div>';
 

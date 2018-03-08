@@ -114,6 +114,3 @@ class HTML_Form {
     http://www.phpformclass.com/page/about (clonefish)
     http://vailo.wordpress.com/2008/09/04/the-php-form-class-one-becomes-two/
 */
-
-?>
-

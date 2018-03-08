@@ -55,6 +55,16 @@ class Admin_dashboard extends CI_Controller {
 
     }
 
+    public function tanya_jawab()
+    {
+        $db['tanya']=$this->Tanya_model;
+		$db['jawab']=$this->Jawab_model;
+		$this->Main_dashboard_model->setdbvar($db);
+		$data=$this->Main_dashboard_model->tanya_jawab();
+		$data['menu_idx']=6;        
+		$this->load->view('admin_tanya_jawab',$data);
+    }
+
     public function hapus_data_maba()
     {
           $id_peserta=$this->input->post('id_peserta'); 
@@ -85,7 +95,7 @@ class Admin_dashboard extends CI_Controller {
 		$this->Admin_dashboard_model->setdbvar($db);
 		$this->Admin_dashboard_model->simpan_berita($berita);
 
-    }
+    }    
 
     public function delete_berita()
     {
@@ -100,9 +110,49 @@ class Admin_dashboard extends CI_Controller {
     {
     	$id_berita=$this->input->post('id_berita');
     	$db['berita']=$this->Berita_model;
+    	$db['priode']=$this->Priode_model;
 		$this->Admin_dashboard_model->setdbvar($db);
 		$html = $this->Admin_dashboard_model->edit_berita($id_berita);
         echo $html;
+    }
+
+    public function addjawab()
+    {
+    	$data['id_tanya']=$this->input->post('id_tanya');
+        $data['comment']=$this->input->post('isi_jawab');
+    	$db['jawab']=$this->Jawab_model;
+		$this->Admin_dashboard_model->setdbvar($db);
+		$this->Admin_dashboard_model->simpan_jawab($data);
+
+    }
+
+    public function delete_jawab()
+    {
+    	$id_jawab=$this->input->post('id_jawab');
+    	$db['jawab']=$this->Jawab_model;
+		$this->Admin_dashboard_model->setdbvar($db);
+		$this->Admin_dashboard_model->delete_jawab($id_jawab);
+    }
+
+    public function edit_jawab()
+    {
+    	$id_jawab=$this->input->post('id_jawab');
+        $db['tanya']=$this->Tanya_model;
+		$db['jawab']=$this->Jawab_model;
+    	$this->Admin_dashboard_model->setdbvar($db);		
+		$html = $this->Admin_dashboard_model->edit_jawab($id_jawab);
+		echo $html;
+    }
+
+    public function save_jawab()
+    {
+    	$data['id']=$this->input->post('id_jawab');
+    	$data['comment']=$this->input->post('isi_jawab');
+    	
+    	$db['jawab']=$this->Jawab_model;
+		$this->Admin_dashboard_model->setdbvar($db);
+		$this->Admin_dashboard_model->save_jawab($data);
+        
     }
 
     public function save_berita()
@@ -263,29 +313,29 @@ class Admin_dashboard extends CI_Controller {
 
 			$jdl=array(array('add'=>'A1','txt'=>'DATA MAHASISWA BARU','merge'=>true,'madd'=>'A1:E1','v'=>PHPExcel_Style_Alignment::VERTICAL_CENTER,'h'=>PHPExcel_Style_Alignment::HORIZONTAL_CENTER,'font'=>$tmp_font),
 	                   array('add'=>'A','row'=>4,'txt'=>'NO','v'=>PHPExcel_Style_Alignment::VERTICAL_CENTER,'h'=>PHPExcel_Style_Alignment::HORIZONTAL_CENTER,'font'=>$tmp_font,'wbrdawl'=>'A','wbrdakh'=>'E','wbrdjml'=>0,'wborders'=>$tmp_borders),
-	                   array('add'=>'B4','txt'=>'NIM','v'=>PHPExcel_Style_Alignment::VERTICAL_CENTER,'h'=>PHPExcel_Style_Alignment::HORIZONTAL_CENTER,'font'=>$tmp_font),  
+	                   array('add'=>'B4','txt'=>'NO Pendaftaran','v'=>PHPExcel_Style_Alignment::VERTICAL_CENTER,'h'=>PHPExcel_Style_Alignment::HORIZONTAL_CENTER,'font'=>$tmp_font),  
 	                   array('add'=>'C4','txt'=>'NAMA','v'=>PHPExcel_Style_Alignment::VERTICAL_CENTER,'h'=>PHPExcel_Style_Alignment::HORIZONTAL_CENTER,'font'=>$tmp_font),
 	                   array('add'=>'D4','txt'=>'VERIFIKASI','v'=>PHPExcel_Style_Alignment::VERTICAL_CENTER,'h'=>PHPExcel_Style_Alignment::HORIZONTAL_CENTER,'font'=>$tmp_font),
 	                   array('add'=>'E4','txt'=>'KETERANGAN','v'=>PHPExcel_Style_Alignment::VERTICAL_CENTER,'h'=>PHPExcel_Style_Alignment::HORIZONTAL_CENTER,'font'=>$tmp_font)
 					   );
 
 			$isi=array(
-	                   array('add'=>'A','row'=>0,'txt'=>'','v'=>PHPExcel_Style_Alignment::VERTICAL_CENTER,'h'=>PHPExcel_Style_Alignment::HORIZONTAL_CENTER,'font'=>$tmp_font,'wbrdawl'=>'A','wbrdakh'=>'E','wbrdjml'=>0,'wborders'=>$tmp_borders),
-	                   array('add'=>'B','row'=>0,'txt'=>'','v'=>PHPExcel_Style_Alignment::VERTICAL_CENTER,'h'=>PHPExcel_Style_Alignment::HORIZONTAL_CENTER,'font'=>$tmp_font),  
-	                   array('add'=>'C','row'=>0,'txt'=>'','v'=>PHPExcel_Style_Alignment::VERTICAL_CENTER,'h'=>PHPExcel_Style_Alignment::HORIZONTAL_LEFT,'font'=>$tmp_font),
-	                   array('add'=>'D','row'=>0,'txt'=>'','v'=>PHPExcel_Style_Alignment::VERTICAL_CENTER,'h'=>PHPExcel_Style_Alignment::HORIZONTAL_LEFT,'font'=>$tmp_font),
-	                   array('add'=>'E','row'=>0,'txt'=>'','v'=>PHPExcel_Style_Alignment::VERTICAL_CENTER,'h'=>PHPExcel_Style_Alignment::HORIZONTAL_LEFT,'font'=>$tmp_font)
+	                 array('add'=>'A','row'=>0,'txt'=>'','v'=>PHPExcel_Style_Alignment::VERTICAL_CENTER,'h'=>PHPExcel_Style_Alignment::HORIZONTAL_CENTER,'font'=>$tmp_font,'wbrdawl'=>'A','wbrdakh'=>'E','wbrdjml'=>0,'wborders'=>$tmp_borders),
+	                 array('add'=>'B','row'=>0,'txt'=>'','v'=>PHPExcel_Style_Alignment::VERTICAL_CENTER,'h'=>PHPExcel_Style_Alignment::HORIZONTAL_CENTER,'font'=>$tmp_font),  
+	                 array('add'=>'C','row'=>0,'txt'=>'','v'=>PHPExcel_Style_Alignment::VERTICAL_CENTER,'h'=>PHPExcel_Style_Alignment::HORIZONTAL_LEFT,'font'=>$tmp_font),
+	                 array('add'=>'D','row'=>0,'txt'=>'','v'=>PHPExcel_Style_Alignment::VERTICAL_CENTER,'h'=>PHPExcel_Style_Alignment::HORIZONTAL_LEFT,'font'=>$tmp_font),
+	                 array('add'=>'E','row'=>0,'txt'=>'','v'=>PHPExcel_Style_Alignment::VERTICAL_CENTER,'h'=>PHPExcel_Style_Alignment::HORIZONTAL_LEFT,'font'=>$tmp_font)
 					   );
 
 			$nm_prodi=array(
-	                   array('add'=>'A','row'=>0,'txt'=>'','merge'=>true,'mawl'=>'A','makh'=>'E','mjml'=>0,'v'=>PHPExcel_Style_Alignment::VERTICAL_CENTER,'h'=>PHPExcel_Style_Alignment::HORIZONTAL_LEFT,'font'=>$tmp_font,'wbrdawl'=>'A','wbrdakh'=>'E','wbrdjml'=>0,'wborders'=>$tmp_borders)	 
-					   );
+	                  array('add'=>'A','row'=>0,'txt'=>'','merge'=>true,'mawl'=>'A','makh'=>'E','mjml'=>0,'v'=>PHPExcel_Style_Alignment::VERTICAL_CENTER,'h'=>PHPExcel_Style_Alignment::HORIZONTAL_LEFT,'font'=>$tmp_font,'wbrdawl'=>'A','wbrdakh'=>'E','wbrdjml'=>0,'wborders'=>$tmp_borders)	 
+				     );
 
 			
-            $db['wisudawan']=$this->Wisudawan_model;
+            $db['maba']=$this->Maba_model;
             $db['priode']=$this->Priode_model;
 			$this->Admin_dashboard_model->setdbvar($db);
-	        $data=$this->Admin_dashboard_model->cetak_wisudawan();
+	        $data=$this->Admin_dashboard_model->cetak_maba();
 
 			$this->excel->setActiveSheetIndex(0);
 			$this->excel->setColumnWidth($col_width);
@@ -306,24 +356,24 @@ class Admin_dashboard extends CI_Controller {
 				  $isi[0]['row']=$i++;
 				  $isi[0]['txt']=$j++;
 				  $isi[1]['row']=$i-1;
-				  $isi[1]['txt']=strtoupper($row['nim']);
+				  $isi[1]['txt']=$row['id_peserta'];
 				  $isi[2]['row']=$i-1;
-				  $isi[2]['txt']=strtoupper($row['nama']);
+				  $isi[2]['txt']=strtoupper($row['nm']);
 				  $this->excel->tulis_data($isi);					
 				}
 			}
 
 			 
-			$filename='data_wisudawan.xls'; //save our workbook as this file name
+			$filename='data_maba.xls'; //save our workbook as this file name
 			header('Content-Type: application/vnd.ms-excel'); //mime type
 			header('Content-Disposition: attachment;filename="'.$filename.'"'); //tell browser what's the file name
 			header('Cache-Control: max-age=0'); //no cache
 			            
-			//save it to Excel5 format (excel 2003 .XLS file), change this to 'Excel2007' (and adjust the filename extension, also the header mime type)
-			//if you want to save it as .XLSX Excel 2007 format
-			$objWriter = PHPExcel_IOFactory::createWriter($this->excel, 'Excel5');  
-			//force user to download the Excel file without writing it to server's HD
-			$objWriter->save('php://output');
+	        $this->excel->download();  		
+			
+            //$filename=dirname(dirname(dirname(__FILE__))).'/assets/data_maba.xls';
+			//$this->excel->save($filename);
+			
 
 		}else{
 			redirect('/Admin_dashboard/login');

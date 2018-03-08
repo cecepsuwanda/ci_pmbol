@@ -29,6 +29,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             <i class="fa fa-gear"></i> <span>Setting</span>            
           </a>          
         </li>
+        <li class="<?php echo ($menu_idx==6 ? 'active ':''); ?>treeview">
+          <a href="<?php echo base_url();?>index.php/Admin_dashboard/tanya_jawab">
+            <i class="fa fa-edit"></i> <span>Tanya Jawab</span>            
+          </a>          
+        </li>
         <li class="<?php echo ($menu_idx==5 ? 'active ':''); ?>treeview">
           <a href="<?php echo base_url();?>index.php/Admin_dashboard/logout">
             <i class="fa fa-user"></i> <span>Logout Admin</span>            

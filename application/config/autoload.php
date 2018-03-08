@@ -89,7 +89,7 @@ $autoload['drivers'] = array();
 |
 |	$autoload['helper'] = array('url', 'file');
 */
-$autoload['helper'] = array('url','date','directory','form_group','form','html_form','desc','todo_list','mytabs','mytable','callout','info_box','div_row_col','box','timeline');
+$autoload['helper'] = array('url','date','directory','form_group','form','html_form','desc','todo_list','mytabs','mytable','callout','info_box','div_row_col','box','timeline','chat_box');
 
 /*
 | -------------------------------------------------------------------
@@ -132,4 +132,4 @@ $autoload['language'] = array();
 |
 |	$autoload['model'] = array('first_model' => 'first');
 */
-$autoload['model'] = array('Main_dashboard_model','Fakultas_model','Prodi_model','Maba_model','Priode_model','Maba_dashboard_model','Log_maba_model','User_model','Log_user_model','Admin_dashboard_model','Berita_model','Glmb_model');
+$autoload['model'] = array('Main_dashboard_model','Fakultas_model','Prodi_model','Maba_model','Priode_model','Maba_dashboard_model','Log_maba_model','User_model','Log_user_model','Admin_dashboard_model','Berita_model','Glmb_model','Tanya_model','Jawab_model');

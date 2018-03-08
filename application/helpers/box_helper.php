@@ -38,9 +38,15 @@ class box
               $txt.='</div>';            
             }
             if(!empty($this->body_)){
+               if(is_array($this->body_)){
+                 $txt.='<div class="box-body '.$this->body_['class'].'" id="'.$this->body_['id'].'">';
+                 $txt.=$this->body_['content']; 
+                 $txt.='</div>'; 
+               }else{  
                  $txt.='<div class="box-body">';
                  $txt.=$this->body_; 
                  $txt.='</div>';
+               } 
               }
 
             if(!empty($this->footer_)){

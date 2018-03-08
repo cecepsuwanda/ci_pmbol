@@ -35,12 +35,12 @@ class Main_dashboard_model extends CI_Model {
        return $option;
    }
 
-   private function thnlls()
+   private function thnlls($thn=1997)
    {
    	$curYear = date('Y');
 
      $ang=array();
-     for ($i=2008; $i <= $curYear ; $i++) { 
+     for ($i=$thn; $i <= $curYear ; $i++) { 
      	 $ang[$i]=$i;
      }
      return $ang;
@@ -78,12 +78,12 @@ class Main_dashboard_model extends CI_Model {
 
      $priode=$this->db['priode']->priode_aktif();
      $this->db['maba']->set_priode($priode);
-     $this->db['berita']->set_priode($priode);
+     
      
      $data['data_daf']=$this->db['maba']->getmaba_jn_prodi(0);
      $data['data_konf']=$this->db['maba']->getmaba_jn_prodi(1);
      $data['data_ver']=$this->db['maba']->getmaba_jn_prodi(1,1);
-     $data['timeline'] =$this->db['berita']->getdata('');
+     
 
      $data['pendaftaran'] = array('Melakukan pendaftaran melalui form di bawah ini',
                                'Membayar biaya pendaftaran',
@@ -99,7 +99,19 @@ class Main_dashboard_model extends CI_Model {
                              'Pas photo 2x3, 3x4, 4x5 masing-masing 2 lembar',
                              'Mengikuti ujian saringan masuk');
 
+
+      
+     
+
     return $data;
+   }
+
+   public function tanya_jawab()
+   {
+     $data['arr_tanya'] =$this->db['tanya']->getchat();
+     $data['arr_jawab'] =$this->db['jawab']->getchat();
+
+     return $data;
    }
 
    public function save_akun($data)
@@ -131,6 +143,13 @@ class Main_dashboard_model extends CI_Model {
        }      
    }
 
+   public function save_tanya($data)
+   {
+              
+      $this->db['tanya']->insertdata($data);
+               
+   }
+
    public function get_prodi($fak)
    {
      $tmp=$this->db['prodi']->getdata("fak_prodi='$fak'");
@@ -143,8 +162,9 @@ class Main_dashboard_model extends CI_Model {
 
    public function baca_berita()
    {
-      $tmp=$this->db['berita']->getdata('');
-      $data['timeline'] = $this->build_timeline($tmp);
+      $priode=$this->db['priode']->priode_aktif();
+      $this->db['berita']->set_priode($priode);      
+      $data['timeline'] = $this->db['berita']->getdata('');
       return $data;
    }
 

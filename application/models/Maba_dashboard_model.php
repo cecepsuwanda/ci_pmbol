@@ -9,12 +9,12 @@ class Maba_dashboard_model extends CI_Model {
    	$this->db=$db;
    }
 
-   private function thnlls($angk)
+   private function thnlls($angk,$thnawl=1997)
    {
     $curYear = date('Y');
 
      $ang=array();
-     for ($i=2008; $i <= $curYear ; $i++) { 
+     for ($i=$thnawl; $i <= $curYear ; $i++) { 
        if($i!=$angk){
          $ang[]=array($i,$i);
        }

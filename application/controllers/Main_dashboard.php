@@ -14,12 +14,23 @@ class Main_dashboard extends CI_Controller {
 		$this->load->view('main_dashboard',$data);
 	}
 
+	public function tanya_jawab()
+	{
+		$db['tanya']=$this->Tanya_model;
+		$db['jawab']=$this->Jawab_model;
+		$this->Main_dashboard_model->setdbvar($db);
+		$data=$this->Main_dashboard_model->tanya_jawab();
+		$data['menu_idx']=5;        
+		$this->load->view('tanya_jawab',$data);
+	}
+
     public function berita()
 	{
-		
+		$db['priode']=$this->Priode_model;
         $db['berita']=$this->Berita_model;
         $this->Main_dashboard_model->setdbvar($db);
         $data=$this->Main_dashboard_model->baca_berita(); 
+		$data['menu_idx']=4;
 		$this->load->view('berita',$data);
 	}
 
@@ -59,6 +70,27 @@ class Main_dashboard extends CI_Controller {
 		}else{
 			show_error('Not an authorized access !!!');
 		}
+	}
+
+	public function save_tanya()
+	{
+		if($this->input->is_ajax_request()){
+         if($this->input->method()==='post'){
+            
+		    $data['nama']=  $this->input->post('nama'); 
+            $data['jk']=  $this->input->post('jk');
+            $data['pertanyaan']=   $this->input->post('pertanyaan');
+
+		    $db['tanya']=$this->Tanya_model;		    
+		    $this->Main_dashboard_model->setdbvar($db);
+		    $this->Main_dashboard_model->save_tanya($data);
+		    
+         }else{
+         	show_error('Not an authorized access !!!');
+         }
+		}else{
+			show_error('Not an authorized access !!!');
+		}
 	}    
 
 
@@ -67,8 +99,7 @@ class Main_dashboard extends CI_Controller {
 		$db['fakultas']=$this->Fakultas_model;
 		$db['priode']=$this->Priode_model;
 		$db['glmb']=$this->Glmb_model;	
-		$db['maba']=$this->Maba_model;	
-		$db['berita']=$this->Berita_model;
+		$db['maba']=$this->Maba_model;		
 		$this->Main_dashboard_model->setdbvar($db);
 		$data=$this->Main_dashboard_model->buat_akun();
 		$data['menu_idx']=1;

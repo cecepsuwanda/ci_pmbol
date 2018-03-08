@@ -105,9 +105,22 @@ class Excel extends PHPExcel {
    
    function save($nm_file)
    {
+      //save it to Excel5 format (excel 2003 .XLS file), change this to 'Excel2007' (and adjust the filename extension, also the header mime type)
+			//if you want to save it as .XLSX Excel 2007 format
       $objWriter = PHPExcel_IOFactory::createWriter($this, 'Excel5');
       $objWriter->save($nm_file);   
    }
+
+   function download()
+   {
+      //save it to Excel5 format (excel 2003 .XLS file), change this to 'Excel2007' (and adjust the filename extension, also the header mime type)
+	  //if you want to save it as .XLSX Excel 2007 format
+
+      $objWriter = PHPExcel_IOFactory::createWriter($this, 'Excel5');
+      $objWriter->save('php://output');
+   }
+
+
   
   function tulis_data($jdl,$idx=0)
    {

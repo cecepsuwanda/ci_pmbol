@@ -141,6 +141,14 @@ class Admin_dashboard_model extends CI_Model {
       return $table;
    }  
 
+   public function tanya_jawab()
+   {
+     $data['arr_tanya'] =$this->db['tanya']->getchat();
+     $data['arr_jawab'] =$this->db['jawab']->getchat();
+
+     return $data;
+   }
+
 
    public function baca_log()
    {
@@ -182,10 +190,21 @@ class Admin_dashboard_model extends CI_Model {
       $this->db['berita']->insertdata($data);
    }
 
+   public function simpan_jawab($data)
+   {
+      
+      $this->db['jawab']->insertdata($data);
+   }
+
    public function delete_berita($id_berita)
    {
       $data['id_berita']=$id_berita;
       $this->db['berita']->deletedata($data);
+   }
+
+   public function delete_jawab($id_jawab)
+   {      
+      $this->db['jawab']->deletedata($id_jawab);
    }
 
    public function save_berita($data)
@@ -194,9 +213,17 @@ class Admin_dashboard_model extends CI_Model {
       $this->db['berita']->updatedata($data);
    }
 
+   public function save_jawab($data)
+   {
+      
+      $this->db['jawab']->updatedata($data);
+   }
+
    public function edit_berita($id_berita)
    {
-      $data = $this->db['berita']->getdata("id_berita='$id_berita'");
+      $priode=$this->db['priode']->priode_aktif();
+      $this->db['berita']->set_priode($priode);
+      $data = $this->db['berita']->getdata("id_berita='$id_berita'",1);
       $tmp='';
       if(!empty($data))
       {
@@ -204,6 +231,25 @@ class Admin_dashboard_model extends CI_Model {
                   <div class="col-md-12">
                    <div class="form-group">
                    <textarea id="berita_'.$id_berita.'" name="berita" class="form-control" rows="3" placeholder="Berita ...">'.$data[0]['isi_berita'].'</textarea>
+                  </div>
+                </div>                
+              </div>';
+      }
+
+      return $tmp;
+   }
+
+   public function edit_jawab($id_jawab)
+   {
+            
+      $data = $this->db['jawab']->getdata("id='$id_jawab'");
+      $tmp='';
+      if(!empty($data))
+      {
+        $tmp = '<div class="row">
+                  <div class="col-md-12">
+                   <div class="form-group">
+                   <textarea id="jawab_'.$id_jawab.'" name="jawab" class="form-control" rows="3" placeholder="Jawab ...">'.$data[0]['comment'].'</textarea>
                   </div>
                 </div>                
               </div>';
@@ -235,20 +281,20 @@ class Admin_dashboard_model extends CI_Model {
     return $data;
    }
 
-   public function cetak_wisudawan()
+   public function cetak_maba()
    {
     $priode=$this->db['priode']->priode_aktif();
-     $this->db['wisudawan']->set_priode($priode);
-    $data=$this->db['wisudawan']->getwisudawan_jn_prodi_admin(1,1,1);
+     $this->db['maba']->set_priode($priode);
+    $data=$this->db['maba']->getmaba_jn_prodi_admin(1,1,1);
     return $data;
    }
 
-   private function thnlls($angk)
+   private function thnlls($angk,$thnawl=1997)
    {
     $curYear = date('Y');
 
      $ang=array();
-     for ($i=2008; $i <= $curYear ; $i++) { 
+     for ($i=$thnawl; $i <= $curYear ; $i++) { 
        if($i!=$angk){
          $ang[]=array($i,$i);
        }

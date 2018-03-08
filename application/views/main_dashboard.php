@@ -80,11 +80,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        Dashboard        
+        Data Masuk        
       </h1>
       <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li class="active">Dashboard</li>
+        <li class="active">Data Masuk</li>
       </ol>
     </section>
 
@@ -148,17 +148,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                     $content1[]=array($tempbox->display()); 
 
                
-                   $hlp_timeline = new timeline($timeline);
-                   $content = array(array($hlp_timeline->display())); 
-                   $divrowcol = new div_row_col($row,$col,$content);
-                   $body = $divrowcol->display();
-                   $box['class']='';
-                   $header_box['title']='Timeline Berita';
-                   $header_box['tools'][0]['icon']='fa fa-minus';
-                   $tempbox=new box($box,$header_box,$body); 
-                   $content1[]=array($tempbox->display()); 
+                   
 
-                   $row = array('jml'=>4);
+                   $row = array('jml'=>3);
                    $col = array('jml'=>1,'class'=>array('col-md-12'));
 
                    $divrowcol = new div_row_col($row,$col,$content1);
@@ -179,7 +171,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <div class="pull-right hidden-xs">
       <b>Version</b> 1.0.0
     </div>
-    <strong>Copyright &copy; September 2017 by <a href="<?php echo base_url();?>index.php/Admin_dashboard/login">Cecep Suwanda</a>, Template by AdminLTE.</strong> All rights
+    <strong>Copyright &copy; September 2017 by <a href="">Cecep Suwanda</a>, Template by AdminLTE.</strong> All rights
     reserved.
   </footer>
 
