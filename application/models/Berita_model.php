@@ -77,4 +77,23 @@ class Berita_model extends CI_Model {
      $this->db->update('tb_berita');
    }
 
+   public function jml()
+   {
+      $this->db->select('count(*) as jml');
+      $this->db->from('tb_berita');
+      $where = $this->sql_priode;
+      $this->db->where($where);      
+      
+
+      $this->query = $this->db->get();
+      $hsl=array();
+      if($this->query->num_rows()>0)
+      {
+        $row=$this->query->result_array();
+        $hsl['jml_berita']= is_null($row[0]['jml']) ? 0 : $row[0]['jml'];        
+      }
+
+      return $hsl; 
+   }
+
  }

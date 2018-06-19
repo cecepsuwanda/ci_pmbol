@@ -19,7 +19,13 @@ class Main_dashboard_model extends CI_Model {
      $data['data_daf']=$this->db['maba']->getmaba_jn_prodi(0);
      $data['data_konf']=$this->db['maba']->getmaba_jn_prodi(1);
      $data['data_ver']=$this->db['maba']->getmaba_jn_prodi(1,1);
-     $data['timeline'] =$this->db['berita']->getdata('');
+     //$data['timeline'] =$this->db['berita']->getdata('');
+     $tmp = $this->db['berita']->jml();
+     $data['jml_berita']=$tmp['jml_berita'];
+     $tmp = $this->db['tanya']->jml();
+     $data['jml_tanya']=$tmp['jml_tanya'];
+     $tmp = $this->db['jawab']->jml();
+     $data['jml_jawab']=$tmp['jml_jawab'];
 
    	 return $data;
    }
@@ -48,7 +54,17 @@ class Main_dashboard_model extends CI_Model {
    
    public function buat_akun()
    {
-   	
+   	$priode=$this->db['priode']->priode_aktif();
+    $this->db['maba']->set_priode($priode);
+    $this->db['berita']->set_priode($priode);
+    $data=$this->db['maba']->jml();
+    $tmp = $this->db['berita']->jml();
+    $data['jml_berita']=$tmp['jml_berita'];
+    $tmp = $this->db['tanya']->jml();
+     $data['jml_tanya']=$tmp['jml_tanya'];
+     $tmp = $this->db['jawab']->jml();
+     $data['jml_jawab']=$tmp['jml_jawab'];
+    
     $tmp = $this->db['priode']->getrek();
 
     $data['bayar'] = array('Biaya Pendaftaran'=>'Rp. '.number_format($tmp['byr'],2,',','.'),
@@ -108,6 +124,16 @@ class Main_dashboard_model extends CI_Model {
 
    public function tanya_jawab()
    {
+     $priode=$this->db['priode']->priode_aktif();
+     $this->db['maba']->set_priode($priode);
+     $this->db['berita']->set_priode($priode);
+     $data=$this->db['maba']->jml();
+     $tmp = $this->db['berita']->jml();
+     $data['jml_berita']=$tmp['jml_berita'];
+     $tmp = $this->db['tanya']->jml();
+     $data['jml_tanya']=$tmp['jml_tanya'];
+     $tmp = $this->db['jawab']->jml();
+     $data['jml_jawab']=$tmp['jml_jawab'];
      $data['arr_tanya'] =$this->db['tanya']->getchat();
      $data['arr_jawab'] =$this->db['jawab']->getchat();
 
@@ -163,7 +189,15 @@ class Main_dashboard_model extends CI_Model {
    public function baca_berita()
    {
       $priode=$this->db['priode']->priode_aktif();
-      $this->db['berita']->set_priode($priode);      
+      $this->db['berita']->set_priode($priode);
+      $this->db['maba']->set_priode($priode);
+      $data=$this->db['maba']->jml();      
+      $tmp = $this->db['berita']->jml();
+      $data['jml_berita']=$tmp['jml_berita'];
+      $tmp = $this->db['tanya']->jml();
+      $data['jml_tanya']=$tmp['jml_tanya'];
+      $tmp = $this->db['jawab']->jml();
+      $data['jml_jawab']=$tmp['jml_jawab'];
       $data['timeline'] = $this->db['berita']->getdata('');
       return $data;
    }

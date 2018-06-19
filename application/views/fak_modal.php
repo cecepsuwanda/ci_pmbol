@@ -6,7 +6,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
         <h4 class="modal-title"><?php echo $judul;?></h4>
       </div>
-       <form id="fakdata" action="" method="post" enctype="multipart/form-data">  
+      <form id="fakdata" action="" method="post" enctype="multipart/form-data">  
       <div class="modal-body">
         <div id="ketfakdata"></div>
          <div class="row">

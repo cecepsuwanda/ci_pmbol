@@ -4,10 +4,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class Admin_dashboard extends CI_Controller {
 	
 	public function index()
-	{
-		$logged_in = $this->session->userdata('logged_in');
+	{		
+		$logged_in = $this->my_session->userdata('logged_in');
 		if($logged_in){
-          
            $db['maba']=$this->Maba_model;
 		   $db['priode']=$this->Priode_model;
 		   $this->Admin_dashboard_model->setdbvar($db);
@@ -15,13 +14,14 @@ class Admin_dashboard extends CI_Controller {
 		   $data['menu_idx']=0;           
 		   $this->load->view('admin_dashboard',$data);
 		}else{
-			redirect('/Admin_dashboard/login');
+		   redirect('/Admin_dashboard/login');
 		}
 
 	}
 
     public function login()
 	{
+
 		$un=$this->input->post('un');
         $psw=$this->input->post('psw');
         $login = $this->input->post('login');
@@ -29,10 +29,12 @@ class Admin_dashboard extends CI_Controller {
 		$db['user']=$this->User_model;
 		$db['log']=$this->Log_user_model;	
 		$this->Admin_dashboard_model->setdbvar($db);
-		$data=$this->Admin_dashboard_model->login($login,$un,$psw);
+		$data=$this->Admin_dashboard_model->login($login,$un,$psw);		
+
         if(($login=='login') and ($data['msg']=='') )
 		{
-          redirect('/Admin_dashboard/index');
+          $this->my_session->set_userdata($data['dt_sess']);
+          redirect('/admin_dashboard');
 		}else{
 		  $this->load->view('admin_login',$data);
 		} 
@@ -168,7 +170,7 @@ class Admin_dashboard extends CI_Controller {
 
 	 public function berita()
 	{
-		$logged_in = $this->session->userdata('logged_in');
+		$logged_in = $this->my_session->userdata('logged_in');
 		if($logged_in){
 		   $db['priode']=$this->Priode_model;
 		   $db['berita']=$this->Berita_model;
@@ -183,7 +185,7 @@ class Admin_dashboard extends CI_Controller {
 
 	public function data()
 	{
-		$logged_in = $this->session->userdata('logged_in');
+		$logged_in = $this->my_session->userdata('logged_in');
 		if($logged_in){
 		  $db['maba']=$this->Maba_model;
 		  $db['priode']=$this->Priode_model;
@@ -194,14 +196,13 @@ class Admin_dashboard extends CI_Controller {
 		}else{
 			redirect('/Admin_dashboard/login');
 		}
-
-
 	}
 
 	public function log()
 	{
-      $logged_in = $this->session->userdata('logged_in');
-		if($logged_in){  
+      
+        $logged_in = $this->my_session->userdata('logged_in');        
+	    if($logged_in){  
 	        $db['log_admin']=$this->Log_user_model;
 			$db['log_maba']=$this->Log_maba_model;
 			$db['maba']=$this->Maba_model;
@@ -216,7 +217,7 @@ class Admin_dashboard extends CI_Controller {
 
 	public function cetak_verifikasi()
 	{
-		$logged_in = $this->session->userdata('logged_in');
+		$logged_in = $this->my_session->userdata('logged_in');
 		if($logged_in){ 
 
 			//load our new PHPExcel library
@@ -299,7 +300,7 @@ class Admin_dashboard extends CI_Controller {
 
 	public function cetak_maba()
 	{
-		$logged_in = $this->session->userdata('logged_in');
+		$logged_in = $this->my_session->userdata('logged_in');
 		if($logged_in){ 
 
 			//load our new PHPExcel library
@@ -382,17 +383,17 @@ class Admin_dashboard extends CI_Controller {
 
 	public function logout()
 	{
-		$logged_in = $this->session->userdata('logged_in');
+		$logged_in = $this->my_session->userdata('logged_in');
 		if($logged_in){
-		  $user_name = $this->session->userdata('user_name');
-		  $lg_time = $this->session->userdata('lg_time');
+		  $user_name = $this->my_session->userdata('user_name');
+		  $lg_time = $this->my_session->userdata('lg_time');
 
 		  $db['log']=$this->Log_user_model;
 		  $this->Admin_dashboard_model->setdbvar($db);
 		  $this->Admin_dashboard_model->logout($user_name,$lg_time);
 		  
 		  $array_items = array('user_name','lg_time','logged_in');
-          $this->session->unset_userdata($array_items);
+          $this->my_session->unset_userdata($array_items);
           
 		}
 		redirect('/Main_dashboard/buat_akun');
@@ -565,7 +566,7 @@ class Admin_dashboard extends CI_Controller {
         //$data['ket']=$this->input->post('keterangan');
         //$data['ver']= $this->input->post('verifikasi');
         //$data['tgl_ver']=date('Y-m-d H:i:s');
-        //$data['admin_name']=$this->session->userdata('user_name');
+        //$data['admin_name']=$this->my_session->userdata('user_name');
 
        // $data['ipk']= $this->input->post('ipk');
         
@@ -628,14 +629,14 @@ class Admin_dashboard extends CI_Controller {
 
 	public function setting()
 	{
-		$logged_in = $this->session->userdata('logged_in');
+		$logged_in = $this->my_session->userdata('logged_in');
 		if($logged_in){ 		
             $db['priode']=$this->Priode_model;
             $db['glmb']=$this->Glmb_model;
             $db['user']=$this->User_model;
             $db['fak']=$this->Fakultas_model;
             $db['prodi']=$this->Prodi_model;
-			$id = $this->session->userdata('user_name');
+			$id = $this->my_session->userdata('user_name');
 			$this->Admin_dashboard_model->setdbvar($db);
             $data = $this->Admin_dashboard_model->baca_setting($id);
             $data['menu_idx']=4;

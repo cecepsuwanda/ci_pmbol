@@ -5,7 +5,7 @@ class Maba_dashboard extends CI_Controller {
 	
 	public function index()
 	{
-		$logged_in = $this->session->userdata('logged_in');
+		$logged_in = $this->my_session->userdata('logged_in');
 		if($logged_in){
 		    $db['priode']=$this->Priode_model;
 		    $db['berita']=$this->Berita_model;
@@ -33,6 +33,7 @@ class Maba_dashboard extends CI_Controller {
 		$data=$this->Maba_dashboard_model->login($login,$un,$psw);
         if(($login=='login') and ($data['msg']=='') )
 		{
+          $this->my_session->set_userdata($data['dt_sess']);
           redirect('/Maba_dashboard/index');
 		}else{
 		  $this->load->view('maba_login',$data);
@@ -68,14 +69,15 @@ class Maba_dashboard extends CI_Controller {
 
 	public function data()
 	{
-		$logged_in = $this->session->userdata('logged_in');
+		$logged_in = $this->my_session->userdata('logged_in');
 		if($logged_in){
 		  $db['fakultas']=$this->Fakultas_model;
 		  $db['prodi']=$this->Prodi_model;
 		  $db['maba']=$this->Maba_model;
 		  $db['priode']=$this->Priode_model;
+		  $db['glmb']=$this->Glmb_model;
 		  $this->Maba_dashboard_model->setdbvar($db);
-		  $data = $this->Maba_dashboard_model->baca_data();		  
+		  $data = $this->Maba_dashboard_model->baca_data($this->my_session->userdata('id_peserta'));		  
           $data['menu_idx']=1;
 		  $this->load->view('maba_data',$data);
 		}else{
@@ -87,7 +89,7 @@ class Maba_dashboard extends CI_Controller {
 
 	public function message()
 	{
-		$logged_in = $this->session->userdata('logged_in');
+		$logged_in = $this->my_session->userdata('logged_in');
 		if($logged_in){
               $this->load->view('wisudawan_message');
 			}else{
@@ -97,17 +99,17 @@ class Maba_dashboard extends CI_Controller {
 
 	public function logout()
 	{
-		$logged_in = $this->session->userdata('logged_in');
+		$logged_in = $this->my_session->userdata('logged_in');
 		if($logged_in){
-		  $id_peserta = $this->session->userdata('id_peserta');
-		  $lg_time = $this->session->userdata('lg_time');
+		  $id_peserta = $this->my_session->userdata('id_peserta');
+		  $lg_time = $this->my_session->userdata('lg_time');
 
 		  $db['log']=$this->Log_maba_model;
 		  $this->Maba_dashboard_model->setdbvar($db);
 		  $this->Maba_dashboard_model->logout($id_peserta,$lg_time);
 		  
 		  $array_items = array('id_peserta','lg_time','logged_in');
-          $this->session->unset_userdata($array_items);
+          $this->my_session->unset_userdata($array_items);
           
 		}
 		redirect('/Main_dashboard/buat_akun');
@@ -118,7 +120,7 @@ class Maba_dashboard extends CI_Controller {
 		 
 		        header('Content-type: application/json');
         
-                $id_peserta = $this->session->userdata('id_peserta');
+                $id_peserta = $this->my_session->userdata('id_peserta');
                 $nm_file = 'temp_'.$id_peserta.'_'.date('YmdHis');
                 
                 $config['upload_path']          = './assets/photo';
@@ -169,7 +171,7 @@ class Maba_dashboard extends CI_Controller {
 	         $data['photo']= $this->input->post('nm_file');
 	        }
 	        
-	        $data['id_peserta']= $this->session->userdata('id_peserta');
+	        $data['id_peserta']= $this->my_session->userdata('id_peserta');
 			$db['maba']=$this->Maba_model;
 			$this->Maba_dashboard_model->setdbvar($db);
 			$hsl=$this->Maba_dashboard_model->updatedatamaba($data);
@@ -190,7 +192,7 @@ class Maba_dashboard extends CI_Controller {
 		        $data['id_prodi']= $this->input->post('prodi');
 		        $data['kelas']= $this->input->post('kelas');
 
-		        $data['id_peserta']= $this->session->userdata('id_peserta');
+		        $data['id_peserta']= $this->my_session->userdata('id_peserta');
 				$db['maba']=$this->Maba_model;
 				$this->Maba_dashboard_model->setdbvar($db);
 				$hsl=$this->Maba_dashboard_model->updatedatapil($data);
@@ -218,7 +220,7 @@ class Maba_dashboard extends CI_Controller {
 		         $data['kwitansi']= $this->input->post('nm_file1');
 		        }
 
-		        $data['id_peserta']= $this->session->userdata('id_peserta');
+		        $data['id_peserta']= $this->my_session->userdata('id_peserta');
 				$db['maba']=$this->Maba_model;
 				$this->Maba_dashboard_model->setdbvar($db);
 				$hsl=$this->Maba_dashboard_model->konf($data);
@@ -241,7 +243,7 @@ class Maba_dashboard extends CI_Controller {
 	          $data['pass']= md5($this->input->post('pass'));
 	        } 
 
-	        $data['id_peserta']= $this->session->userdata('id_peserta');
+	        $data['id_peserta']= $this->my_session->userdata('id_peserta');
 			$db['maba']=$this->Maba_model;
 			$this->Maba_dashboard_model->setdbvar($db);
 			$hsl=$this->Maba_dashboard_model->rubahuserpass($data);
@@ -256,8 +258,39 @@ class Maba_dashboard extends CI_Controller {
 
 	}
 
+	public function rubah()
+	{
+		 $logged_in = $this->my_session->userdata('logged_in');
+		 if($logged_in){ 
+            $db['priode']=$this->Priode_model;
+		    $db['glmb']=$this->Glmb_model; 
+            $this->Maba_dashboard_model->setdbvar($db);   
+            $data=$this->Maba_dashboard_model->rubah();
+            $data['menu_idx']=4;
+            $this->load->view('maba_rubah',$data);
+		 }else{
+			redirect('/Maba_dashboard/login');
+		}	
+	}
+
+	public function konfirmasi()
+	{
+		 $logged_in = $this->my_session->userdata('logged_in');
+		 if($logged_in){ 
+		 	$db['priode']=$this->Priode_model;
+		    $db['glmb']=$this->Glmb_model;
+		    $db['maba']=$this->Maba_model; 
+            $this->Maba_dashboard_model->setdbvar($db);   
+            $data=$this->Maba_dashboard_model->konfirmasi($this->my_session->userdata('id_peserta'));
+            $data['menu_idx']=2;
+            $this->load->view('maba_konfirmasi',$data); 
+         }else{
+			redirect('/Maba_dashboard/login');
+		 }	
+	}
+
 	public function cetak(){
-         $logged_in = $this->session->userdata('logged_in');
+         $logged_in = $this->my_session->userdata('logged_in');
 		 if($logged_in){ 
             $db['fakultas']=$this->Fakultas_model;
 		    $db['prodi']=$this->Prodi_model;
@@ -265,8 +298,9 @@ class Maba_dashboard extends CI_Controller {
 		    $db['priode']=$this->Priode_model;
 		    $db['glmb']=$this->Glmb_model;
 		    $this->Maba_dashboard_model->setdbvar($db);
-		    $data = $this->Maba_dashboard_model->cetak_data(); 
-            $this->load->library('pdf');
+		    $data = $this->Maba_dashboard_model->cetak_data($this->my_session->userdata('id_peserta')); 
+            //$this->load->view('cetak',$data);
+            $this->load->library('Pdf');
             $this->pdf->load_view('cetak',$data);
             $this->pdf->render();            
             $this->pdf->stream("Kartu Ujian.pdf");

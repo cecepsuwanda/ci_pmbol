@@ -52,3 +52,20 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 $route['default_controller'] = 'Main_dashboard/buat_akun';
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
+
+
+$route['buat_akun'] = 'Main_dashboard/buat_akun';
+$route['berita'] = 'Main_dashboard/berita';
+$route['data_masuk'] = 'Main_dashboard/index';
+$route['tanya_jawab'] = 'Main_dashboard/tanya_jawab';
+
+$route['admin_app'] = 'Admin_dashboard/login';
+$route['admin_dashboard'] = 'Admin_dashboard/index';
+$route['admin_log'] = 'Admin_dashboard/log';
+$route['admin_berita'] = 'Admin_dashboard/berita';
+$route['admin_data_baru'] = 'Admin_dashboard/data';
+$route['admin_setting'] = 'Admin_dashboard/setting';
+$route['admin_tanya_jawab'] = 'Admin_dashboard/tanya_jawab';
+$route['admin_logout'] = 'Admin_dashboard/logout';
+
+$route['maba_app'] = 'Maba_dashboard/login';

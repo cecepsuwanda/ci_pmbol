@@ -208,7 +208,7 @@ $data['menu_idx']=$menu_idx;
 
     function after(data)
     {
-       window.location.href = "<?php echo site_url('Admin_dashboard/berita'); ?>";
+       window.location.href = "<?php echo site_url('admin_berita'); ?>";
     }
 
   function delete_berita(id)

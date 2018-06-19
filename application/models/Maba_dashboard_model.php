@@ -35,9 +35,9 @@ class Maba_dashboard_model extends CI_Model {
    }
 
 
-   public function baca_data()
+   public function baca_data($id_peserta)
    {
-     $id_peserta = $this->session->userdata('id_peserta');
+     //$id_peserta = $this->session->userdata('id_peserta');
 
      $tmp=$this->db['maba']->getdata('id_peserta="'.$id_peserta.'"');
      
@@ -67,28 +67,28 @@ class Maba_dashboard_model extends CI_Model {
      $data['email']=empty($tmp[0]['email']) ? '' : $tmp[0]['email'];
      $data['hp']=$tmp[0]['hp'];     
      $data['photo']=$tmp[0]['photo'];
-     $data['tgl_trans']= is_null($tmp[0]['tgltrans'])  ? '' : date("d-m-Y", strtotime($tmp[0]['tgltrans']));
-     $data['kwitansi']=$tmp[0]['kwitansi'];
-     $data['bank']=empty($tmp[0]['nm_bank']) ? '' : $tmp[0]['nm_bank'];
-     $data['kelas']=empty($tmp[0]['kelas']) ? '' : $tmp[0]['kelas'];     
-    
-     $data['ver']=$tmp[0]['verified'];
+     
 
      $tmp = $this->db['priode']->getrek();
 
-     $data['konf_msg']='Biaya pendaftaran Rp. '.number_format($tmp['byr'],2,',','.').'<br> ditransfer ke <br>'.
-                       'No Rekening : '.$tmp['rek'].'<br>'.
-                       'Bank        : '.$tmp['bank'].'<br>'.
-                       'Atas Nama   : '.$tmp['an'];
+     $data['bayar'] = array('Biaya Pendaftaran'=>'Rp. '.number_format($tmp['byr'],2,',','.'),
+                   'Bank'=>$tmp['bank'],
+                   'Nomor Rekening'=>$tmp['rek'],
+                   'Atas Nama'=>$tmp['an']
+                   );
+
+     $tmp=$this->db['priode']->priode_aktif();
+     $tmp=$this->db['glmb']->getglmbjdwl($tmp['thn']); 
+     $data['tb_jdwl'] = $this->db['glmb']->build_tag_db($tmp);                  
 
 
      return $data;
 
    }
 
-   public function cetak_data()
+   public function cetak_data($id_peserta)
    {
-     $id_peserta = $this->session->userdata('id_peserta');
+     //$id_peserta = $this->session->userdata('id_peserta');
      $data['id_peserta']=$id_peserta;
      
      $tmp=$this->db['maba']->getdata('id_peserta="'.$id_peserta.'"');
@@ -152,7 +152,7 @@ class Maba_dashboard_model extends CI_Model {
                'lg_time' => date('Y-m-d H:i:s'),
                'logged_in' => TRUE
              );
-             $this->session->set_userdata($newdata);
+             $data['dt_sess']=$newdata;
              $tmp=$this->db['log']->insertdata($newdata);     
 
         }
@@ -219,7 +219,7 @@ class Maba_dashboard_model extends CI_Model {
                       
                          $this->db['maba']->updatedata($data);
 
-                         $id_peserta = $this->session->userdata('id_peserta');
+                         $id_peserta = $data['id_peserta'];
                          $nm_file = 'temp_'.$id_peserta;
 
                          $file = directory_map('./assets/photo/');
@@ -283,7 +283,7 @@ class Maba_dashboard_model extends CI_Model {
                      
                          $this->db['maba']->updatedata($data);
 
-                         $id_peserta = $this->session->userdata('id_peserta');
+                         $id_peserta = $data['id_peserta'];
                          $nm_file = 'temp_'.$id_peserta;
 
                          $file = directory_map('./assets/photo/');
@@ -365,6 +365,47 @@ class Maba_dashboard_model extends CI_Model {
       
       return $data;
    }
+    
+   public function rubah()
+   {
+       $tmp = $this->db['priode']->getrek();
 
+       $data['bayar'] = array('Biaya Pendaftaran'=>'Rp. '.number_format($tmp['byr'],2,',','.'),
+                   'Bank'=>$tmp['bank'],
+                   'Nomor Rekening'=>$tmp['rek'],
+                   'Atas Nama'=>$tmp['an']
+                   );
+
+       $tmp=$this->db['priode']->priode_aktif();
+       $tmp=$this->db['glmb']->getglmbjdwl($tmp['thn']); 
+       $data['tb_jdwl'] = $this->db['glmb']->build_tag_db($tmp);
+
+       return $data;
+   } 
+
+   public function konfirmasi($id_peserta)
+   {
+       $tmp=$this->db['maba']->getdata('id_peserta="'.$id_peserta.'"');
+       $data['kwitansi']=$tmp[0]['kwitansi'];
+       $data['bank']=empty($tmp[0]['nm_bank']) ? '' : $tmp[0]['nm_bank'];
+       $data['tgl_trans']= is_null($tmp[0]['tgltrans'])  ? '' : date("d-m-Y", strtotime($tmp[0]['tgltrans']));
+       $data['ver']=$tmp[0]['verified'];
+
+       $tmp = $this->db['priode']->getrek();
+
+       $data['bayar'] = array('Biaya Pendaftaran'=>'Rp. '.number_format($tmp['byr'],2,',','.'),
+                   'Bank'=>$tmp['bank'],
+                   'Nomor Rekening'=>$tmp['rek'],
+                   'Atas Nama'=>$tmp['an']
+                   );
+
+       $tmp=$this->db['priode']->priode_aktif();
+       $tmp=$this->db['glmb']->getglmbjdwl($tmp['thn']); 
+       $data['tb_jdwl'] = $this->db['glmb']->build_tag_db($tmp);
+
+       return $data;
+   } 
+
+   
 
 }

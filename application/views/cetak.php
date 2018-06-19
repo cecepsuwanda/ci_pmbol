@@ -16,7 +16,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         <table width = '595px'>   
             <tr>
                <td width='80'>
-                    <img src='<?php echo base_url();?>assets/img/logo_unibba.png' style='width:40px;height:40px'>         
+                    <img src='<?php echo dirname((dirname(dirname(__FILE__))));?>/assets/img/logo_unibba.png' style='width:40px;height:40px'>         
                </td>
               <td>
                   <font size='2'><b>UNIVERSITAS BALE BANDUNG<br>PENERIMAAN MAHASISWA BARU <?php echo $TA; ?> </b></font>
@@ -40,7 +40,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
              <table width='595px'>
                <tr>
                   <td >
-                      <img src='<?php echo base_url();?>assets/photo/<?php echo $photo;?>' style='width:150px;height:200px'>
+                      <img src='<?php echo dirname((dirname(dirname(__FILE__))));?>/assets/photo/<?php echo $photo;?>' style='width:150px;height:200px'>
                  </td>
                  <td>           
                       <table>             

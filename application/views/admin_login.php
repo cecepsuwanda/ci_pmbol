@@ -41,7 +41,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                   ?>
     <p class="login-box-msg">Masukkan username dan password untuk login</p>
 
-    <form action="<?php echo base_url();?>index.php/Admin_dashboard/login" method="post" id="login">
+    <form action="<?php echo base_url();?>admin_app" method="post" id="login">
       <div class="form-group has-feedback">
         <input type="text" name="un" value="" maxlength="10" class="form-control" placeholder="Username" data-msg="Username Harus Diisi !!!"  required>
         <span class="glyphicon glyphicon-user form-control-feedback"></span>

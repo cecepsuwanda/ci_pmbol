@@ -72,7 +72,21 @@ class Jawab_model extends CI_Model {
      $this->db->delete('tb_jawab');
    }
 
+   public function jml()
+   {
+      $this->db->select('count(*) as jml');
+      $this->db->from('tb_jawab');
+      
+      $this->query = $this->db->get();
+      $hsl=array();
+      if($this->query->num_rows()>0)
+      {
+        $row=$this->query->result_array();
+        $hsl['jml_jawab']= is_null($row[0]['jml']) ? 0 : $row[0]['jml'];        
+      }
 
+      return $hsl; 
+   }
    
 
 }

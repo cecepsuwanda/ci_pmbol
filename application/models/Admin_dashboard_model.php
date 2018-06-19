@@ -396,9 +396,8 @@ class Admin_dashboard_model extends CI_Model {
                'lg_time' => date('Y-m-d H:i:s'),
                'logged_in' => TRUE
              );
-             $this->session->set_userdata($newdata);
-             $tmp=$this->db['log']->insertdata($newdata);     
-
+             $data['dt_sess']=$newdata;
+             $tmp=$this->db['log']->insertdata($newdata); 
         }
 
      }

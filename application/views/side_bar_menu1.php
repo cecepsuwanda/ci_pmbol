@@ -20,6 +20,16 @@ defined('BASEPATH') OR exit('No direct script access allowed');
           </a>          
         </li>      
         <li class="<?php echo ($menu_idx==2 ? 'active ':''); ?>treeview">
+          <a href="<?php echo base_url();?>index.php/Maba_dashboard/konfirmasi">
+            <i class="fa fa-graduation-cap"></i> <span>Konfirmasi Pembayaran</span>            
+          </a>          
+        </li>
+        <li class="<?php echo ($menu_idx==4 ? 'active ':''); ?>treeview">
+          <a href="<?php echo base_url();?>index.php/Maba_dashboard/rubah">
+            <i class="fa fa-graduation-cap"></i> <span>Rubah User dan Pass</span>            
+          </a>          
+        </li>
+        <li class="<?php echo ($menu_idx==5 ? 'active ':''); ?>treeview">
           <a href="<?php echo base_url();?>index.php/Maba_dashboard/logout">
             <i class="fa fa-graduation-cap"></i> <span>Logout Mahasiswa Baru</span>            
           </a>          
