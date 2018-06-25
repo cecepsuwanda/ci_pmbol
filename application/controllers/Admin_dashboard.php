@@ -7,6 +7,9 @@ class Admin_dashboard extends CI_Controller {
 	{		
 		$logged_in = $this->my_session->userdata('logged_in');
 		if($logged_in){
+           $db['tanya']=$this->Tanya_model;
+		   $db['jawab']=$this->Jawab_model;
+		   $db['berita']=$this->Berita_model;
            $db['maba']=$this->Maba_model;
 		   $db['priode']=$this->Priode_model;
 		   $this->Admin_dashboard_model->setdbvar($db);
@@ -59,8 +62,11 @@ class Admin_dashboard extends CI_Controller {
 
     public function tanya_jawab()
     {
+        $db['priode']=$this->Priode_model;
         $db['tanya']=$this->Tanya_model;
 		$db['jawab']=$this->Jawab_model;
+		$db['maba']=$this->Maba_model;
+		$db['berita']=$this->Berita_model;
 		$this->Main_dashboard_model->setdbvar($db);
 		$data=$this->Main_dashboard_model->tanya_jawab();
 		$data['menu_idx']=6;        
@@ -172,6 +178,9 @@ class Admin_dashboard extends CI_Controller {
 	{
 		$logged_in = $this->my_session->userdata('logged_in');
 		if($logged_in){
+		   $db['tanya']=$this->Tanya_model;
+		   $db['jawab']=$this->Jawab_model;
+           $db['maba']=$this->Maba_model;
 		   $db['priode']=$this->Priode_model;
 		   $db['berita']=$this->Berita_model;
 		   $this->Admin_dashboard_model->setdbvar($db);
@@ -187,7 +196,10 @@ class Admin_dashboard extends CI_Controller {
 	{
 		$logged_in = $this->my_session->userdata('logged_in');
 		if($logged_in){
+		  $db['tanya']=$this->Tanya_model;
+		  $db['jawab']=$this->Jawab_model;
 		  $db['maba']=$this->Maba_model;
+		  $db['berita']=$this->Berita_model;
 		  $db['priode']=$this->Priode_model;
 		  $this->Admin_dashboard_model->setdbvar($db);
 		  $data = $this->Admin_dashboard_model->baca_data();		  
@@ -206,6 +218,10 @@ class Admin_dashboard extends CI_Controller {
 	        $db['log_admin']=$this->Log_user_model;
 			$db['log_maba']=$this->Log_maba_model;
 			$db['maba']=$this->Maba_model;
+			$db['tanya']=$this->Tanya_model;
+		    $db['jawab']=$this->Jawab_model;
+		    $db['berita']=$this->Berita_model;
+		    $db['priode']=$this->Priode_model;
 			$this->Admin_dashboard_model->setdbvar($db);
 	        $data=$this->Admin_dashboard_model->baca_log();
 	        $data['menu_idx']=1;
@@ -636,6 +652,10 @@ class Admin_dashboard extends CI_Controller {
             $db['user']=$this->User_model;
             $db['fak']=$this->Fakultas_model;
             $db['prodi']=$this->Prodi_model;
+            $db['maba']=$this->Maba_model;
+			$db['tanya']=$this->Tanya_model;
+		    $db['jawab']=$this->Jawab_model;
+		    $db['berita']=$this->Berita_model;
 			$id = $this->my_session->userdata('user_name');
 			$this->Admin_dashboard_model->setdbvar($db);
             $data = $this->Admin_dashboard_model->baca_setting($id);

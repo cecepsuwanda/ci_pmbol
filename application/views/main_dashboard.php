@@ -107,8 +107,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             $divrowcol = new div_row_col($row,$col,$content);
             echo $divrowcol->display();
        
-                     $box=array('class'=>'collapsed-box');
-                     $header_box = array('class'=>'with-border','title'=>'Verifikasi','tools'=>array(array('widget'=>'collapse','icon'=>'fa fa-plus'),array('widget'=>'remove','icon'=>'fa fa-times')));
+                     $box=array('class'=>'');
+                     $header_box = array('class'=>'with-border','title'=>'Verifikasi','tools'=>array(array('widget'=>'collapse','icon'=>'fa fa-minus'),array('widget'=>'remove','icon'=>'fa fa-times')));
 
 
                      $row = array('jml'=>1);
@@ -123,7 +123,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                      $body = $divrowcol->display();
                      $tempbox=new box($box,$header_box,$body); 
                      $content1=array(array($tempbox->display())); 
-
+                     
+                     $box=array('class'=>'collapsed-box');
+                     $header_box = array('class'=>'with-border','title'=>'Verifikasi','tools'=>array(array('widget'=>'collapse','icon'=>'fa fa-plus'),array('widget'=>'remove','icon'=>'fa fa-times')));
                
                      $callout=new callout('callout-info','Pemberitahuan','Konfirmasi adalah mahasiswa baru yang sudah bayar pendaftaran');
                      $tbstat = array("id" => "konf",'width'=>'100%');
@@ -132,7 +134,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                      $content = array(array( $callout->display().'<div>'.$tbl->display().'</div>'));
                      $divrowcol = new div_row_col($row,$col,$content);
                      $body = $divrowcol->display();
-                     $header_box['title']='Konfirmasi';
+                     $header_box['title']='Konfirmasi';                     
                      $tempbox=new box($box,$header_box,$body); 
                     $content1[]=array($tempbox->display()); 
 

@@ -67,7 +67,7 @@ class Maba_dashboard_model extends CI_Model {
      $data['email']=empty($tmp[0]['email']) ? '' : $tmp[0]['email'];
      $data['hp']=$tmp[0]['hp'];     
      $data['photo']=$tmp[0]['photo'];
-     
+     $data['kelas']=$tmp[0]['kelas'];
 
      $tmp = $this->db['priode']->getrek();
 

@@ -44,9 +44,12 @@ class Main_dashboard extends CI_Controller {
 
 	public function jadwal_syarat()
 	{
-		
+		$db['tanya']=$this->Tanya_model;
+		$db['jawab']=$this->Jawab_model;
         $db['priode']=$this->Priode_model;
         $db['glmb']=$this->Glmb_model;
+        $db['berita']=$this->Berita_model;
+        $db['maba']=$this->Maba_model;
         $this->Main_dashboard_model->setdbvar($db);
         $data=$this->Main_dashboard_model->jadwal_syarat(); 
         $data['menu_idx']=3;
@@ -116,6 +119,7 @@ class Main_dashboard extends CI_Controller {
 		$data['menu_idx']=1;
 		$this->load->view('buat_akun',$data);
 	}
+	
 
 	public function get_prodi()
 	{

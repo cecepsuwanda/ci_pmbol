@@ -4,11 +4,31 @@ class Admin_dashboard_model extends CI_Model {
 
    private $db,$lib;
 
+   private function notif()
+   {
+     $data=$this->db['maba']->jml(); 
+     $tmp = $this->db['berita']->jml();
+     $data['jml_berita']=$tmp['jml_berita'];
+     $tmp = $this->db['tanya']->jml();
+     $data['jml_tanya']=$tmp['jml_tanya'];
+     $tmp = $this->db['jawab']->jml();
+     $data['jml_jawab']=$tmp['jml_jawab'];
+     return $data;
+   }
 
    public function setdbvar($db,$lib=array())
    {
    	$this->db=$db;
     $this->lib=$lib;
+    if(array_key_exists('priode', $db)){
+      $priode=$this->db['priode']->priode_aktif();
+      if(array_key_exists('berita', $db)){  
+        $this->db['berita']->set_priode($priode);
+      }
+      if(array_key_exists('maba', $db)){  
+        $this->db['maba']->set_priode($priode); 
+      }  
+    }
    }   
 
    private function build_tag_db2($data)
@@ -153,6 +173,9 @@ class Admin_dashboard_model extends CI_Model {
    public function baca_log()
    {
 
+     $data = $this->notif();
+     $data['rekap_prodi']=$this->db['maba']->rekapperprodi();  
+
      $tmp=$this->db['log_admin']->getdata('');
      $data['log_admin']=$this->build_tag_db2($tmp);
      $tmp=$this->db['log_maba']->getdata('');
@@ -166,20 +189,15 @@ class Admin_dashboard_model extends CI_Model {
 
    public function rekap_data()
    {
-     $priode=$this->db['priode']->priode_aktif();
-     $this->db['maba']->set_priode($priode);     
-     $data=$this->db['maba']->jml();     
+     $data = $this->notif();
      $data['rekap_prodi']=$this->db['maba']->rekapperprodi();
      return $data;
    }
    
 
    public function baca_berita()
-   {
-      
-      $priode=$this->db['priode']->priode_aktif();
-      $this->db['berita']->set_priode($priode);
-
+   {      
+      $data = $this->notif();
       $data['timeline'] =$this->db['berita']->getdata('');
       return $data;
    }
@@ -262,9 +280,7 @@ class Admin_dashboard_model extends CI_Model {
    public function baca_data()
    {
      
-     $priode=$this->db['priode']->priode_aktif();
-     $this->db['maba']->set_priode($priode);
-         
+     $data = $this->notif();         
      $data['data_daf']=$this->db['maba']->getmaba_jn_prodi_admin(0);
      $data['data_konf']=$this->db['maba']->getmaba_jn_prodi_admin(1);
      $data['data_ver']=$this->db['maba']->getmaba_jn_prodi_admin(1,1);
@@ -628,6 +644,8 @@ class Admin_dashboard_model extends CI_Model {
 
    public function baca_setting($id)
    {
+     
+     $data = $this->notif();
      $dt_jdwl = $this->db['glmb']->getallglmbjdwl();
      $arr_tbjdwl = $this->db['glmb']->alltotb($dt_jdwl);     
      $data['data_priode'] = $this->db['priode']->getsettingpriode($arr_tbjdwl);

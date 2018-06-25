@@ -58,6 +58,7 @@ $route['buat_akun'] = 'Main_dashboard/buat_akun';
 $route['berita'] = 'Main_dashboard/berita';
 $route['data_masuk'] = 'Main_dashboard/index';
 $route['tanya_jawab'] = 'Main_dashboard/tanya_jawab';
+$route['jadwal_syarat'] = 'Main_dashboard/jadwal_syarat';
 
 $route['admin_app'] = 'Admin_dashboard/login';
 $route['admin_dashboard'] = 'Admin_dashboard/index';

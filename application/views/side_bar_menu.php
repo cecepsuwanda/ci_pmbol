@@ -4,17 +4,17 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <!-- sidebar menu: : style can be found in sidebar.less -->
       <ul class="sidebar-menu">
         <li class="header">MAIN NAVIGATION</li>
-        <!--
-        <li class="<?php echo ($menu_idx==3 ? 'active ':''); ?>treeview">
-          <a href="<?php echo base_url();?>index.php/Main_dashboard/jadwal_syarat">
-            <i class="fa fa-edit"></i> <span>Jadwal & Syarat Pendaftaran</span>            
-          </a>          
-        </li>-->      
+        
         <li class="<?php echo ($menu_idx==1 ? 'active ':''); ?>treeview">
           <a href="<?php echo base_url();?>buat_akun">
             <i class="fa fa-edit"></i> <span>Daftar Mahasiswa Baru</span>            
           </a>          
-        </li>
+        </li>        
+        <li class="<?php echo ($menu_idx==3 ? 'active ':''); ?>treeview">
+          <a href="<?php echo base_url();?>jadwal_syarat">
+            <i class="fa fa-edit"></i> <span>Jadwal & Syarat Pendaftaran</span>            
+          </a>          
+        </li>      
         <li class="<?php echo ($menu_idx==4 ? 'active ':''); ?>treeview">
           <a href="<?php echo base_url();?>berita">
             <i class="fa fa-newspaper-o"></i> <span>Berita</span>

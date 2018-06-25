@@ -124,8 +124,8 @@ $data['menu_idx']=$menu_idx;
                     $divrowcol = new div_row_col($row,$col,$content);
                     $body=$divrowcol->display();
 
-                    $box=array('class'=>'collapsed-box');
-                    $header_box = array('class'=>'with-border','title'=>'Verifikasi','tools'=>array(array('widget'=>'collapse','icon'=>'fa fa-plus'),array('widget'=>'remove','icon'=>'fa fa-times')));
+                    $box=array('class'=>'');
+                    $header_box = array('class'=>'with-border','title'=>'Verifikasi','tools'=>array(array('widget'=>'collapse','icon'=>'fa fa-minus'),array('widget'=>'remove','icon'=>'fa fa-times')));
                     $footer = '<button type="button" class="btn btn-primary" onclick="Cetak()">Cetak Data Mahasiswa Baru</button>';
                     $tempbox=new box($box,$header_box,$body,$footer); 
                     $content1=array(array($tempbox->display()));
@@ -135,6 +135,9 @@ $data['menu_idx']=$menu_idx;
                     $tbl = new mytable($tbstat,$header,$isi_data,'');
                     $content=array(array($tbl->display())); 
                    
+                    $box=array('class'=>'collapsed-box');
+                    $header_box = array('class'=>'with-border','title'=>'Verifikasi','tools'=>array(array('widget'=>'collapse','icon'=>'fa fa-plus'),array('widget'=>'remove','icon'=>'fa fa-times')));
+
                     $divrowcol = new div_row_col($row,$col,$content);
                     $body=$divrowcol->display();
 
