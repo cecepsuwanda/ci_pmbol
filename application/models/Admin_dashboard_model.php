@@ -2,7 +2,7 @@
 
 class Admin_dashboard_model extends CI_Model {
 
-   private $db,$lib;
+   private $db,$lib,$glmb;
 
    private function notif()
    {
@@ -27,7 +27,10 @@ class Admin_dashboard_model extends CI_Model {
       }
       if(array_key_exists('maba', $db)){  
         $this->db['maba']->set_priode($priode); 
-      }  
+      }
+      if(array_key_exists('glmb', $db)){  
+        $this->glmb = $this->db['glmb']->getglmbjdwl($priode['thn']); 
+      }        
     }
    }   
 
@@ -191,6 +194,15 @@ class Admin_dashboard_model extends CI_Model {
    {
      $data = $this->notif();
      $data['rekap_prodi']=$this->db['maba']->rekapperprodi();
+     $data['jml_rekap_prodi']=$this->db['maba']->jmlrekapperprodi();
+     
+     foreach ($this->glmb as $glmb => $jadwal) {
+       $data['glmb'][$glmb]['data']=$this->db['maba']->rekapperprodi($jadwal['awal'],$jadwal['akhir']);
+       $data['glmb'][$glmb]['jml']=$this->db['maba']->jmlrekapperprodi($jadwal['awal'],$jadwal['akhir']);
+     }
+     
+
+
      return $data;
    }
    

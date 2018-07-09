@@ -140,27 +140,27 @@ class Main_dashboard_model extends CI_Model {
        if(!empty($data['ktp'])){   
            $tmp=$this->db['maba']->getdata("ktp='$data[ktp]'");
            if(!empty($tmp)){
-               return "<div class='callout callout-danger'><h4>Pemberitahuan</h4><p>Calon Mahasiswa Baru dengan ktp/nik = $data[ktp], sudah daftar !!!</p> </div>"; 
+               return json_encode(array('err'=>1,'txt'=>"<div class='callout callout-danger'><h4>Pemberitahuan</h4><p>Calon Mahasiswa Baru dengan ktp/nik = $data[ktp], sudah daftar !!!</p> </div>"));                
            }else{ 
              if(!empty($data['user'])){  
                $tmp=$this->db['maba']->getdata("user='$data[user]'");
                if(!empty($tmp)){
-                  return "<div class='callout callout-danger'><h4>Pemberitahuan</h4><p>Calon Mahasiswa Baru dengan username = $data[user], sudah ada !!!</p> </div>"; 
+                  return json_encode(array('err'=>1,'txt'=>"<div class='callout callout-danger'><h4>Pemberitahuan</h4><p>Calon Mahasiswa Baru dengan username = $data[user], sudah ada !!!</p> </div>"));                  
                }else{  
                  if(!empty($data['prodi'])){
                      $data['kd_prodi']= $this->db['prodi']->getkdprodi($data['prodi']);
                      $this->db['maba']->insertdata($data);
-                     return "<div class='callout callout-info'><h4>Pemberitahuan</h4><p>Akun Calon Mahasiswa Baru dengan ktp/nik = $data[ktp], berhasil di buat !!!</p> </div>"; 
+                     return json_encode(array('err'=>0,'txt'=>"<div class='callout callout-info'><h4>Pemberitahuan</h4><p>Akun Calon Mahasiswa Baru dengan ktp/nik = $data[ktp], berhasil di buat !!!</p> </div>"));                     
                   }else{
-                    return "<div class='callout callout-danger'><h4>Pemberitahuan</h4><p>Kode Prodi. tidak boleh kosong !!!</p> </div>";   
+                    return json_encode(array('err'=>1,'txt'=>"<div class='callout callout-danger'><h4>Pemberitahuan</h4><p>Kode Prodi. tidak boleh kosong !!!</p> </div>"));                    
                   }
                }  
               }else{
-                 return "<div class='callout callout-danger'><h4>Pemberitahuan</h4><p>Username tidak boleh kosong !!!</p> </div>";
+                 return json_encode(array('err'=>1,'txt'=>"<div class='callout callout-danger'><h4>Pemberitahuan</h4><p>Username tidak boleh kosong !!!</p> </div>"));                 
               }
            }
        }else{
-          return "<div class='callout callout-danger'><h4>Pemberitahuan</h4><p>No. KTP/NIK tidak boleh kosong !!!</p> </div>"; 
+          return json_encode(array('err'=>1,'txt'=>"<div class='callout callout-danger'><h4>Pemberitahuan</h4><p>No. KTP/NIK tidak boleh kosong !!!</p> </div>"));          
        }      
    }
 

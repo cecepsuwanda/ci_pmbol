@@ -23,7 +23,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             </span>            
           </a>          
         </li>        
-        <li class="<?php echo ($menu_idx==0 ? 'active ':''); ?>treeview">
+        <!-- <li class="<?php echo ($menu_idx==0 ? 'active ':''); ?>treeview">
           <a href="<?php echo base_url();?>data_masuk">
             <i class="fa fa-dashboard"></i> <span>Data Masuk</span> 
             <span class="pull-right-container">
@@ -32,7 +32,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
               <small class="label pull-right bg-red"><?php echo $jml_ver; ?></small>
             </span>           
           </a>          
-        </li> 
+        </li>  -->
         <li class="<?php echo ($menu_idx==5 ? 'active ':''); ?>treeview">
           <a href="<?php echo base_url();?>tanya_jawab">
             <i class="fa fa-dashboard"></i> <span>Tanya Jawab</span>

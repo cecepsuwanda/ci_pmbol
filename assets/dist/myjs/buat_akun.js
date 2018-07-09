@@ -1,5 +1,6 @@
 
-function myajax(id,data1,url,fbefore=null,fafter=null) {        
+var v_base_url;
+function myajax(id,data1,url,fbefore=null,fafter=null,datatype='html') {        
         if(fbefore != null){
             if(typeof fbefore==='function'){
                fbefore();
@@ -11,9 +12,16 @@ function myajax(id,data1,url,fbefore=null,fafter=null) {
             "url" : url,
             "cache" : false,
             "data" : data1,
+            "dataType" : datatype, 
             success : function (data) {
                 if(id!=''){                  
-                  $('#'+id).html(data);
+                 if(datatype=='html'){ 
+                   $('#'+id).html(data);
+                 }else{
+                   if(datatype=='json'){ 
+                     $('#'+id).html(data.txt);
+                   }
+                 }                   
                 }
                 
                 if(fafter != null){
@@ -25,11 +33,18 @@ function myajax(id,data1,url,fbefore=null,fafter=null) {
         });
      }
 
+function fafter(data)
+{
+ if(data.err==0){  
+   window.location = v_base_url+"maba_app";
+ }  
+}     
+
 
 function init(base_url)
 {
    
-
+    v_base_url = base_url;
     $("#jdwl").DataTable({"bPaginate": false,"ordering": false,"searching": false,"info": false}); 
    
    
@@ -76,7 +91,7 @@ function init(base_url)
                 $('#ket').html('<div class="callout callout-danger"><h4>Pemberitahuan</h4><p>Tanggal lahir dan nomor ktp-nya tidak cocok !</p> </div>');
               }else{     
                    data = $("#buat_akun").serialize();
-                   myajax('ket',data,base_url+'index.php/Main_dashboard/save');    
+                   myajax('ket',data,base_url+'index.php/Main_dashboard/save',null,fafter,'json');    
               }
         }        
     });

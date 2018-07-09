@@ -111,7 +111,7 @@ $data['menu_idx']=$menu_idx;
                    $header = array(array('No','Program Studi','Daftar','Konfirmasi','Verifikasi'));
                    $tbstat = array("id" => "rekapprodi",'width'=>'100%');
                    $isi_data = $rekap_prodi;
-                   $tbl = new mytable($tbstat,$header,$isi_data,'');
+                   $tbl = new mytable($tbstat,$header,$isi_data,$jml_rekap_prodi);
                    $content=array(array($tbl->display())); 
 
                    $row = array('jml'=>1);
@@ -122,6 +122,24 @@ $data['menu_idx']=$menu_idx;
                    $tempbox=new box($box,$header_box,$body); 
                    $content=array(array($tempbox->display()));
 
+                   foreach ($glmb as $idx => $tbl) {
+                      $isi_data = $tbl['data'];
+                      $tbstat = array("id" => "glmb".$idx,'width'=>'100%');
+                      $tbl = new mytable($tbstat,$header,$isi_data,$tbl['jml']);
+                      $tmp=array(array($tbl->display())); 
+
+                      $row = array('jml'=>1);
+                      $col = array('jml'=>1,'class'=>array('col-xs-12'));
+                      $divrowcol = new div_row_col($row,$col,$tmp);
+                      $body=$divrowcol->display();
+                      
+                      $header_box['title']='Rekap Perprodi Gelombang '.$idx;
+                      $tempbox=new box($box,$header_box,$body);
+                      $content[]=array($tempbox->display());
+                    } 
+
+
+                   $row = array('jml'=>1+count($glmb));
                    $col = array('jml'=>1,'class'=>array('col-md-12'));
                    $divrowcol = new div_row_col($row,$col,$content); 
                    echo $divrowcol->display();
@@ -180,7 +198,7 @@ $data['menu_idx']=$menu_idx;
 <script>
   $(function () {
     $("#rekapprodi").DataTable();
-    
+    $('table[id*="glmb"]').DataTable();;
     
   });
 </script>

@@ -50,10 +50,14 @@ class Maba_model extends CI_Model {
           foreach ($data as $row) {
           $tmp=array();          
               foreach ($row as $key=>$value) {
-                if($key!='id_prodi'){
+                if(in_array($key,array('nm_prodi'))){
                    $tmp[]=array($value,array());
                  }else{
-                   $tmp[]=array($i++,array());
+                   if(in_array($key,array('jml1','jml2','jml3'))){
+                     $tmp[]=array($value,array('align'=>'right'));
+                   }else{
+                     $tmp[]=array($i++,array());
+                   }  
                  }  
               }
           $table[]=$tmp;
@@ -112,7 +116,7 @@ class Maba_model extends CI_Model {
       if(!empty($where)){
         $this->db->where($where);      
       }
-      
+      $this->db->order_by('id_peserta', 'DESC');
       $this->query = $this->db->get();
       $hsl=array();
       $this->numrows = $this->query->num_rows();
@@ -174,7 +178,7 @@ class Maba_model extends CI_Model {
       return $hsl; 
    }
 
-   public function rekapperprodi()
+   public function rekapperprodi($awl='',$akh='')
    {
       $this->db->select('a.id_prodi,
                          nm_prodi,
@@ -187,9 +191,13 @@ class Maba_model extends CI_Model {
       $this->db->group_by('a.id_prodi');
         
       $where = $this->sql_priode;
-    //if(!empty($where)){
-        $this->db->where($where);      
-      //}
+      if(!empty($awl) and !empty($akh))
+      {
+        $where .= ' and (tglentry between "'.$awl.'" and "'.$akh.'")' ;
+      }
+
+      $this->db->where($where);      
+      
 
       $this->db->order_by('a.urut_prodi');
 
@@ -202,13 +210,44 @@ class Maba_model extends CI_Model {
       return $hsl; 
    }
 
+   public function jmlrekapperprodi($awl='',$akh='')
+   {
+      $this->db->select('count(*) as jml1,
+                         sum(if((konf=1) and (verified=0),1,0)) as jml2,
+                         SUM(IF((konf=1)and(verified=1),1,0)) AS jml3');
+      $this->db->from('tb_prodi a'); 
+      $this->db->join('tb_maba b', 'a.id_prodi=b.id_prodi');      
+        
+      $where = $this->sql_priode;
+      if(!empty($awl) and !empty($akh))
+      {
+        $where .= ' and (tglentry between "'.$awl.'" and "'.$akh.'")' ;
+      }
+
+      $this->db->where($where);     
+
+      $this->query = $this->db->get();
+      $hsl='<tr><td colspan="2" align="center" >Jumlah</td>';
+      if($this->query->num_rows()>0)
+      {
+         foreach($this->query->result_array() as $row)
+         {
+           $hsl.='<td align="right" >'.$row['jml1'].'</td><td align="right" >'.$row['jml2'].'</td><td align="right" >'.$row['jml3'].'</td>';
+         }
+      }
+      $hsl.='</tr>';
+      return $hsl; 
+   }
+
+
+
    private function getnew_id_peserta($kd_prodi)
    {
      $year = date('Y');    
-     $data = $this->getData("id_peserta like '".$year.sprintf("%02d", $kd_prodi)."%'");
+     $data = $this->getData("id_peserta like '".$year.sprintf("%02d", $kd_prodi)."%'");     
      if($this->numrows>0)
      {
-       return  $year.sprintf("%02d", $kd_prodi). sprintf("%03d", ($this->numrows+1));    
+       return  $year.sprintf("%02d", $kd_prodi). sprintf("%03d", (intval(substr($data[0]['id_peserta'],6,3))+1));
      }else{
        return  $year.sprintf("%02d", $kd_prodi).'001';
      }

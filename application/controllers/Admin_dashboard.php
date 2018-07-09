@@ -11,7 +11,8 @@ class Admin_dashboard extends CI_Controller {
 		   $db['jawab']=$this->Jawab_model;
 		   $db['berita']=$this->Berita_model;
            $db['maba']=$this->Maba_model;
-		   $db['priode']=$this->Priode_model;
+		   $db['priode']=$this->Priode_model;		   
+		   $db['glmb']=$this->Glmb_model;
 		   $this->Admin_dashboard_model->setdbvar($db);
 		   $data=$this->Admin_dashboard_model->rekap_data();
 		   $data['menu_idx']=0;           

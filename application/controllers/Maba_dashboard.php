@@ -112,7 +112,7 @@ class Maba_dashboard extends CI_Controller {
           $this->my_session->unset_userdata($array_items);
           
 		}
-		redirect('/Main_dashboard/buat_akun');
+		redirect('/data_masuk');
 	}
 
 	public function do_upload()
