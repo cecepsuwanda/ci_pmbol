@@ -398,6 +398,122 @@ class Admin_dashboard extends CI_Controller {
 		}
 	}
 
+	public function cetak_rekap()
+	{
+		$logged_in = $this->my_session->userdata('logged_in');
+		if($logged_in){ 
+            $this->load->library('excel');
+                      
+           $db['maba']=$this->Maba_model;
+           $db['priode']=$this->Priode_model;		   
+		   $db['glmb']=$this->Glmb_model;
+		   $this->Admin_dashboard_model->setdbvar($db);
+		   $data=$this->Admin_dashboard_model->cetak_rekap_data();
+
+            $col_width=array("B"=>5.00,"C"=>30.00);
+            $tmp=68;  
+            foreach ($data['glmb'] as $value) {
+              	$col_width[chr($tmp++)]=11.89;
+                $col_width[chr($tmp++)]=11.89;
+                $col_width[chr($tmp++)]=11.89;
+              }  
+                $col_width[chr($tmp++)]=11.89;
+                $col_width[chr($tmp++)]=11.89;
+                $col_width[chr($tmp++)]=11.89;  
+            
+            $tmp_font = $this->excel->build_font(true,'Times New Roman',12);
+
+			$tmp_borders = $this->excel->build_borders(PHPExcel_Style_Border::BORDER_THIN,PHPExcel_Style_Border::BORDER_MEDIUM);
+            
+            $jdl=array(array('add'=>'B1','txt'=>'REKAP DATA','merge'=>true,'madd'=>'B1:'.chr($tmp-1).'1','v'=>PHPExcel_Style_Alignment::VERTICAL_CENTER,'h'=>PHPExcel_Style_Alignment::HORIZONTAL_CENTER,'font'=>$tmp_font),
+	                   array('add'=>'B','row'=>4,'txt'=>'NO','merge'=>true,'madd'=>'B4:B5','v'=>PHPExcel_Style_Alignment::VERTICAL_CENTER,'h'=>PHPExcel_Style_Alignment::HORIZONTAL_CENTER,'font'=>$tmp_font,'wbrdawl'=>'B','wbrdakh'=>chr($tmp-1),'wbrdjml'=>1,'wborders'=>$tmp_borders),
+	                   array('add'=>'C4','txt'=>'PROGRAM STUDI','merge'=>true,'madd'=>'C4:C5','v'=>PHPExcel_Style_Alignment::VERTICAL_CENTER,'h'=>PHPExcel_Style_Alignment::HORIZONTAL_CENTER,'font'=>$tmp_font)
+					   );
+
+            $tmp=68;
+            $tmp1=68;  
+            foreach ($data['glmb'] as $idx => $tbl) {
+              $jdl[]=array('add'=>chr($tmp),'row'=>4,'txt'=>'Gelombang '.$idx,'merge'=>true,'madd'=>chr($tmp).'4:'.chr($tmp+2).'4','v'=>PHPExcel_Style_Alignment::VERTICAL_CENTER,'h'=>PHPExcel_Style_Alignment::HORIZONTAL_CENTER,'font'=>$tmp_font);
+              $tmp=$tmp+3;
+              $jdl[]=array('add'=>chr($tmp1++),'row'=>5,'txt'=>'Daftar','v'=>PHPExcel_Style_Alignment::VERTICAL_CENTER,'h'=>PHPExcel_Style_Alignment::HORIZONTAL_CENTER,'font'=>$tmp_font);
+              $jdl[]=array('add'=>chr($tmp1++),'row'=>5,'txt'=>'Konfirmasi','v'=>PHPExcel_Style_Alignment::VERTICAL_CENTER,'h'=>PHPExcel_Style_Alignment::HORIZONTAL_CENTER,'font'=>$tmp_font);
+              $jdl[]=array('add'=>chr($tmp1++),'row'=>5,'txt'=>'verifikasi','v'=>PHPExcel_Style_Alignment::VERTICAL_CENTER,'h'=>PHPExcel_Style_Alignment::HORIZONTAL_CENTER,'font'=>$tmp_font);
+            }
+
+              $jdl[]=array('add'=>chr($tmp),'row'=>4,'txt'=>'Total','merge'=>true,'madd'=>chr($tmp).'4:'.chr($tmp+2).'4','v'=>PHPExcel_Style_Alignment::VERTICAL_CENTER,'h'=>PHPExcel_Style_Alignment::HORIZONTAL_CENTER,'font'=>$tmp_font);
+              $jdl[]=array('add'=>chr($tmp1++),'row'=>5,'txt'=>'Daftar','v'=>PHPExcel_Style_Alignment::VERTICAL_CENTER,'h'=>PHPExcel_Style_Alignment::HORIZONTAL_CENTER,'font'=>$tmp_font);
+              $jdl[]=array('add'=>chr($tmp1++),'row'=>5,'txt'=>'Konfirmasi','v'=>PHPExcel_Style_Alignment::VERTICAL_CENTER,'h'=>PHPExcel_Style_Alignment::HORIZONTAL_CENTER,'font'=>$tmp_font);
+              $jdl[]=array('add'=>chr($tmp1++),'row'=>5,'txt'=>'verifikasi','v'=>PHPExcel_Style_Alignment::VERTICAL_CENTER,'h'=>PHPExcel_Style_Alignment::HORIZONTAL_CENTER,'font'=>$tmp_font);
+            
+             $isi=array(
+	                 array('add'=>'B','row'=>0,'txt'=>'','v'=>PHPExcel_Style_Alignment::VERTICAL_CENTER,'h'=>PHPExcel_Style_Alignment::HORIZONTAL_CENTER,'font'=>$tmp_font,'wbrdawl'=>'B','wbrdakh'=>chr($tmp1-1),'wbrdjml'=>0,'wborders'=>$tmp_borders),
+	                 array('add'=>'C','row'=>0,'txt'=>'','v'=>PHPExcel_Style_Alignment::VERTICAL_CENTER,'h'=>PHPExcel_Style_Alignment::HORIZONTAL_CENTER,'font'=>$tmp_font)  
+	      			 );
+
+             $tmp=68;
+             foreach ($data['glmb'] as $value) {              
+              $isi[]=array('add'=>chr($tmp++),'row'=>0,'txt'=>'','v'=>PHPExcel_Style_Alignment::VERTICAL_CENTER,'h'=>PHPExcel_Style_Alignment::HORIZONTAL_CENTER,'font'=>$tmp_font);
+              $isi[]=array('add'=>chr($tmp++),'row'=>0,'txt'=>'','v'=>PHPExcel_Style_Alignment::VERTICAL_CENTER,'h'=>PHPExcel_Style_Alignment::HORIZONTAL_CENTER,'font'=>$tmp_font);
+              $isi[]=array('add'=>chr($tmp++),'row'=>0,'txt'=>'','v'=>PHPExcel_Style_Alignment::VERTICAL_CENTER,'h'=>PHPExcel_Style_Alignment::HORIZONTAL_CENTER,'font'=>$tmp_font);
+            }
+
+              $isi[]=array('add'=>chr($tmp++),'row'=>0,'txt'=>'','v'=>PHPExcel_Style_Alignment::VERTICAL_CENTER,'h'=>PHPExcel_Style_Alignment::HORIZONTAL_CENTER,'font'=>$tmp_font);
+              $isi[]=array('add'=>chr($tmp++),'row'=>0,'txt'=>'','v'=>PHPExcel_Style_Alignment::VERTICAL_CENTER,'h'=>PHPExcel_Style_Alignment::HORIZONTAL_CENTER,'font'=>$tmp_font);
+              $isi[]=array('add'=>chr($tmp++),'row'=>0,'txt'=>'','v'=>PHPExcel_Style_Alignment::VERTICAL_CENTER,'h'=>PHPExcel_Style_Alignment::HORIZONTAL_CENTER,'font'=>$tmp_font);               
+                            
+            $this->excel->setActiveSheetIndex(0);
+			$this->excel->setColumnWidth($col_width);
+			$this->excel->tulis_data($jdl);  
+            $row=6;
+            $no=1;
+			foreach ($data['rekap_prodi'] as $value) {
+			    $idx=0;
+                $isi[$idx]['row']=$row;
+                $isi[$idx++]['txt']=$no++;
+                $isi[$idx]['row']=$row;
+                $isi[$idx++]['txt']=$value['nm_prodi'];  
+                foreach ($data['glmb'] as $glmb) {
+                  if(isset($glmb['data'][$value['id_prodi']])){
+                    $isi[$idx]['row']=$row;
+                    $isi[$idx++]['txt']=$glmb['data'][$value['id_prodi']]['jml1'];
+                    $isi[$idx]['row']=$row;
+                    $isi[$idx++]['txt']=$glmb['data'][$value['id_prodi']]['jml2'];
+                    $isi[$idx]['row']=$row;
+                    $isi[$idx++]['txt']=$glmb['data'][$value['id_prodi']]['jml3'];; 
+                  }else{
+                    $isi[$idx]['row']=$row;
+                    $isi[$idx++]['txt']=0;
+                    $isi[$idx]['row']=$row;
+                    $isi[$idx++]['txt']=0;
+                    $isi[$idx]['row']=$row;
+                    $isi[$idx++]['txt']=0;
+                  }
+
+                }
+				
+				    $isi[$idx]['row']=$row;
+                    $isi[$idx++]['txt']=$value['jml1'];
+                    $isi[$idx]['row']=$row;
+                    $isi[$idx++]['txt']=$value['jml2'];
+                    $isi[$idx]['row']=$row;
+                    $isi[$idx++]['txt']=$value['jml3'];;
+
+				$this->excel->tulis_data($isi);
+				$row++;
+			}
+
+		    $filename='data_rekap.xls'; //save our workbook as this file name
+			header('Content-Type: application/vnd.ms-excel'); //mime type
+			header('Content-Disposition: attachment;filename="'.$filename.'"'); //tell browser what's the file name
+			header('Cache-Control: max-age=0'); //no cache
+			            
+	        $this->excel->download();  	
+
+		}else{
+			redirect('/Admin_dashboard/login');
+		}	
+	}
+
 	public function logout()
 	{
 		$logged_in = $this->my_session->userdata('logged_in');

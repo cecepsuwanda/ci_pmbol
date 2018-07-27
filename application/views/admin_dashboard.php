@@ -119,7 +119,8 @@ $data['menu_idx']=$menu_idx;
                    $divrowcol = new div_row_col($row,$col,$content);
                    $body=$divrowcol->display();
 
-                   $tempbox=new box($box,$header_box,$body); 
+                   $footer = '<button type="button" class="btn btn-primary" onclick="Cetak()">Cetak</button>';
+                   $tempbox=new box($box,$header_box,$body,$footer); 
                    $content=array(array($tempbox->display()));
 
                    foreach ($glmb as $idx => $tbl) {
@@ -200,7 +201,13 @@ $data['menu_idx']=$menu_idx;
     $("#rekapprodi").DataTable();
     $('table[id*="glmb"]').DataTable();;
     
+    
   });
+
+  function Cetak()
+    {
+      window.location = '<?php echo base_url();?>index.php/Admin_dashboard/cetak_rekap';
+    }
 </script>
 </body>
 </html>

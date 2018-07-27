@@ -200,10 +200,30 @@ class Admin_dashboard_model extends CI_Model {
        $data['glmb'][$glmb]['data']=$this->db['maba']->rekapperprodi($jadwal['awal'],$jadwal['akhir']);
        $data['glmb'][$glmb]['jml']=$this->db['maba']->jmlrekapperprodi($jadwal['awal'],$jadwal['akhir']);
      }
-     
-
-
      return $data;
+   }
+
+   public function cetak_rekap_data()
+   {
+     $tmp['rekap_prodi']=$this->db['maba']->rekapperprodi('','',1);
+     $tmp['jml_rekap_prodi']=$this->db['maba']->jmlrekapperprodi('','',1);
+     
+     foreach ($this->glmb as $glmb => $jadwal) {
+       $tmp['glmb'][$glmb]['data']=$this->db['maba']->rekapperprodi($jadwal['awal'],$jadwal['akhir'],1);
+       $tmp['glmb'][$glmb]['jml']=$this->db['maba']->jmlrekapperprodi($jadwal['awal'],$jadwal['akhir'],1);
+     }
+
+     foreach ($tmp['glmb'] as $glmb=>$data) {
+       $tmp1 = array();
+       foreach ($data['data'] as $value) {
+          $tmp1[$value['id_prodi']]['jml1']=$value['jml1'];
+          $tmp1[$value['id_prodi']]['jml2']=$value['jml2'];
+          $tmp1[$value['id_prodi']]['jml3']=$value['jml3'];
+       }
+       $tmp['glmb'][$glmb]['data']=$tmp1;
+     }
+
+     return $tmp;
    }
    
 

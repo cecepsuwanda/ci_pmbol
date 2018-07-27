@@ -178,7 +178,7 @@ class Maba_model extends CI_Model {
       return $hsl; 
    }
 
-   public function rekapperprodi($awl='',$akh='')
+   public function rekapperprodi($awl='',$akh='',$idx=0)
    {
       $this->db->select('a.id_prodi,
                          nm_prodi,
@@ -205,12 +205,17 @@ class Maba_model extends CI_Model {
       $hsl=array();
       if($this->query->num_rows()>0)
       {
-        $hsl = $this->build_tag_db1($this->query->result_array());
+        if($idx==0){
+           $hsl = $this->build_tag_db1($this->query->result_array());
+         }else{
+           $hsl = $this->query->result_array();
+         }
+
       }
       return $hsl; 
    }
 
-   public function jmlrekapperprodi($awl='',$akh='')
+   public function jmlrekapperprodi($awl='',$akh='',$idx=0)
    {
       $this->db->select('count(*) as jml1,
                          sum(if((konf=1) and (verified=0),1,0)) as jml2,
@@ -227,15 +232,24 @@ class Maba_model extends CI_Model {
       $this->db->where($where);     
 
       $this->query = $this->db->get();
-      $hsl='<tr><td colspan="2" align="center" >Jumlah</td>';
+      if($idx==0){   
+         $hsl='<tr><td colspan="2" align="center" >Jumlah</td>';
+      }
       if($this->query->num_rows()>0)
       {
+       if($idx==0){
          foreach($this->query->result_array() as $row)
          {
            $hsl.='<td align="right" >'.$row['jml1'].'</td><td align="right" >'.$row['jml2'].'</td><td align="right" >'.$row['jml3'].'</td>';
          }
+       }else{
+        $hsl=$this->query->result_array();
+       }  
+
       }
-      $hsl.='</tr>';
+      if($idx==0){ 
+        $hsl.='</tr>';
+      }  
       return $hsl; 
    }
 
